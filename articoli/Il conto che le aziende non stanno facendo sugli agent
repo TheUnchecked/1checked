@@ -3,10 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exchange on-prem: il rischio che dorme nella tua configurazione di default The Black Sheep</title>
+  <title>La matematica degli agent — The Black Sheep</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0d0d0d; --card: #1414
+    :root { --bg: #0d0d0d; --card: #141414; --border: #242424; --text: #e0e0e0; --muted: #666; --accent: #c8f0d8; --accent2: #f0c8b4; --accent3: #c8d8f0; --accent4: #f0e0c8; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, serif; min-height: 100vh; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    article { max-width: 720px; margin: 0 auto; padding: 4rem 2rem 6rem; animation: fadeUp 0.5s ease both; }
+    .article-meta { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 1.5rem; }
+    .article-meta span { color: var(--accent); margin: 0 0.4rem; }
+    .article-title { font-family: 'Space Mono', monospace; font-size: clamp(1.4rem, 3.2vw, 2.2rem); font-weight: 700; line-height: 1.25; color: var(--text); margin-bottom: 1.2rem; }
+    .article-title em { color: var(--accent); font-style: normal; }
+    .article-subtitle { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.8rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3rem; }
+    .tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid; }
+    .tag.green  { color: var(--accent);  border-color: rgba(200,240,216,0.35); background: rgba(200,240,216,0.06); }
+    .tag.warm   { color: var(--accent2); border-color: rgba(240,200,180,0.35); background: rgba(240,200,180,0.06); }
+    .tag.blue   { color: var(--accent3); border-color: rgba(200,216,240,0.35); background: rgba(200,216,240,0.06); }
+    .tag.yellow { color: var(--accent4); border-color: rgba(240,224,200,0.35); background: rgba(240,224,200,0.06); }
+    .divider { border: none; border-top: 1px solid var(--border); margin-bottom: 3rem; }
+    .article-body h2 { font-family: 'Space Mono', monospace; font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.6rem; }
+    .article-body h2::before { content: '//'; color: var(--accent); }
+    .article-body p { font-size: 1rem; line-height: 1.85; color: #aaa; margin-bottom: 1.4rem; }
+    .article-body strong { color: var(--text); font-weight: 600; }
+    .article-body em { color: var(--accent); font-style: italic; }
+    .article-body blockquote { border-left: 2px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--muted); font-style: italic; line-height: 1.7; }
+    .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .back-link { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    footer { text-align: center; padding: 2rem; font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #333; border-top: 1px solid var(--border); letter-spacing: 0.1em; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) { nav { padding: 1rem 1.5rem; } article { padding: 2.5rem 1.5rem 4rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="logo">THE <span>BLACK</span> SHEEP</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#articoli">Articoli</a></li>
+      <li><a href="https://github.com/TheBlackSheepBlog/the.black.sheep" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <article>
+
+    <p class="article-meta">2026-03-06 <span>|</span> kruskeggio</p>
+
+    <h1 class="article-title">La matematica degli <em>agent</em> non mente. Ma nemmeno basta.</h1>
+
+    <p class="article-subtitle">
+      10.000 dipendenti, 25 milioni al mese, 5.000 agent a 2.000€. Il calcolo è corretto. La domanda che nessuno si fa è un'altra.
+    </p>
+
+    <div class="tags">
+      <span class="tag green">AI</span>
+      <span class="tag warm">Lavoro</span>
+      <span class="tag blue">Agent</span>
+      <span class="tag yellow">Strategia</span>
+    </div>
+
+    <hr class="divider">
+
+    <div class="article-body">
+
+      <p>Un'azienda, 10.000 dipendenti. Costo medio: 5.000€ al mese a persona, tasse incluse. Diciamo che la metà fa lavoro eseguibile da un sistema automatizzato. Sono <strong>25 milioni di euro al mese</strong>. Solo per quella metà.</p>
+
+      <p>Adesso metti 5.000 agent a 2.000€ ciascuno. Sono 10 milioni. Il risparmio è reale. La matematica non mente.</p>
+
+      <blockquote>Dimmi perché un'azienda già martellata dal fisco, già sotto pressione sui margini, non dovrebbe farlo.</blockquote>
+
+      <h2>Capisco la logica. Davvero.</h2>
+
+      <p>Le aziende non sono cattive. Sono razionali. Gli agent sono la versione 2025 della delocalizzazione: stessa logica, più pulita, senza bisogno di aprire una sede in Romania. Capisco. E proprio per questo la domanda che voglio fare è diversa.</p>
+
+      <h2>La domanda che nessuno si sta facendo</h2>
+
+      <p>Non "è giusto sostituire le persone con i robot?" Quella è una domanda morale — importante, ma non è quella che mi preoccupa adesso.</p>
+
+      <p>La domanda concreta è: <strong>il prodotto che esce dall'altra parte è di qualità?</strong></p>
+
+      <p>Un agent esegue. Veloce, senza pause, senza malattie. Ma non ha contesto. Non ha giudizio. Non si accorge quando qualcosa non torna — quando il cliente dice una cosa ma ne intende un'altra, quando la soluzione giusta è quella che nessuno aveva previsto.</p>
+
+      <p>Un professionista esperto non porta solo l'esecuzione. Porta la capacità di leggere quello che non viene detto, di adattarsi, di sbagliare e fare meglio la volta dopo. Un agent ottimizza dentro i parametri che gli hai dato. <em>Fuori da quei parametri, è cieco.</em></p>
+
+      <h2>Il boomerang</h2>
+
+      <p>Le aziende che negli anni '90 sono fuggite all'estero per tagliare il costo del lavoro hanno ottenuto quello che cercavano. Ma molte — nel tempo — hanno perso qualcosa di più difficile da misurare: l'identità del prodotto, la qualità percepita, la fiducia del cliente.</p>
+
+      <p>Il problema non era andare all'estero. Era credere che il costo del lavoro fosse l'unica variabile che contava.</p>
+
+      <p>Con gli agent rischiamo lo stesso errore. Ottimizzo i costi, erodo silenziosamente quello che rendeva il mio prodotto diverso. Il cliente se ne accorge — non subito, ma se ne accorge. E il costo per recuperare la fiducia persa è molto più alto di quello che hai risparmiato sulle licenze.</p>
+
+      <h2>Dove sto davvero</h2>
+
+      <p>Sono critico sull'uso massivo degli agent non perché l'AI sia sbagliata. La uso, la trovo utile, può amplificare il lavoro di un professionista in modo straordinario.</p>
+
+      <p>Il punto è un altro: c'è differenza tra usare l'AI per fare meglio quello che già fai, e usarla per non dover più avere qualcuno che lo sa fare. Nel primo caso stai investendo. Nel secondo stai scommettendo che la qualità non conti.</p>
+
+      <p>È una scommessa che alcune aziende vinceranno. Ma non tutte. E non per sempre.</p>
+
+      <blockquote>La vera domanda non è quanto costa un dipendente. È quanto vale quello che produce. E se non sai rispondere, forse hai già il tuo problema — e non è il costo del lavoro.</blockquote>
+
+    </div>
+
+    <div class="article-footer">
+      <a class="back-link" href="../index.html">← torna agli articoli</a>
+      <span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:#333;">the.black.sheep</span>
+    </div>
+
+  </article>
+
+  <footer>the.black.sheep &mdash; pubblicato su github pages</footer>
+
+</body>
+</html>
