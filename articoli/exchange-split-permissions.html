@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exchange on-prem: il rischio che dorme nella tua configurazione di default The Black Sheep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d0d; --card: #141414; --border: #242424;
+      --text: #e0e0e0; --muted: #666;
+      --accent: #c8f0d8; --accent2: #f0c8b4; --accent3: #c8d8f0; --accent4: #f0e0c8;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, serif; min-height: 100vh; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    article { max-width: 720px; margin: 0 auto; padding: 4rem 2rem 6rem; animation: fadeUp 0.5s ease both; }
+
+    .article-meta { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 1.5rem; }
+    .article-meta span { color: var(--accent); margin: 0 0.4rem; }
+
+    .article-title { font-family: 'Space Mono', monospace; font-size: clamp(1.4rem, 3.2vw, 2.2rem); font-weight: 700; line-height: 1.25; color: var(--text); margin-bottom: 1.2rem; }
+    .article-title em { color: var(--accent); font-style: normal; }
+
+    .article-subtitle { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.8rem; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3rem; }
+    .tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid; }
+    .tag.green  { color: var(--accent);  border-color: rgba(200,240,216,0.35); background: rgba(200,240,216,0.06); }
+    .tag.warm   { color: var(--accent2); border-color: rgba(240,200,180,0.35); background: rgba(240,200,180,0.06); }
+    .tag.blue   { color: var(--accent3); border-color: rgba(200,216,240,0.35); background: rgba(200,216,240,0.06); }
+    .tag.yellow { color: var(--accent4); border-color: rgba(240,224,200,0.35); background: rgba(240,224,200,0.06); }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin-bottom: 3rem; }
+
+    .article-body h2 { font-family: 'Space Mono', monospace; font-size: 1.05rem; font-weight: 700; color: var(--text); margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 0.6rem; }
+    .article-body h2::before { content: '//'; color: var(--accent); }
+    .article-body h3 { font-family: 'Space Mono', monospace; font-size: 0.78rem; font-weight: 700; color: var(--muted); margin: 2rem 0 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .article-body p { font-size: 1rem; line-height: 1.85; color: #aaa; margin-bottom: 1.4rem; }
+    .article-body strong { color: var(--text); font-weight: 600; }
+    .article-body em { color: var(--accent); font-style: italic; }
+    .article-body ul { margin: 0 0 1.4rem 1.5rem; color: #aaa; }
+    .article-body li { font-size: 1rem; line-height: 1.8; margin-bottom: 0.4rem; }
+    .article-body blockquote { border-left: 2px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--muted); font-style: italic; line-height: 1.7; }
+    .article-body code { font-family: 'Space Mono', monospace; font-size: 0.78rem; background: #1a1a1a; border: 1px solid var(--border); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent2); }
+    .article-body pre { background: #111; border: 1px solid var(--border); border-radius: 4px; padding: 1.4rem; margin: 1.2rem 0 1.8rem; overflow-x: auto; }
+    .article-body pre code { font-size: 0.73rem; line-height: 1.7; color: #888; background: none; border: none; padding: 0; }
+
+    .appendix { margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+    .appendix-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.6rem; }
+    .appendix-sub { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #444; letter-spacing: 0.1em; margin-bottom: 2rem; }
+
+    .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .back-link { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+
+    footer { text-align: center; padding: 2rem; font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #333; border-top: 1px solid var(--border); letter-spacing: 0.1em; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) { nav { padding: 1rem 1.5rem; } article { padding: 2.5rem 1.5rem 4rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="logo">THE <span>BLACK</span> SHEEP</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#articoli">Articoli</a></li>
+      <li><a href="https://github.com/kruskeggio/the.black.sheep" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <article>
+
+    <p class="article-meta">2026-03-06 <span>|</span> kruskeggio</p>
+
+    <h1 class="article-title">Exchange on-prem: il rischio che dorme nella tua <em>configurazione di default</em></h1>
+
+    <p class="article-subtitle">
+      Ti sei mai chiesto quanti permessi ha Exchange sulla tua Active Directory? La risposta, nella maggior parte delle installazioni, è: troppi.
+    </p>
+
+    <div class="tags">
+      <span class="tag green">Exchange</span>
+      <span class="tag warm">Shared Permissions Model</span>
+      <span class="tag blue">Active Directory Split Permissions</span>
+      <span class="tag yellow">RBAC</span>
+      <span class="tag green">Security</span>
+    </div>
+
+    <hr class="divider">
+
+    <div class="article-body">
+
+      <h2>Il rischio che nessuno nomina</h2>
+
+      <p>Si chiama <strong>Shared Permissions Model</strong> la configurazione con cui Exchange viene installato per impostazione predefinita. Funziona così: Exchange riceve permessi ampi direttamente sulla radice del dominio Active Directory, ereditati ovunque nell'alberatura AD.</p>
+
+      <p>In pratica significa che Exchange può resettare password, modificare gruppi critici, creare utenti con privilegi elevati. Non è un bug è una scelta progettuale che semplifica la gestione quotidiana.</p>
+
+      <p>Il problema non è Exchange. È cosa succede se un attaccante lo compromette.</p>
+
+      <blockquote>In quel momento, tutto quello che Exchange può fare tecnicamente l'attaccante può farlo con lui.</blockquote>
+
+      <h2>Perché quasi nessuno lo sa</h2>
+
+      <p>Non è negligenza. È che il problema è invisibile finché non viene sfruttato.</p>
+
+      <p>Exchange funziona. Le email arrivano. L'IT è occupato su altro. Nessuno ha mai avuto motivo di guardare i permessi sulla radice del dominio e quindi nessuno li ha mai toccati.</p>
+
+      <p>Il rischio dorme tranquillo nella configurazione che il wizard di installazione ha scelto per te anni fa. Non quello che non conosci, ma quello che dai per scontato perché non ha mai causato problemi visibili.</p>
+
+      <h2>La soluzione: Active Directory Split Permissions</h2>
+
+      <p>Il principio è semplice: Exchange gestisce le caselle, AD gestisce le identità. Nessuno dei due ha accesso illimitato al territorio dell'altro. In pratica si ottiene in quattro passaggi.</p>
+
+      <p><strong>Audit.</strong> Prima di toccare qualsiasi configurazione, serve sapere chi sta usando i cmdlet che verranno disabilitati comandi come <code>New-Mailbox</code> o <code>Add-DistributionGroupMember</code>. Script di automazione, processi IDM: bisogna saperlo prima, non dopo.</p>
+
+      <p><strong>Abilitazione Split Permissions.</strong> Un singolo comando di setup rimuove i permessi pericolosi da "Exchange Windows Permissions" e disconnette i server Exchange dai gruppi con accesso privilegiato sulla radice del dominio. È il passaggio che interrompe i percorsi di lateral movement verso la compromissione totale del dominio.</p>
+
+      <p><strong>Delega granulare.</strong> Exchange non ha più i permessi per scrivere in AD e genererà errori. La soluzione è creare un gruppo AD personalizzato, aggiungere i server Exchange, e assegnargli permessi solo sulle OU dove risiedono effettivamente gli utenti che Exchange deve gestire. Chirurgici, non sulla radice.</p>
+
+      <p><strong>Ripristino dei cmdlet via RBAC.</strong> Il modello Split Permissions nasconde alcuni comandi agli amministratori Exchange. Vanno riabilitati esplicitamente attraverso i Role Group così chi gestisce le caselle continua a lavorare, ma Exchange opera solo dove ha permessi espliciti.</p>
+
+      <h2>Tre domande da fare al tuo team domani mattina</h2>
+
+      <p>Non devi sapere eseguire questi passaggi. Devi sapere se qualcuno nel tuo team li ha già considerati.</p>
+
+      <p><strong>Prima domanda:</strong> <em>"Stiamo usando il modello Shared Permissions o Split Permissions su Exchange?"</em> Se la risposta è "non lo so" o "credo Shared, è quello di default" hai trovato il primo lavoro da fare.</p>
+
+      <p><strong>Seconda domanda:</strong> <em>"Se un attaccante compromettesse un server Exchange oggi, fino a dove potrebbe spingersi in Active Directory?"</em> Questa domanda scomoda ha una risposta tecnica precisa. Chiedila.</p>
+
+      <p><strong>Terza domanda:</strong> <em>"Abbiamo mai fatto un audit dei permessi che Exchange ha sulla radice del dominio?"</em> Se la risposta è no, non è un problema è un punto di partenza.</p>
+
+      <h2>Una riflessione finale</h2>
+
+      <p>Nella mia esperienza, i rischi più difficili da affrontare non sono quelli nuovi. Sono quelli che esistono da anni, funzionano silenziosamente, e non hanno mai causato un problema visibile. Finché non lo fanno.</p>
+
+      <p>So che gli ambienti IT reali sono complessi. Le risorse sono poche. Non sempre esiste la possibilità di separare chi gestisce Exchange da chi gestisce il dominio specialmente in organizzazioni multi-sede dove le stesse persone indossano più cappelli contemporaneamente. Lo so. E non è una scusa.</p>
+
+      <p>Anzi: è esattamente in quegli ambienti che un attaccante si muove più facilmente. Perché la complessità operativa che rende difficile implementare i controlli è la stessa che rende difficile accorgersi di una compromissione in corso.</p>
+
+      <blockquote>La configurazione di default non è mai una garanzia di sicurezza. È semplicemente la scelta che qualcun altro ha fatto per te, in un contesto diverso, con priorità diverse dalle tue.</blockquote>
+
+      <p>Quella consapevolezza è il primo livello di protezione reale.</p>
+
+      <div class="appendix">
+        <p class="appendix-label">// Appendice Tecnica Script PowerShell</p>
+        <p class="appendix-sub">Questa sezione è destinata ai team tecnici che implementano la configurazione.</p>
+
+        <h3>Step 1 Audit dei cmdlet in uso</h3>
+        <pre><code>$CsvPath = "C:\temp\SplitPermissionAdminAuditLog.csv"
+
+$Cmdlets = "Add-ADPermission","Remove-ADPermission","New-DistributionGroup",
+           "Remove-DistributionGroup","Add-DistributionGroupMember",
+           "Update-DistributionGroupMember","Remove-DistributionGroupMember",
+           "New-Mailbox","Remove-Mailbox","New-RemoteMailbox","Remove-RemoteMailbox",
+           "New-MailUser","Remove-MailUser","New-MailContact","Remove-MailContact"
+
+Search-AdminAuditLog -ResultSize 99000 -Cmdlets $Cmdlets |
+    Select-Object RunDate, Caller, ObjectModified, CmdletName,
+        @{Name='CmdletParameters'; Expression={[string]::join(",", ($_.CmdletParameters))}},
+        succeeded, error |
+    Export-Csv -Path $CsvPath -Delimiter ";" -Encoding Unicode -NoTypeInformation
+
+$CSVs = Import-Csv -Path $CsvPath -Delimiter ";"
+$CSVs | Group-Object Caller
+$CSVs | Group-Object CmdletName</code></pre>
+
+        <h3>Step 2 Abilitazione AD Split Permissions</h3>
+        <pre><code>Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF /PrepareAD /ActiveDirectorySplitPermissions:true
+
+# Per tornare indietro: sostituire :true con :false</code></pre>
+
+        <h3>Step 3 Creazione gruppo AD e delega granulare</h3>
+        <pre><code>New-ADGroup `
+    -Name "AD_Custom Exchange Split permissions replacement" `
+    -GroupCategory Security `
+    -GroupScope DomainLocal `
+    -Path "OU=Rights,OU=Groups,OU=T1,OU=_ADM,$((Get-ADDomain).DistinguishedName)" `
+    -Description "Replaces the permissions lost by split permissions on relevant OUs"
+
+Add-ADGroupMember "AD_Custom Exchange Split permissions replacement" `
+    -Members "Exchange Trusted Subsystem"
+
+# CRITICAL: Riavviare i server Exchange per aggiornare il token Kerberos
+
+Add-ExchangeADSplitPermissionOnOU.ps1 `
+    -TargetOU "OU=ExchangeGroups,DC=contoso,DC=com" `
+    -PermissionType GroupManage `
+    -Trustee "AD_Custom Exchange Split permissions replacement"
+
+Add-ExchangeADSplitPermissionOnOU.ps1 `
+    -TargetOU "OU=Users,DC=contoso,DC=com" `
+    -PermissionType CreateUserAndContact `
+    -Trustee "AD_Custom Exchange Split permissions replacement"</code></pre>
+
+        <h3>Step 4 Ripristino cmdlet tramite Exchange RBAC</h3>
+        <pre><code>New-RoleGroup `
+    -Name "SplitPermission Security Group Creation and Membership" `
+    -Roles "Security Group Creation and Membership" `
+    -Members "Organization Management","Recipient Management"
+
+New-RoleGroup `
+    -Name "SplitPermission Mail Recipient Creation" `
+    -Roles "Mail Recipient Creation" `
+    -Members "Organization Management","Recipient Management"</code></pre>
+
+        <h3>Note operative</h3>
+        <ul>
+          <li>Non accedere mai ai server Exchange (Tier 1) con account Domain Admin (Tier 0).</li>
+          <li>Esegui l'intera procedura in ambiente di test prima della produzione.</li>
+          <li>Dopo l'implementazione, usa PingCastle o Purple Knight per validare la nuova postura di sicurezza.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="article-footer">
+      <a class="back-link" href="../index.html">← torna agli articoli</a>
+      <span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:#333;">the.black.sheep</span>
+    </div>
+
+  </article>
+
+  <footer>the.black.sheep &mdash; pubblicato su github pages</footer>
+
+</body>
+</html>
