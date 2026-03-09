@@ -5,49 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Black Sheep</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #0d0d0d; --card: #141414; --border: #242424; --text: #e8e8e8; --muted: #666; --accent: #c8f0d8; --accent2: #f0c8b4; --accent3: #c8d8f0; --accent4: #f0e0c8; }
+    :root {
+      --bg: #000000;
+      --card: #0c0c0c;
+      --border: #1e1e1e;
+      --text: #ffffff;
+      --muted: #555;
+    }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, serif; min-height: 100vh; }
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 3rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; transition: border-color 0.3s, background 0.3s; }
-    nav.scrolled { background: rgba(13,13,13,0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(8px); }
-    .logo { font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text); text-decoration: none; }
-    .logo span { color: var(--accent); }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Serif Display', Georgia, serif; min-height: 100vh; }
+
+    /* NAV */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 3rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; transition: background 0.3s, border-color 0.3s; }
+    nav.scrolled { background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(8px); }
+    .logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: #ffffff; text-decoration: none; }
+    .logo span { color: #ffffff; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
+    .nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #ffffff; }
+
+    /* HERO */
     .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(200,240,216,0.06) 0%, transparent 70%); pointer-events: none; }
-    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 15vw, 13rem); line-height: 0.95; letter-spacing: 0.05em; background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 40px rgba(200,240,216,0.3)); animation: fadeUp 0.8s ease both; }
-    .hero-sub { font-family: 'Space Mono', monospace; font-size: 0.85rem; letter-spacing: 0.2em; color: var(--muted); margin-top: 2rem; animation: fadeUp 0.8s 0.2s ease both; }
-    .hero-desc { margin-top: 1rem; font-size: 0.95rem; color: #555; font-style: italic; animation: fadeUp 0.8s 0.35s ease both; }
-    .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; animation: bounce 2s 1s infinite; text-decoration: none; }
+    .hero-title { font-family: 'IBM Plex Mono', monospace; font-size: clamp(3.5rem, 12vw, 10rem); line-height: 0.95; letter-spacing: -0.02em; color: #ffffff; animation: fadeUp 0.8s ease both; }
+    .hero-sub { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; letter-spacing: 0.2em; color: var(--muted); margin-top: 2rem; animation: fadeUp 0.8s 0.2s ease both; }
+    .hero-desc { margin-top: 1rem; font-size: 1.1rem; color: #444; font-style: italic; animation: fadeUp 0.8s 0.35s ease both; font-family: 'DM Serif Display', serif; }
+    .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; animation: bounce 2s 1s infinite; text-decoration: none; }
+
+    /* SECTION */
     .section { max-width: 860px; margin: 0 auto; padding: 5rem 2rem 6rem; }
     .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
-    .section-header .slash { font-family: 'Space Mono', monospace; font-size: 1.2rem; color: var(--accent); }
-    .section-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.1em; color: var(--text); }
+    .section-header .slash { font-family: 'IBM Plex Mono', monospace; font-size: 1.2rem; color: #ffffff; }
+    .section-header h2 { font-family: 'IBM Plex Mono', monospace; font-size: 2rem; font-weight: 700; letter-spacing: 0.05em; color: #ffffff; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.2rem; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 3px; padding: 1.8rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 0.8rem; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
-    .card:hover { border-color: rgba(200,240,216,0.3); box-shadow: 0 0 30px rgba(200,240,216,0.05); transform: translateY(-2px); }
-    .card-date { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); }
-    .card h3 { font-family: 'Space Mono', monospace; font-size: 1rem; font-weight: 700; line-height: 1.4; color: var(--text); }
-    .card p { font-size: 0.88rem; color: #555; line-height: 1.7; flex: 1; }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
-    .tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 2px; border: 1px solid var(--border); color: var(--muted); }
-    .tag.green { color: var(--accent); border-color: rgba(200,240,216,0.25); }
-    .tag.warm { color: var(--accent2); border-color: rgba(240,200,180,0.25); }
-    .tag.blue { color: var(--accent3); border-color: rgba(200,216,240,0.25); }
-    .tag.yellow { color: var(--accent4); border-color: rgba(240,224,200,0.25); }
-    footer { text-align: center; padding: 2rem; font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #333; border-top: 1px solid var(--border); letter-spacing: 0.1em; }
+
+    /* CARD */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 3px; text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .card:hover { border-color: rgba(255,255,255,0.2); box-shadow: 0 0 30px rgba(255,255,255,0.04); transform: translateY(-2px); }
+    .card-cover { width: 100%; height: 200px; object-fit: cover; display: block; background: #111; }
+    .card-body { padding: 1.8rem; display: flex; flex-direction: column; gap: 0.8rem; flex: 1; }
+    .card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+    .card h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; font-weight: 700; line-height: 1.4; color: #ffffff; }
+    .card p { font-family: 'DM Serif Display', serif; font-size: 0.95rem; color: #444; line-height: 1.7; flex: 1; }
+
+    /* TAGS — linea colorata sotto, nessun box */
+    .tags { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.6rem; align-items: center; }
+    .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: transparent; border: none; padding: 0 0 3px 0; border-bottom: 2px solid #444; }
+    .tag:nth-child(4n+1) { border-color: #e05c5c; }
+    .tag:nth-child(4n+2) { border-color: #e0a85c; }
+    .tag:nth-child(4n+3) { border-color: #5ce08a; }
+    .tag:nth-child(4n+4) { border-color: #5ca8e0; }
+
+    footer { text-align: center; padding: 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: #222; border-top: 1px solid var(--border); letter-spacing: 0.1em; }
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
-    .card { animation: fadeUp 0.5s ease both; }
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.2s; }
-    .card:nth-child(3) { animation-delay: 0.3s; }
-    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
+    .card:nth-child(2) { animation: fadeUp 0.5s 0.2s ease both; }
+    .card:nth-child(3) { animation: fadeUp 0.5s 0.3s ease both; }
+    .card:nth-child(4) { animation: fadeUp 0.5s 0.4s ease both; }
     @media (max-width: 640px) { nav { padding: 1rem 1.5rem; } .grid { grid-template-columns: 1fr; } .section { padding: 3rem 1.5rem 4rem; } }
   </style>
 </head>
@@ -60,34 +78,84 @@
       <li><a href="https://github.com/TheBlackSheepBlog/the.black.sheep" target="_blank">GitHub</a></li>
     </ul>
   </nav>
+
   <section class="hero">
     <h1 class="hero-title">THE BLACK<br>SHEEP</h1>
-    <p class="hero-sub">// TheBlackSheepBlog</p>
+    <p class="hero-sub">
+      <svg width="22" height="22" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; background:#fff; border-radius:3px; padding:2px; margin-right:6px;">
+        <ellipse cx="26" cy="30" rx="14" ry="12" fill="#000"/>
+        <ellipse cx="40" cy="26" rx="10" ry="9" fill="#000"/>
+        <circle cx="18" cy="22" r="8" fill="#000"/>
+        <circle cx="32" cy="18" r="7" fill="#000"/>
+        <circle cx="44" cy="20" r="6" fill="#000"/>
+        <rect x="20" y="40" width="5" height="12" rx="2" fill="#000"/>
+        <rect x="28" y="40" width="5" height="12" rx="2" fill="#000"/>
+        <rect x="36" y="38" width="5" height="11" rx="2" fill="#000"/>
+        <rect x="43" y="37" width="5" height="10" rx="2" fill="#000"/>
+        <circle cx="14" cy="22" r="2" fill="#fff"/>
+        <circle cx="14.5" cy="22" r="1" fill="#000"/>
+      </svg>
+      TheBlackSheepBlog
+    </p>
     <p class="hero-desc">Scrivo quello che penso. Fuori dal gregge.</p>
     <a class="scroll-hint" href="#articoli">&#x2193; &nbsp; articoli</a>
   </section>
+
   <section class="section" id="articoli">
     <div class="section-header">
-      <span class="slash">//</span>
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#fff; border-radius:4px; padding:3px; flex-shrink:0;">
+        <ellipse cx="26" cy="30" rx="14" ry="12" fill="#000"/>
+        <ellipse cx="40" cy="26" rx="10" ry="9" fill="#000"/>
+        <circle cx="18" cy="22" r="8" fill="#000"/>
+        <circle cx="32" cy="18" r="7" fill="#000"/>
+        <circle cx="44" cy="20" r="6" fill="#000"/>
+        <rect x="20" y="40" width="5" height="12" rx="2" fill="#000"/>
+        <rect x="28" y="40" width="5" height="12" rx="2" fill="#000"/>
+        <rect x="36" y="38" width="5" height="11" rx="2" fill="#000"/>
+        <rect x="43" y="37" width="5" height="10" rx="2" fill="#000"/>
+        <circle cx="14" cy="22" r="2" fill="#fff"/>
+        <circle cx="14.5" cy="22" r="1" fill="#000"/>
+      </svg>
       <h2>Articoli</h2>
     </div>
     <div class="grid">
-      
-    <a class="card" href="articoli/la-matematica-degli-agent.html">
-      <span class="card-date">2026-03-06</span>
-      <h3>La matematica degliagentnon mente, ma siamo sicuri che basti questo?</h3>
-      <p>10.000 dipendenti, 25 milioni al mese, 5.000 agent a 2.000€. Il calcolo è corretto. La domanda che nessuno si fa è un'altra.</p>
-      <div class="tags"><span class="tag ">AI</span><span class="tag ">Lavoro</span><span class="tag ">Agent</span><span class="tag ">Strategia</span></div>
-    </a>
-    <a class="card" href="articoli/exchange-split-permissions.html">
-      <span class="card-date">2026-03-06</span>
-      <h3>Exchange on-prem: il rischio che dorme nella tuaconfigurazione di default</h3>
-      <p>Ti sei mai chiesto quanti permessi ha Exchange sulla tua Active Directory? La risposta, nella maggior parte delle installazioni, è: troppi.</p>
-      <div class="tags"><span class="tag ">Exchange</span><span class="tag ">Shared Permissions Model</span><span class="tag ">Active Directory Split Permissions</span><span class="tag ">RBAC</span><span class="tag ">Security</span></div>
-    </a>
+
+      <a class="card" href="articoli/la-matematica-degli-agent.html">
+        <img class="card-cover" src="assets/images/AgentVSHuman.jpg" alt="La matematica degli agent" onerror="this.style.display='none'">
+        <div class="card-body">
+          <span class="card-date">2026-03-06</span>
+          <h3>La matematica degli agent non mente, ma siamo sicuri che basti questo?</h3>
+          <p>10.000 dipendenti, 25 milioni al mese, 5.000 agent a 2.000€. Il calcolo è corretto. La domanda che nessuno si fa è un'altra.</p>
+          <div class="tags">
+            <span class="tag">AI</span>
+            <span class="tag">Lavoro</span>
+            <span class="tag">Agent</span>
+            <span class="tag">Strategia</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="articoli/exchange-split-permissions.html">
+        <img class="card-cover" src="images/exchange-cover.jpg" alt="Exchange on-prem" onerror="this.style.display='none'">
+        <div class="card-body">
+          <span class="card-date">2026-03-06</span>
+          <h3>Exchange on-prem: il rischio che dorme nella tua configurazione di default</h3>
+          <p>Ti sei mai chiesto quanti permessi ha Exchange sulla tua Active Directory? La risposta, nella maggior parte delle installazioni, è: troppi.</p>
+          <div class="tags">
+            <span class="tag">Exchange</span>
+            <span class="tag">Shared Permissions Model</span>
+            <span class="tag">Active Directory Split Permissions</span>
+            <span class="tag">RBAC</span>
+            <span class="tag">Security</span>
+          </div>
+        </div>
+      </a>
+
     </div>
   </section>
+
   <footer>the.black.sheep &mdash; pubblicato su github pages</footer>
+
   <script>
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
