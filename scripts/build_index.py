@@ -1,9 +1,12 @@
 import os
 import re
+from datetime import datetime
 from bs4 import BeautifulSoup
 
 ARTICLES_DIR = "articoli"
 OUTPUT_FILE = "index.html"
+FEED_FILE = "feed.xml"
+BASE_URL = "https://theblacksheepblog.github.io/the.black.sheep"
 
 TAG_COLORS = {
     "ai": "green", "exchange": "green", "certificazioni": "green",
@@ -65,6 +68,43 @@ def build_card(article):
         <div class="tags">{tags_html}</div>
       </a>"""
 
+def date_to_rfc822(date_str):
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        return dt.strftime("%a, %d %b %Y 00:00:00 +0000")
+    except:
+        return ""
+
+def build_feed(articles):
+    now = datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S +0000")
+    items = ""
+    for a in articles:
+        url = f"{BASE_URL}/articoli/{a['file']}"
+        pub_date = date_to_rfc822(a["date"])
+        # Escape XML special chars in title and subtitle
+        title = a["title"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        desc = a["subtitle"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        items += f"""
+    <item>
+      <title>{title}</title>
+      <link>{url}</link>
+      <guid>{url}</guid>
+      <pubDate>{pub_date}</pubDate>
+      <description>{desc}</description>
+    </item>"""
+
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>The Black Sheep</title>
+    <link>{BASE_URL}/</link>
+    <description>Scrivo quello che penso. Fuori dal gregge.</description>
+    <language>it</language>
+    <lastBuildDate>{now}</lastBuildDate>
+    <atom:link href="{BASE_URL}/feed.xml" rel="self" type="application/rss+xml"/>{items}
+  </channel>
+</rss>"""
+
 def build_index(articles):
     articles.sort(key=lambda a: a["date"], reverse=True)
     cards_html = "".join(build_card(a) for a in articles)
@@ -76,10 +116,21 @@ def build_index(articles):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Black Sheep</title>
+  <meta name="description" content="Scrivo quello che penso. Fuori dal gregge. IT, sicurezza, AI, lavoro.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Black Sheep">
+  <meta property="og:title" content="The Black Sheep">
+  <meta property="og:description" content="Scrivo quello che penso. Fuori dal gregge. IT, sicurezza, AI, lavoro.">
+  <meta property="og:image" content="{BASE_URL}/assets/favicon.png">
+  <meta property="og:url" content="{BASE_URL}/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Black Sheep">
+  <meta name="twitter:description" content="Scrivo quello che penso. Fuori dal gregge.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="stylesheet" href="style.css">
+  <link rel="alternate" type="application/rss+xml" title="The Black Sheep" href="{BASE_URL}/feed.xml">
 </head>
 <body>
 
@@ -152,10 +203,17 @@ def main():
                 articles.append(data)
                 print(f"  + {fname} — {data['date']} — {data['title'][:50]}")
 
+    articles.sort(key=lambda a: a["date"], reverse=True)
+
     html = build_index(articles)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"\nindex.html aggiornato con {len(articles)} articoli.")
+
+    feed = build_feed(articles)
+    with open(FEED_FILE, "w", encoding="utf-8") as f:
+        f.write(feed)
+    print(f"feed.xml aggiornato con {len(articles)} articoli.")
 
 if __name__ == "__main__":
     main()
