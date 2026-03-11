@@ -90,6 +90,9 @@ nav {
 
 .logo span { color: #ffffff; font-weight: 700; }
 
+[data-theme="light"] .logo { color: #1a1a2e; }
+[data-theme="light"] .logo span { color: #1a1a2e; }
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -326,19 +329,17 @@ nav {
 .tag {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  padding: 0.15rem 0;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-transform: lowercase;
   border: none;
-  border-bottom: 1px solid;
   background: transparent;
+  color: var(--text-secondary);
+  padding: 0;
 }
 
-.tag.green  { color: var(--accent);        border-color: var(--accent); }
-.tag.warm   { color: var(--accent-warm);   border-color: var(--accent-warm); }
-.tag.blue   { color: var(--accent-blue);   border-color: var(--accent-blue); }
-.tag.orange { color: var(--accent-orange); border-color: var(--accent-orange); }
-.tag.purple { color: var(--accent-purple); border-color: var(--accent-purple); }
+.tag::before { content: '#'; }
+
+.tag.green, .tag.warm, .tag.blue, .tag.orange, .tag.purple { color: var(--text-secondary); border: none; }
 
 /* ---- Footer ---- */
 footer {
