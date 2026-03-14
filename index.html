@@ -15,16 +15,14 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Black Sheep">
   <meta name="twitter:description" content="Scrivo quello che penso. Fuori dal gregge.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="stylesheet" href="style.css">
   <link rel="alternate" type="application/rss+xml" title="The Black Sheep" href="https://theblacksheepblog.github.io/the.black.sheep/feed.xml">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <nav>
-    <a href="index.html" class="logo">THE BLACK SHEEP</a>
+    <a href="index.html" class="logo">The Black Sheep</a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -39,57 +37,74 @@
   </nav>
 
   <section class="hero">
-    <h1 class="hero-title">THE BLACK SHEEP</h1>
-    <p class="hero-sub"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;vertical-align:middle;margin-right:7px;stroke:var(--text-secondary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="15" x2="13" y2="15"/></svg>TheBlackSheepBlog</p>
-    <p class="hero-desc">Scrivo quello che penso. Fuori dal gregge.</p>
-    <a class="scroll-hint" href="#articoli">&#x2193; &nbsp; articoli</a>
+    <div>
+      <div class="hero-eyebrow">Fuori dal gregge</div>
+      <span class="hero-number">01</span>
+      <h1 class="hero-title">27 anni di IT.<br><mark>Bocciato</mark> per 20 centesimi.</h1>
+      <p class="hero-desc">Fallire una certificazione dopo 27 anni di esperienza non è la fine. È l'inizio di una domanda che nessuno si fa prima di sedersi davanti allo schermo.</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-label">Articoli</div>
+      <div class="hero-stat-num">03</div>
+      <div class="hero-stat-sub">pubblicati</div>
+    </div>
   </section>
 
+  <div class="featured">
+    <div class="featured-label">The Black Sheep</div>
+    <div class="featured-quote">"Scrivo quello che penso. Fuori dal gregge, dentro alla realtà."</div>
+    <div class="featured-byline">TheBlackSheepBlog</div>
+  </div>
+
   <section class="section" id="articoli">
-    <h2 class="section-title"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;vertical-align:middle;margin-right:8px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="11" x2="17" y2="11"/><line x1="7" y1="15" x2="13" y2="15"/></svg>Articoli</h2>
-    <p class="section-subtitle">Pensieri, analisi e osservazioni fuori dal gregge.</p>
+    <div class="section-header">
+      <div class="section-title">Articoli recenti</div>
+      <div class="section-count">03</div>
+    </div>
     <div class="grid">
-      <a class="card" href="articoli/Domain-Join.html">
-        <span class="card-date">2026-03-13 &nbsp;·&nbsp; 8 min</span>
-        <h3>La falla silenziosa: i rischi dell'account Domain Join in Active Directory .</h3>
-        <p>Un tecnico dell'Help Desk scarta un nuovo laptop aziendale. Avvia l'installazione di Windows 11. Preme F12 per il boot PXE.</p>
-        <div class="tags"><span class="tag blue">Active Directory</span><span class="tag warm">Security</span><span class="tag blue">Blue Team</span></div>
+
+      <a class="card" href="articoli/ho-fallito-la-certificazione.html">
+        <div class="card-num">03</div>
+        <div class="card-date">Mar 10 · 3 min</div>
+        <h3>27 anni di IT. Bocciato per 20 centesimi.</h3>
+        <p>Fallire una certificazione non è la fine. È l'inizio di una domanda che nessuno si fa.</p>
+        <div class="tags">
+          <span class="tag">Certificazioni</span>
+          <span class="tag">Mindset</span>
+          <span class="tag">IT Career</span>
+        </div>
       </a>
-      <a class="card" href="articoli/adminsdholder.html">
-        <span class="card-date">2026-03-13 &nbsp;·&nbsp; 3 min</span>
-        <h3>AdminSDHolder: perché i tuoi permessi spariscono ogni 60 minuti .</h3>
-        <p>Hai appena passato mezz'ora a sistemare i permessi su un account in Active Directory. Riabiliti l'ereditarietà, salvi, tutto ok. Un'ora dopo il tuo collega ti c...</p>
-        <div class="tags"><span class="tag blue">Active Directory</span><span class="tag warm">Security</span><span class="tag purple">RBAC</span><span class="tag blue">IT Career</span></div>
-      </a>
-      <a class="card" href="articoli/demo-zero-trust.html">
-        <span class="card-date">2026-03-11 &nbsp;·&nbsp; 4 min</span>
-        <h3>Zero Trust non è un prodotto. È una mentalità .</h3>
-        <p>Ogni vendor di sicurezza ha una soluzione Zero Trust. Firewall Zero Trust. VPN Zero Trust. Antivirus Zero Trust. Se metti "Zero Trust" su qualsiasi cosa, il pre...</p>
-        <div class="tags"><span class="tag blue">Zero Trust</span><span class="tag blue">Active Directory</span><span class="tag warm">Security</span><span class="tag purple">Strategia</span></div>
-      </a>
-      <a class="card" href="articoli/27-anni-di-it-bocciato.html">
-        <span class="card-date">2026-03-10 &nbsp;·&nbsp; 3 min</span>
-        <h3>27 anni di IT. Bocciato per 20 centesimi .</h3>
-        <p>27 anni di lavoro nell'IT.</p>
-        <div class="tags"><span class="tag green">Certificazioni</span><span class="tag blue">IT Career</span><span class="tag orange">Formazione</span><span class="tag purple">Mindset</span></div>
-      </a>
+
       <a class="card" href="articoli/exchange-split-permissions.html">
-        <span class="card-date">2026-03-06 &nbsp;·&nbsp; 5 min</span>
-        <h3>Exchange on-prem: il rischio che dorme nella tua configurazione di default</h3>
-        <p>Si chiamaShared Permissions Modella configurazione con cui Exchange viene installato per impostazione predefinita. Funziona così: Exchange riceve permessi ampi ...</p>
-        <div class="tags"><span class="tag green">Exchange</span><span class="tag orange">Shared Permissions Model</span><span class="tag blue">Active Directory</span><span class="tag purple">RBAC</span><span class="tag warm">Security</span></div>
+        <div class="card-num">02</div>
+        <div class="card-date">Mar 06 · 5 min</div>
+        <h3>Exchange on-prem: il rischio che dorme nella configurazione di default</h3>
+        <p>Ti sei mai chiesto quanti permessi ha Exchange sulla tua Active Directory?</p>
+        <div class="tags">
+          <span class="tag">Exchange</span>
+          <span class="tag">Security</span>
+          <span class="tag">Active Directory</span>
+        </div>
       </a>
+
       <a class="card" href="articoli/la-matematica-degli-agent.html">
-        <span class="card-date">2026-03-06 &nbsp;·&nbsp; 2 min</span>
-        <h3>La matematica degli agent non mente, ma siamo sicuri che basti questo?</h3>
-        <p>Un'azienda, 10.000 dipendenti. Costo medio: 5.000€ al mese a persona, tasse incluse. Diciamo che la metà fa lavoro eseguibile da un sistema automatizzato. Sono2...</p>
-        <div class="tags"><span class="tag green">AI</span><span class="tag warm">Lavoro</span><span class="tag blue">Agent</span><span class="tag purple">Strategia</span></div>
+        <div class="card-num">01</div>
+        <div class="card-date">Mar 06 · 2 min</div>
+        <h3>La matematica degli agent non mente. Ma nemmeno basta.</h3>
+        <p>10.000 dipendenti, 25 milioni al mese. Il calcolo è corretto. La domanda è un'altra.</p>
+        <div class="tags">
+          <span class="tag">AI</span>
+          <span class="tag">Lavoro</span>
+          <span class="tag">Strategia</span>
+        </div>
       </a>
+
     </div>
   </section>
 
   <footer>
-    the.black.sheep &mdash; <a href="https://github.com/TheBlackSheepBlog/the.black.sheep">github</a>
+    <span>the.black.sheep</span>
+    <span>pubblicato su <a href="https://github.com/TheBlackSheepBlog/the.black.sheep">github</a></span>
   </footer>
 
   <script>
@@ -100,15 +115,13 @@
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
     });
-    window.addEventListener('scroll', () => {
-      document.querySelector('nav').style.borderBottomColor = window.scrollY > 50 ? 'var(--border-subtle)' : 'transparent';
-    });
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
-        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 120);
       });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.card').forEach(c => observer.observe(c));
+    document.querySelectorAll('.card, .fade-in').forEach(c => observer.observe(c));
   </script>
 
 </body>
