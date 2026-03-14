@@ -8,17 +8,6 @@ OUTPUT_FILE = "index.html"
 FEED_FILE = "feed.xml"
 BASE_URL = "https://theblacksheepblog.github.io/the.black.sheep"
 
-TAG_COLORS = {
-    "ai": "green", "exchange": "green", "certificazioni": "green",
-    "security": "warm", "lavoro": "warm",
-    "agent": "blue", "active directory": "blue", "it career": "blue",
-    "shared permissions model": "orange", "formazione": "orange",
-    "strategia": "purple", "rbac": "purple", "mindset": "purple",
-}
-
-def get_tag_color(tag_text):
-    return TAG_COLORS.get(tag_text.lower(), "blue")
-
 def extract_article_data(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f.read(), "html.parser")
@@ -53,16 +42,31 @@ def extract_article_data(filepath):
         read_time = max(1, round(words / 200))
 
     filename = os.path.basename(filepath)
-    return {"title": title, "subtitle": subtitle, "date": date, "tags": tags, "file": filename, "read_time": read_time}
+    return {
+        "title": title,
+        "subtitle": subtitle,
+        "date": date,
+        "tags": tags,
+        "file": filename,
+        "read_time": read_time
+    }
 
-def build_card(article):
-    tags_html = "".join(
-        f'<span class="tag {get_tag_color(t)}">{t}</span>'
-        for t in article["tags"]
-    )
+def format_date_short(date_str):
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        months = ["Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov","Dic"]
+        return f"{months[dt.month-1]} {dt.day:02d}"
+    except:
+        return date_str
+
+def build_card(article, index):
+    tags_html = "".join(f'<span class="tag">{t}</span>' for t in article["tags"])
+    date_short = format_date_short(article["date"])
+    num = str(index + 1).zfill(2)
     return f"""
       <a class="card" href="articoli/{article['file']}">
-        <span class="card-date">{article['date']} &nbsp;·&nbsp; {article['read_time']} min</span>
+        <div class="card-num">{num}</div>
+        <div class="card-date">{date_short} · {article['read_time']} min</div>
         <h3>{article['title']}</h3>
         <p>{article['subtitle']}</p>
         <div class="tags">{tags_html}</div>
@@ -81,7 +85,6 @@ def build_feed(articles):
     for a in articles:
         url = f"{BASE_URL}/articoli/{a['file']}"
         pub_date = date_to_rfc822(a["date"])
-        # Escape XML special chars in title and subtitle
         title = a["title"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         desc = a["subtitle"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         items += f"""
@@ -107,7 +110,19 @@ def build_feed(articles):
 
 def build_index(articles):
     articles.sort(key=lambda a: a["date"], reverse=True)
-    cards_html = "".join(build_card(a) for a in articles)
+    count = len(articles)
+    cards_html = "".join(build_card(a, i) for i, a in enumerate(articles))
+
+    # Hero: prende il titolo dell'articolo più recente
+    latest = articles[0] if articles else None
+    hero_num = str(count).zfill(2)
+    hero_title = latest["title"] if latest else "The Black Sheep"
+    # Mette in <mark> l'ultima parola del titolo
+    words = hero_title.split()
+    if len(words) > 1:
+        hero_title_html = " ".join(words[:-1]) + f" <mark>{words[-1]}</mark>"
+    else:
+        hero_title_html = f"<mark>{hero_title}</mark>"
 
     return f"""<!DOCTYPE html>
 <html lang="it" data-theme="dark">
@@ -126,16 +141,14 @@ def build_index(articles):
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Black Sheep">
   <meta name="twitter:description" content="Scrivo quello che penso. Fuori dal gregge.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="stylesheet" href="style.css">
   <link rel="alternate" type="application/rss+xml" title="The Black Sheep" href="{BASE_URL}/feed.xml">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <nav>
-    <a href="index.html" class="logo">THE BLACK SHEEP</a>
+    <a href="index.html" class="logo">The Black Sheep</a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -150,21 +163,37 @@ def build_index(articles):
   </nav>
 
   <section class="hero">
-    <h1 class="hero-title">THE BLACK SHEEP</h1>
-    <p class="hero-sub"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;vertical-align:middle;margin-right:7px;stroke:var(--text-secondary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="15" x2="13" y2="15"/></svg>TheBlackSheepBlog</p>
-    <p class="hero-desc">Scrivo quello che penso. Fuori dal gregge.</p>
-    <a class="scroll-hint" href="#articoli">&#x2193; &nbsp; articoli</a>
+    <div>
+      <div class="hero-eyebrow">Ultimo articolo</div>
+      <span class="hero-number">{hero_num}</span>
+      <h1 class="hero-title">{hero_title_html}</h1>
+      <p class="hero-desc">Scrivo quello che penso. Fuori dal gregge, dentro alla realtà.</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-label">Articoli</div>
+      <div class="hero-stat-num">{count:02d}</div>
+      <div class="hero-stat-sub">pubblicati</div>
+    </div>
   </section>
 
+  <div class="featured">
+    <div class="featured-label">The Black Sheep</div>
+    <div class="featured-quote">"Scrivo quello che penso. Fuori dal gregge, dentro alla realtà."</div>
+    <div class="featured-byline">TheBlackSheepBlog</div>
+  </div>
+
   <section class="section" id="articoli">
-    <h2 class="section-title"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;vertical-align:middle;margin-right:8px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="11" x2="17" y2="11"/><line x1="7" y1="15" x2="13" y2="15"/></svg>Articoli</h2>
-    <p class="section-subtitle">Pensieri, analisi e osservazioni fuori dal gregge.</p>
+    <div class="section-header">
+      <div class="section-title">Articoli recenti</div>
+      <div class="section-count">{count:02d}</div>
+    </div>
     <div class="grid">{cards_html}
     </div>
   </section>
 
   <footer>
-    the.black.sheep &mdash; <a href="https://github.com/TheBlackSheepBlog/the.black.sheep">github</a>
+    <span>the.black.sheep</span>
+    <span>pubblicato su <a href="https://github.com/TheBlackSheepBlog/the.black.sheep">github</a></span>
   </footer>
 
   <script>
@@ -175,12 +204,9 @@ def build_index(articles):
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
     }});
-    window.addEventListener('scroll', () => {{
-      document.querySelector('nav').style.borderBottomColor = window.scrollY > 50 ? 'var(--border-subtle)' : 'transparent';
-    }});
     const observer = new IntersectionObserver((entries) => {{
       entries.forEach((e, i) => {{
-        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 120);
       }});
     }}, {{ threshold: 0.1 }});
     document.querySelectorAll('.card').forEach(c => observer.observe(c));
