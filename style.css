@@ -424,7 +424,7 @@ nav {
 
 .article-cover {
   width: 100%;
-  max-height: 420px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   border-top: 1px solid var(--ink-xlight);
   border-bottom: 1px solid var(--ink-xlight);
@@ -438,10 +438,10 @@ nav {
 
 .article-content p {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
-  line-height: 1.85;
+  font-size: 1.1rem;
+  line-height: 1.9;
   color: var(--ink);
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.5rem;
 }
 
 .article-content h2 {
@@ -452,7 +452,7 @@ nav {
   letter-spacing: 1px;
   border-top: 2px solid var(--ink);
   padding-top: 1.5rem;
-  margin: 3rem 0 1.2rem;
+  margin: 4rem 0 1.2rem;
 }
 
 .article-content h3 {
@@ -507,7 +507,18 @@ nav {
   color: inherit;
 }
 
-.article-content ul, .article-content ol {
+.article-content a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--ink-xlight);
+  transition: text-decoration-color var(--transition);
+}
+
+.article-content a:hover {
+  text-decoration-color: var(--ink);
+}
   padding-left: 1.5rem;
   margin-bottom: 1.4rem;
 }
@@ -793,6 +804,22 @@ footer a { color: var(--ink-light); }
 footer a:hover { color: var(--ink); }
 
 /* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--ink);
+  width: 0%;
+  z-index: 999;
+  transition: width 0.1s linear;
+}
+
+[data-theme="dark"] .progress-bar { background: #f0ede8; }
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 900px) {
@@ -811,4 +838,6 @@ footer a:hover { color: var(--ink); }
   .col-left { border-right: none; border-bottom: 1px solid var(--ink-xlight); }
   .pipeline-steps { grid-template-columns: 1fr 1fr; }
   .stats-row { grid-template-columns: 1fr 1fr; }
+  .article-content p { font-size: 1rem; }
+  .article-content h2 { font-size: 1.5rem; margin-top: 3rem; }
 }
