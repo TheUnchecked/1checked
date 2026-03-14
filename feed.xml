@@ -5,15 +5,8 @@
     <link>https://theblacksheepblog.github.io/the.black.sheep/</link>
     <description>Scrivo quello che penso. Fuori dal gregge.</description>
     <language>it</language>
-    <lastBuildDate>Sat, 14 Mar 2026 12:30:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2026 12:34:14 +0000</lastBuildDate>
     <atom:link href="https://theblacksheepblog.github.io/the.black.sheep/feed.xml" rel="self" type="application/rss+xml"/>
-    <item>
-      <title>AdminSDHolder: perché i tuoi permessi spariscono ogni 60 minuti .</title>
-      <link>https://theblacksheepblog.github.io/the.black.sheep/articoli/adminsdholder.html</link>
-      <guid>https://theblacksheepblog.github.io/the.black.sheep/articoli/adminsdholder.html</guid>
-      <pubDate>Fri, 13 Mar 2026 00:00:00 +0000</pubDate>
-      <description>Hai appena passato mezz'ora a sistemare i permessi su un account in Active Directory. Riabiliti l'ereditarietà, salvi, tutto ok. Un'ora dopo il tuo collega ti c...</description>
-    </item>
     <item>
       <title>La falla silenziosa: i rischi dell'account Domain Join in Active Directory .</title>
       <link>https://theblacksheepblog.github.io/the.black.sheep/articoli/domain-join-risks.html</link>
