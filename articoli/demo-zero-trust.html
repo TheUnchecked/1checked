@@ -4,17 +4,23 @@
   <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo Componenti — The Black Sheep</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <title>Zero Trust non è un prodotto — The Black Sheep</title>
+  <meta name="description" content="Tutti lo vendono. Quasi nessuno lo capisce. Ecco cosa significa davvero non fidarsi di niente.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Black Sheep">
+  <meta property="og:title" content="Zero Trust non è un prodotto. È una mentalità.">
+  <meta property="og:description" content="Tutti lo vendono. Quasi nessuno lo capisce. Ecco cosa significa davvero non fidarsi di niente.">
+  <meta property="og:image" content="https://theblacksheepblog.github.io/the.black.sheep/assets/images/zerotrust.jpg">
+  <meta property="og:url" content="https://theblacksheepblog.github.io/the.black.sheep/articoli/zero-trust.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://theblacksheepblog.github.io/the.black.sheep/assets/images/zerotrust.jpg">
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
   <nav>
-    <a href="../index.html" class="logo">THE BLACK SHEEP</a>
+    <a href="../index.html" class="logo">The Black Sheep</a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="../index.html">Home</a></li>
@@ -30,15 +36,15 @@
 
   <header class="article-header">
     <p class="article-meta">2026-03-11 | The Black Sheep</p>
-    <h1 class="article-page-title">Zero Trust non è un prodotto.<br>È una <span class="accent">mentalità</span>.</h1>
-    <p style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-secondary); margin-top: 1rem;">
+    <h1 class="article-page-title">Zero Trust non è un prodotto.<br>È una <mark>mentalità</mark>.</h1>
+    <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:var(--ink-light); margin-top:1.2rem; line-height:1.7;">
       Tutti lo vendono. Quasi nessuno lo capisce. Ecco cosa significa davvero non fidarsi di niente — e perché la maggior parte delle implementazioni fallisce ancora prima di iniziare.
     </p>
-    <div class="tags" style="justify-content: center; margin-top: 1.5rem;">
-      <span class="tag orange">Zero Trust</span>
-      <span class="tag blue">Active Directory</span>
-      <span class="tag warm">Security</span>
-      <span class="tag purple">Strategia</span>
+    <div class="tags" style="margin-top:1.5rem;">
+      <span class="tag">Zero Trust</span>
+      <span class="tag">Active Directory</span>
+      <span class="tag">Security</span>
+      <span class="tag">Strategia</span>
     </div>
   </header>
 
@@ -52,22 +58,21 @@
 
     <blockquote>Non fidarti mai. Verifica sempre. Assumi sempre che sei già compromesso.</blockquote>
 
-    <!-- STATS ROW -->
     <div class="stats-row fade-in">
       <div class="stat-card">
-        <div class="stat-number green">82%</div>
+        <div class="stat-number">82%</div>
         <div class="stat-label">breach da credenziali</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number red">207</div>
+        <div class="stat-number">207</div>
         <div class="stat-label">giorni medi per rilevare</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number purple">3</div>
+        <div class="stat-number">3</div>
         <div class="stat-label">principi fondamentali</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number cyan">0</div>
+        <div class="stat-number">0</div>
         <div class="stat-label">fiducia implicita</div>
       </div>
     </div>
@@ -79,7 +84,7 @@
     <p>Questo modello aveva senso nel 2005. Quando i dati stavano sui server in sala macchine, gli utenti lavoravano in ufficio, e "il cloud" era ancora una parola strana.</p>
 
     <div class="insight-box fade-in">
-      <p><strong>Il problema:</strong> oggi il perimetro non esiste più. I dati sono su AWS, Microsoft 365, Salesforce, GitHub. Gli utenti lavorano da casa, dal bar, dall'aeroporto. I dispositivi sono personali. Il concetto di "dentro" e "fuori" non ha più senso — eppure la maggior parte delle aziende costruisce ancora la sicurezza su quel modello.</p>
+      <p><strong>Il problema:</strong> oggi il perimetro non esiste più. I dati sono su AWS, Microsoft 365, Salesforce, GitHub. Gli utenti lavorano da casa, dal bar, dall'aeroporto. Il concetto di "dentro" e "fuori" non ha più senso — eppure la maggior parte delle aziende costruisce ancora la sicurezza su quel modello.</p>
     </div>
 
     <h2>I tre principi di Zero Trust</h2>
@@ -127,8 +132,8 @@
 
     <p>Parlo di AD perché è il punto di attacco preferito in qualsiasi ambiente Windows. E perché la maggior parte delle implementazioni Zero Trust lo ignora completamente — si concentra sul perimetro di rete e lascia AD configurato come negli anni '90.</p>
 
-    <div class="strategy-table fade-in" style="overflow-x: auto;">
-      <table class="strategy-table">
+    <div style="overflow-x:auto;">
+      <table class="strategy-table fade-in">
         <thead>
           <tr>
             <th>Controllo</th>
@@ -232,18 +237,20 @@
     <p>Il progetto parte con entusiasmo. Si compra il tool. Si fa il POC. Poi arriva il primo dirigente a cui scade il token mentre è in meeting e chiama il CIO. E il progetto si ferma.</p>
 
     <div class="conclusion-box fade-in">
-      <div class="quote">"Zero Trust non fallisce per motivi tecnici.<br>Fallisce perché richiede coraggio organizzativo."</div>
-      <p style="color: var(--text-secondary); margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.8rem;">The Black Sheep</p>
+      <div class="quote">Zero Trust non fallisce per motivi tecnici.<br>Fallisce perché richiede coraggio organizzativo.</div>
     </div>
 
-    <div style="margin-top: 3rem; display: flex; justify-content: space-between; align-items: center;">
-      <a href="../index.html" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); text-decoration: none; transition: color var(--transition);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">← torna agli articoli</a>
-      <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); opacity: 0.5;">the.black.sheep</span>
+    <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
+      <a href="../index.html" style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-light); text-decoration:none;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-light)'">← Torna agli articoli</a>
+      <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-xlight);">The Black Sheep</span>
     </div>
 
   </article>
 
-  <footer>the.black.sheep &mdash; <a href="https://github.com/TheBlackSheepBlog/the.black.sheep">github</a></footer>
+  <footer>
+    <span>the.black.sheep</span>
+    <span>pubblicato su <a href="https://github.com/TheBlackSheepBlog/the.black.sheep">github</a></span>
+  </footer>
 
   <script>
     const toggle = document.getElementById('theme-toggle');
@@ -253,7 +260,6 @@
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
     });
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
