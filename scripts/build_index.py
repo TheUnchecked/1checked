@@ -148,7 +148,7 @@ def build_index(articles):
 <body>
 
   <nav>
-    <a href="index.html" class="logo">The Unchecked</a>
+    <a href="index.html" class="logo"><span style="color:#c0392b">[</span> Unchecked <span style="color:#c0392b">]</span></a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
