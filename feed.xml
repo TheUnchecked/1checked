@@ -2,57 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>The Unchecked</title>
-    <link>https://theunchecked.github.io/theunchecked/</link>
+    <link>https://theunchecked.github.io/_unchecked_/</link>
     <description>Non dare niente per scontato. Mai.</description>
     <language>it</language>
-    <lastBuildDate>Sun, 15 Mar 2026 10:12:45 +0000</lastBuildDate>
-    <atom:link href="https://theunchecked.github.io/theunchecked/feed.xml" rel="self" type="application/rss+xml"/>
-    <item>
-      <title>RC4 e Kerberos: hai tempo fino a luglio 2026 . Non sprecarlo.</title>
-      <link>https://theunchecked.github.io/theunchecked/articoli/RC4.html</link>
-      <guid>https://theunchecked.github.io/theunchecked/articoli/RC4.html</guid>
-      <pubDate>Sun, 15 Mar 2026 00:00:00 +0000</pubDate>
-      <description>Ti sei mai trovato a gestire un'interruzione di servizio su Active Directory senza capire immediatamente da dove venisse?</description>
-    </item>
+    <lastBuildDate>Sun, 15 Mar 2026 12:51:03 +0000</lastBuildDate>
+    <atom:link href="https://theunchecked.github.io/_unchecked_/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>AdminSDHolder: perché i tuoi permessi spariscono ogni 60 minuti .</title>
-      <link>https://theunchecked.github.io/theunchecked/articoli/adminsdholder.html</link>
-      <guid>https://theunchecked.github.io/theunchecked/articoli/adminsdholder.html</guid>
+      <link>https://theunchecked.github.io/_unchecked_/articoli/adminsdholder.html</link>
+      <guid>https://theunchecked.github.io/_unchecked_/articoli/adminsdholder.html</guid>
       <pubDate>Fri, 13 Mar 2026 00:00:00 +0000</pubDate>
       <description>Hai appena passato mezz'ora a sistemare i permessi su un account in Active Directory. Riabiliti l'ereditarietà, salvi, tutto ok. Un'ora dopo il tuo collega ti c...</description>
     </item>
     <item>
       <title>La falla silenziosa: i rischi dell'account Domain Join in Active Directory .</title>
-      <link>https://theunchecked.github.io/theunchecked/articoli/domain-join-risks.html</link>
-      <guid>https://theunchecked.github.io/theunchecked/articoli/domain-join-risks.html</guid>
+      <link>https://theunchecked.github.io/_unchecked_/articoli/domain-join-risks.html</link>
+      <guid>https://theunchecked.github.io/_unchecked_/articoli/domain-join-risks.html</guid>
       <pubDate>Fri, 13 Mar 2026 00:00:00 +0000</pubDate>
       <description>Un tecnico dell'Help Desk scarta un nuovo laptop aziendale. Avvia l'installazione di Windows 11. Preme F12 per il boot PXE.</description>
     </item>
     <item>
       <title>Zero Trust non è un prodotto. È una mentalità .</title>
-      <link>https://theunchecked.github.io/theunchecked/articoli/zero-trust.html</link>
-      <guid>https://theunchecked.github.io/theunchecked/articoli/zero-trust.html</guid>
+      <link>https://theunchecked.github.io/_unchecked_/articoli/zero-trust.html</link>
+      <guid>https://theunchecked.github.io/_unchecked_/articoli/zero-trust.html</guid>
       <pubDate>Wed, 11 Mar 2026 00:00:00 +0000</pubDate>
       <description>Ogni vendor di sicurezza ha una soluzione Zero Trust. Firewall Zero Trust. VPN Zero Trust. Antivirus Zero Trust. Se metti "Zero Trust" su qualsiasi cosa, il pre...</description>
     </item>
     <item>
       <title>27 anni di IT. Bocciato per 20 centesimi .</title>
-      <link>https://theunchecked.github.io/theunchecked/articoli/ho-fallito-la-certificazione.html</link>
-      <guid>https://theunchecked.github.io/theunchecked/articoli/ho-fallito-la-certificazione.html</guid>
+      <link>https://theunchecked.github.io/_unchecked_/articoli/ho-fallito-la-certificazione.html</link>
+      <guid>https://theunchecked.github.io/_unchecked_/articoli/ho-fallito-la-certificazione.html</guid>
       <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
       <description>27 anni di lavoro nell'IT.</description>
     </item>
     <item>
       <title>Exchange on-prem: il rischio che dorme nella tua configurazione di default</title>
-      <link>https://theunchecked.github.io/theunchecked/articoli/exchange-split-permissions.html</link>
-      <guid>https://theunchecked.github.io/theunchecked/articoli/exchange-split-permissions.html</guid>
+      <link>https://theunchecked.github.io/_unchecked_/articoli/exchange-split-permissions.html</link>
+      <guid>https://theunchecked.github.io/_unchecked_/articoli/exchange-split-permissions.html</guid>
       <pubDate>Fri, 06 Mar 2026 00:00:00 +0000</pubDate>
       <description>Si chiamaShared Permissions Modella configurazione con cui Exchange viene installato per impostazione predefinita. Funziona così: Exchange riceve permessi ampi ...</description>
     </item>
     <item>
       <title>La matematica degli agent non mente, ma siamo sicuri che basti questo?</title>
-      <link>https://theunchecked.github.io/theunchecked/articoli/la-matematica-degli-agent.html</link>
-      <guid>https://theunchecked.github.io/theunchecked/articoli/la-matematica-degli-agent.html</guid>
+      <link>https://theunchecked.github.io/_unchecked_/articoli/la-matematica-degli-agent.html</link>
+      <guid>https://theunchecked.github.io/_unchecked_/articoli/la-matematica-degli-agent.html</guid>
       <pubDate>Fri, 06 Mar 2026 00:00:00 +0000</pubDate>
       <description>Un'azienda, 10.000 dipendenti. Costo medio: 5.000€ al mese a persona, tasse incluse. Diciamo che la metà fa lavoro eseguibile da un sistema automatizzato. Sono2...</description>
     </item>
