@@ -5,7 +5,7 @@
     <link>https://theunchecked.github.io/_unchecked_/</link>
     <description>Non dare niente per scontato. Mai.</description>
     <language>it</language>
-    <lastBuildDate>Sun, 15 Mar 2026 12:51:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 12:52:13 +0000</lastBuildDate>
     <atom:link href="https://theunchecked.github.io/_unchecked_/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Zero Trust non è un prodotto. È una mentalità .</title>
@@ -13,13 +13,6 @@
       <guid>https://theunchecked.github.io/_unchecked_/articoli/zero-trust.html</guid>
       <pubDate>Wed, 11 Mar 2026 00:00:00 +0000</pubDate>
       <description>Ogni vendor di sicurezza ha una soluzione Zero Trust. Firewall Zero Trust. VPN Zero Trust. Antivirus Zero Trust. Se metti "Zero Trust" su qualsiasi cosa, il pre...</description>
-    </item>
-    <item>
-      <title>27 anni di IT. Bocciato per 20 centesimi .</title>
-      <link>https://theunchecked.github.io/_unchecked_/articoli/ho-fallito-la-certificazione.html</link>
-      <guid>https://theunchecked.github.io/_unchecked_/articoli/ho-fallito-la-certificazione.html</guid>
-      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
-      <description>27 anni di lavoro nell'IT.</description>
     </item>
     <item>
       <title>La matematica degli agent non mente, ma siamo sicuri che basti questo?</title>
