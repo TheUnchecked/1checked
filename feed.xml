@@ -5,15 +5,8 @@
     <link>https://theunchecked.github.io/_unchecked_/</link>
     <description>Non dare niente per scontato. Mai.</description>
     <language>it</language>
-    <lastBuildDate>Sun, 15 Mar 2026 12:51:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Mar 2026 12:51:21 +0000</lastBuildDate>
     <atom:link href="https://theunchecked.github.io/_unchecked_/feed.xml" rel="self" type="application/rss+xml"/>
-    <item>
-      <title>AdminSDHolder: perché i tuoi permessi spariscono ogni 60 minuti .</title>
-      <link>https://theunchecked.github.io/_unchecked_/articoli/adminsdholder.html</link>
-      <guid>https://theunchecked.github.io/_unchecked_/articoli/adminsdholder.html</guid>
-      <pubDate>Fri, 13 Mar 2026 00:00:00 +0000</pubDate>
-      <description>Hai appena passato mezz'ora a sistemare i permessi su un account in Active Directory. Riabiliti l'ereditarietà, salvi, tutto ok. Un'ora dopo il tuo collega ti c...</description>
-    </item>
     <item>
       <title>La falla silenziosa: i rischi dell'account Domain Join in Active Directory .</title>
       <link>https://theunchecked.github.io/_unchecked_/articoli/domain-join-risks.html</link>
