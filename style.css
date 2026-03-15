@@ -68,6 +68,7 @@ nav {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--ink);
+  white-space: nowrap;
 }
 
 .logo span { color: #c0392b; font-weight: 800; }
@@ -410,7 +411,7 @@ nav {
 
 .article-page-title {
   font-family: var(--font-head);
-  font-size: 3.8rem;
+  font-size: 3.2rem;
   font-weight: 900;
   line-height: 0.95;
   text-transform: uppercase;
@@ -912,7 +913,7 @@ body {
   .grid { grid-template-columns: 1fr; }
   .card { border-right: none; border-bottom: 1px solid var(--ink-xlight); padding: 1.5rem 0 !important; }
   .article-header { padding: 3rem 1.5rem 2rem; }
-  .article-page-title { font-size: 2.4rem; }
+  .article-page-title { font-size: 2rem; line-height: 1; }
   .article-content { padding: 2rem 1.5rem 4rem; }
   .two-cols { grid-template-columns: 1fr; }
   .col-left { border-right: none; border-bottom: 1px solid var(--ink-xlight); }
