@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azure Storage GRS — The Unchecked</title>
+  <meta name="description" content="Scegli GRS e pensi di essere al sicuro. Poi arriva il disastro e scopri che il secondario è passivo. Ecco cosa devi sapere prima.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Unchecked">
+  <meta property="og:title" content="Azure Storage: scegli la ridondanza sbagliata e lo scopri nel momento peggiore.">
+  <meta property="og:description" content="Scegli GRS e pensi di essere al sicuro. Poi arriva il disastro e scopri che il secondario è passivo.">
+  <meta property="og:url" content="https://theunchecked.github.io/_unchecked_/articoli/azure-storage-grs.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <nav>
+    <a href="../index.html" class="logo"><span style="color:#c0392b">[</span> Unchecked <span style="color:#c0392b">]</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#articoli">Articoli</a></li>
+        <li><a href="https://github.com/TheUnchecked/theunchecked" target="_blank">GitHub</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button id="theme-toggle" aria-label="Toggle theme">
+        <svg id="theme-icon-dark" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="theme-icon-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="article-header">
+    <p class="article-meta">2026-03-15 | The Unchecked<span class="read-time" id="read-time"></span></p>
+    <span class="article-number">06</span>
+    <h1 class="article-page-title">Azure Storage: scegli la ridondanza sbagliata<br>e lo scopri nel <mark>momento peggiore</mark>.</h1>
+    <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:var(--ink-light); margin-top:1.2rem; line-height:1.7;">
+      Configuri uno Storage Account, scegli GRS perché "tanto è geo-ridondante", e vai avanti. Il problema non emerge in fase di configurazione. Emerge quando hai davvero bisogno di quella ridondanza.
+    </p>
+    <div class="tags" style="margin-top:1.5rem;">
+      <span class="tag">Azure</span>
+      <span class="tag">Storage</span>
+      <span class="tag">Cloud</span>
+      <span class="tag">Disaster Recovery</span>
+    </div>
+  </header>
+
+  <article class="article-content">
+
+    <p>Ti sei mai trovato a configurare uno Storage Account, scegliere GRS perché "tanto è geo-ridondante", e andare avanti senza pensarci più?</p>
+
+    <p>Succede continuamente. E il problema non emerge in fase di configurazione — emerge quando hai davvero bisogno di quella ridondanza.</p>
+
+    <blockquote>Il secondario in GRS è passivo. Lo scopri quando è troppo tardi.</blockquote>
+
+    <h2>Il malinteso più comune</h2>
+
+    <p>GRS significa Geo-Redundant Storage: sei copie dei tuoi dati, distribuite tra la regione primaria e una regione secondaria accoppiata da Microsoft. Sembra solido. Ed è solido, per la durabilità dei dati.</p>
+
+    <p>Il problema è un altro.</p>
+
+    <p>Il secondario in GRS è <strong>passivo</strong>. Non puoi leggerlo, non puoi scriverci, non puoi usarlo finché Microsoft non dichiara un failover della regione primaria. Se la tua applicazione va giù e la regione primaria è ancora tecnicamente "viva", sei bloccato.</p>
+
+    <p>Hai pagato per la geo-ridondanza. Ma non hai accesso al secondario quando ti serve davvero.</p>
+
+    <h2>Le sigle che devi conoscere</h2>
+
+    <div class="stats-row fade-in">
+      <div class="stat-card">
+        <div class="stat-number">LRS</div>
+        <div class="stat-label">3 copie, 1 data center. Economico, fragile.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">ZRS</div>
+        <div class="stat-label">3 zone di disponibilità. Forte protezione locale.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">GRS</div>
+        <div class="stat-label">6 copie geo-distribuite. Secondario passivo.</div>
+      </div>
+    </div>
+
+    <p>Prima di scegliere, è utile avere chiaro cosa c'è dietro ogni opzione.</p>
+
+    <div class="pipeline-steps fade-in">
+      <div class="pipeline-step">
+        <div class="step-num">LRS</div>
+        <div class="step-name">Locally Redundant Storage</div>
+        <div class="step-detail">Tre copie in un singolo data center. Economico, ma fragile. Un incendio, un'alluvione, un'interruzione localizzata — e sei fuori.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">ZRS</div>
+        <div class="step-name">Zone-Redundant Storage</div>
+        <div class="step-detail">Dati distribuiti su tre zone di disponibilità nella stessa regione. Protegge dai guasti locali, ma non da un'interruzione regionale.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">GRS</div>
+        <div class="step-name">Geo-Redundant Storage</div>
+        <div class="step-detail">LRS nella regione primaria più LRS in una regione secondaria accoppiata. Sei copie totali. Il secondario è passivo — solo Microsoft può attivare il failover.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">RA-GRS</div>
+        <div class="step-name">Read-Access GRS</div>
+        <div class="step-detail">Identico a GRS, ma con accesso in lettura sulla regione secondaria. Puoi leggere i dati anche quando la primaria ha problemi, ma non scrivere.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">GZRS</div>
+        <div class="step-name">Geo-Zone-Redundant Storage</div>
+        <div class="step-detail">La combinazione più robusta: ridondanza di zona nella primaria più replica geografica nella secondaria. RA-GZRS aggiunge anche la lettura sul secondario.</div>
+      </div>
+    </div>
+
+    <h2>La distinzione che cambia tutto</h2>
+
+    <p>C'è una differenza che vale la pena fissare bene: <strong>ridondanza e resilienza non sono la stessa cosa</strong>.</p>
+
+    <div class="two-cols fade-in">
+      <div class="col-side col-left">
+        <div class="col-side-title">Ridondanza</div>
+        <p>Quante copie dei tuoi dati esistono.</p>
+        <p>GRS ti dà sei copie.</p>
+        <p>I dati sono al sicuro.</p>
+        <p>Ma non puoi accedere al secondario.</p>
+      </div>
+      <div class="col-side col-right">
+        <div class="col-side-title">Resilienza</div>
+        <p>Quanto velocemente torni operativo.</p>
+        <p>Dipende dal design, non dalle copie.</p>
+        <p>Richiede un piano di failover.</p>
+        <p>Richiede RPO e RTO definiti.</p>
+      </div>
+    </div>
+
+    <p>Puoi avere sei copie dei tuoi dati e non avere nessun piano per usarle in caso di disastro. GRS senza una strategia di failover chiara è esattamente questa situazione.</p>
+
+    <div class="warning-box fade-in">
+      <p><strong>Attenzione:</strong> Se il tuo obiettivo è la continuità operativa, devi pensare anche ad Azure Site Recovery per la replica delle VM, alla definizione del tuo RPO e RTO, e a chi ha l'autorità e la procedura per dichiarare un failover.</p>
+    </div>
+
+    <h2>Cosa scegliere</h2>
+
+    <p>Non esiste la scelta giusta in assoluto — esiste la scelta giusta per il tuo contesto.</p>
+
+    <div class="insight-box fade-in">
+      <p>Se i tuoi dati devono essere accessibili in lettura anche durante un'interruzione regionale, <strong>RA-GRS o RA-GZRS</strong> sono l'unica opzione sensata.</p>
+    </div>
+
+    <div class="insight-box fade-in">
+      <p>Se ti basta la durabilità geografica e puoi aspettare un failover gestito da Microsoft, <strong>GRS</strong> può bastare.</p>
+    </div>
+
+    <div class="insight-box fade-in">
+      <p>Se lavori in ambienti critici dove le zone di disponibilità contano, <strong>GZRS</strong> è il punto di partenza.</p>
+    </div>
+
+    <p>Quello che non puoi permetterti è scegliere senza sapere cosa stai scegliendo.</p>
+
+    <div class="conclusion-box fade-in">
+      <div class="quote">Configurare uno Storage Account richiede pochi minuti.<br>Capire le implicazioni di quella scelta in uno scenario di disaster recovery richiede molto di più.</div>
+    </div>
+
+    <p>Ricorda: la parte più difficile non è la configurazione tecnica. È avere la lucidità di fare le domande giuste prima che qualcuno le faccia per te, nel momento sbagliato.</p>
+
+    <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
+      <a id="back-link" href="../index.html" style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-light); text-decoration:none;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-light)'">← Torna agli articoli</a>
+      <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-xlight);">The Unchecked</span>
+    </div>
+
+  </article>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Torna su">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <footer>
+    <span>theunchecked</span>
+    <span>pubblicato su <a href="https://github.com/TheUnchecked/theunchecked">github</a></span>
+  </footer>
+
+  <script>
+    const burger = document.getElementById("burger");
+    const navLinks = document.querySelector(".nav-links");
+    if (burger) {
+      burger.addEventListener("click", () => {
+        burger.classList.toggle("open");
+        navLinks.classList.toggle("mobile-open");
+        document.body.style.overflow = navLinks.classList.contains("mobile-open") ? "hidden" : "";
+      });
+      navLinks.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          burger.classList.remove("open");
+          navLinks.classList.remove("mobile-open");
+          document.body.style.overflow = "";
+        });
+      });
+    }
+
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    const progressBar = document.getElementById("progress-bar");
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollTop / docHeight * 100) + "%";
+    });
+
+    const backToTop = document.getElementById("back-to-top");
+    window.addEventListener("scroll", () => {
+      backToTop.classList.toggle("visible", window.scrollY > 400);
+    });
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const content = document.querySelector(".article-content");
+    if (content) {
+      const words = content.innerText.split(/\s+/).length;
+      const mins = Math.max(1, Math.round(words / 200));
+      const rt = document.getElementById("read-time");
+      if (rt) rt.textContent = " · " + mins + " min";
+    }
+
+    const backLink = document.getElementById("back-link");
+    if (backLink) {
+      backLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => { window.location.href = backLink.href; }, 260);
+      });
+    }
+  </script>
+
+</body>
+</html>
