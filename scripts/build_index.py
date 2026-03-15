@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 ARTICLES_DIR = "articoli"
 OUTPUT_FILE = "index.html"
 FEED_FILE = "feed.xml"
-BASE_URL = "https://theunchecked.github.io/theunchecked"
+BASE_URL = "https://theunchecked.github.io/_unchecked_"
 
 def extract_article_data(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
@@ -153,7 +153,7 @@ def build_index(articles):
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="#articoli">Articoli</a></li>
-        <li><a href="https://github.com/theunchecked/theunchecked" target="_blank">GitHub</a></li>
+        <li><a href="https://github.com/theunchecked/_unchecked_" target="_blank">GitHub</a></li>
       </ul>
       <button id="theme-toggle" aria-label="Toggle theme">
         <svg id="theme-icon-dark" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -193,7 +193,7 @@ def build_index(articles):
 
   <footer>
     <span>theunchecked</span>
-    <span>pubblicato su <a href="https://github.com/theunchecked/theunchecked">github</a></span>
+    <span>pubblicato su <a href="https://github.com/theunchecked/_unchecked_">github</a></span>
   </footer>
 
   <script>
