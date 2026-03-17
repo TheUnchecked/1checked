@@ -148,4 +148,41 @@ with open(index_path, "w", encoding="utf-8") as f:
     f.write(index)
 
 print(f"✅ index.html aggiornato — ultimo articolo: {LATEST['title']}")
+# ── AGGIORNA OG:IMAGE IN TUTTI GLI ARTICOLI ───────────────────
+OG_IMAGE = "https://theunchecked.github.io/_unchecked_/assets/og-cover.svg"
+
+for article in ARTICLES:
+    filepath = os.path.join(articles_dir, article["file"])
+    if not os.path.exists(filepath):
+        continue
+
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    # Aggiunge og:image se non c'è
+    if 'og:image' not in content:
+        content = content.replace(
+            '<meta name="twitter:card"',
+            f'<meta property="og:image" content="{OG_IMAGE}">\n  <meta name="twitter:image" content="{OG_IMAGE}">\n  <meta name="twitter:card"'
+        )
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"✅ og:image aggiunto: {article['file']}")
+    else:
+        print(f"✅ og:image già presente: {article['file']}")
+
+# Aggiorna og:image in index.html
+with open(index_path, "r", encoding="utf-8") as f:
+    index = f.read()
+
+index = re.sub(
+    r'<meta property="og:image" content="[^"]*">',
+    f'<meta property="og:image" content="{OG_IMAGE}">',
+    index
+)
+
+with open(index_path, "w", encoding="utf-8") as f:
+    f.write(index)
+
+print("✅ og:image aggiornato in index.html")
 print("\nDone!")
