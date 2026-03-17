@@ -41,4 +41,111 @@ const ARTICLES = """ + str(ARTICLES).replace("'", '"') + """;
       </div>`;
     }
     const tags = article.tags.map(t => `<span class="nav-tag">${t}</span>`).join('');
-    const l
+    const label = direction === 'prev' ? '← Precedente' : 'Successivo →';
+    return `<a class="article-nav-link nav-${direction}" href="${article.file}" data-href="${article.file}">
+      <span class="nav-direction">${label}</span>
+      <span class="nav-num">${article.num}</span>
+      <span class="nav-title">${article.title}</span>
+      <div style="display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:0.2rem;">${tags}</div>
+    </a>`;
+  }
+
+  const nav = document.getElementById('article-nav');
+  if (nav) {
+    nav.innerHTML = buildLink(prev, 'prev') + buildLink(next, 'next');
+    nav.querySelectorAll('a[data-href]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => { window.location.href = link.getAttribute('data-href'); }, 260);
+      });
+    });
+  }
+
+  const backHome = document.getElementById('back-home-link');
+  if (backHome) {
+    backHome.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.classList.add('fade-out');
+      setTimeout(() => { window.location.href = backHome.href; }, 260);
+    });
+  }
+})();"""
+
+# ── AGGIORNA ARTICOLI ──────────────────────────────────────────
+articles_dir = "articoli"
+
+for article in ARTICLES:
+    filepath = os.path.join(articles_dir, article["file"])
+    if not os.path.exists(filepath):
+        print(f"⚠️  Non trovato: {filepath}")
+        continue
+
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    if 'id="article-nav"' in content:
+        print(f"✅ Già aggiornato: {article['file']}")
+        continue
+
+    content = re.sub(
+        r'<div style="margin-top:3rem.*?</div>\s*(?=\s*</article>)',
+        HTML_NAV + "\n\n  ",
+        content,
+        flags=re.DOTALL
+    )
+
+    content = re.sub(
+        r'const backLink = document\.getElementById\("back-link"\);.*?}\s*\n?\s*}',
+        JS_NAV,
+        content,
+        flags=re.DOTALL
+    )
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    print(f"✅ Aggiornato: {article['file']}")
+
+# ── AGGIORNA HERO IN INDEX.HTML ────────────────────────────────
+index_path = "index.html"
+
+with open(index_path, "r", encoding="utf-8") as f:
+    index = f.read()
+
+total = len(ARTICLES)
+
+# Aggiorna numero hero
+index = re.sub(
+    r'<span class="hero-number">\d+</span>',
+    f'<span class="hero-number">{total}</span>',
+    index
+)
+
+# Aggiorna titolo hero
+index = re.sub(
+    r'<h1 class="hero-title">.*?</h1>',
+    f'<h1 class="hero-title">{LATEST["title"]}</h1>',
+    index,
+    flags=re.DOTALL
+)
+
+# Aggiorna CTA hero
+index = re.sub(
+    r'<a href="articoli/[^"]*" class="hero-cta">.*?</a>',
+    f'<a href="articoli/{LATEST["file"]}" class="hero-cta">Leggi l\'articolo →</a>',
+    index
+)
+
+# Aggiorna contatore articoli nella sezione
+index = re.sub(
+    r'(<div class="section-count">)\d+(</div>)',
+    f'\\g<1>{total}\\g<2>',
+    index
+)
+
+with open(index_path, "w", encoding="utf-8") as f:
+    f.write(index)
+
+print(f"✅ index.html aggiornato — ultimo articolo: {LATEST['title']}")
+print("\nDone!")
