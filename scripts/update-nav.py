@@ -101,7 +101,7 @@ for article in ARTICLES:
     else:
         print(f"✅ Nav già presente: {article['file']}")
 
-content = re.sub(
+    content = re.sub(
         r'<meta property="og:image" content="[^"]*">',
         f'<meta property="og:image" content="{OG_IMAGE}">',
         content
@@ -117,6 +117,7 @@ content = re.sub(
             f'<meta property="og:image" content="{OG_IMAGE}">\n  <meta name="twitter:image" content="{OG_IMAGE}">\n  <meta name="twitter:card"'
         )
     print(f"✅ og:image aggiornato: {article['file']}")
+
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
 
