@@ -14,8 +14,8 @@ ARTICLES = [
     {"file": "IA-Lavoro.html", "num": "01", "title": "L'IA ci ruberà il lavoro? Solo se lo meriti.", "tags": ["AI", "Lavoro"]},
 ]
 
-# L'ultimo articolo è quello con il numero più alto
 LATEST = max(ARTICLES, key=lambda a: int(a["num"]))
+OG_IMAGE = "https://theunchecked.github.io/_unchecked_/assets/og-default.png"
 
 HTML_NAV = """
 <nav class="article-nav" id="article-nav"></nav>
@@ -84,45 +84,47 @@ for article in ARTICLES:
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
 
-    if 'id="article-nav"' in content:
-        print(f"✅ Già aggiornato: {article['file']}")
-        continue
+    if 'id="article-nav"' not in content:
+        content = re.sub(
+            r'<div style="margin-top:3rem.*?</div>\s*(?=\s*</article>)',
+            HTML_NAV + "\n\n  ",
+            content,
+            flags=re.DOTALL
+        )
+        content = re.sub(
+            r'const backLink = document\.getElementById\("back-link"\);.*?}\s*\n?\s*}',
+            JS_NAV,
+            content,
+            flags=re.DOTALL
+        )
+        print(f"✅ Nav aggiornata: {article['file']}")
+    else:
+        print(f"✅ Nav già presente: {article['file']}")
 
-    content = re.sub(
-        r'<div style="margin-top:3rem.*?</div>\s*(?=\s*</article>)',
-        HTML_NAV + "\n\n  ",
-        content,
-        flags=re.DOTALL
-    )
-
-    content = re.sub(
-        r'const backLink = document\.getElementById\("back-link"\);.*?}\s*\n?\s*}',
-        JS_NAV,
-        content,
-        flags=re.DOTALL
-    )
+    if 'og:image' not in content:
+        content = content.replace(
+            '<meta name="twitter:card"',
+            f'<meta property="og:image" content="{OG_IMAGE}">\n  <meta name="twitter:image" content="{OG_IMAGE}">\n  <meta name="twitter:card"'
+        )
+        print(f"✅ og:image aggiunto: {article['file']}")
+    else:
+        print(f"✅ og:image già presente: {article['file']}")
 
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
 
-    print(f"✅ Aggiornato: {article['file']}")
-
-# ── AGGIORNA HERO IN INDEX.HTML ────────────────────────────────
+# ── AGGIORNA INDEX.HTML ────────────────────────────────────────
 index_path = "index.html"
 
 with open(index_path, "r", encoding="utf-8") as f:
     index = f.read()
 
-total = len(ARTICLES)
-
-# Aggiorna numero hero
 index = re.sub(
     r'<span class="hero-number">\d+</span>',
-    f'<span class="hero-number">{total}</span>',
+    f'<span class="hero-number">{len(ARTICLES)}</span>',
     index
 )
 
-# Aggiorna titolo hero
 index = re.sub(
     r'<h1 class="hero-title">.*?</h1>',
     f'<h1 class="hero-title">{LATEST["title"]}</h1>',
@@ -130,50 +132,17 @@ index = re.sub(
     flags=re.DOTALL
 )
 
-# Aggiorna CTA hero
 index = re.sub(
     r'<a href="articoli/[^"]*" class="hero-cta">.*?</a>',
     f'<a href="articoli/{LATEST["file"]}" class="hero-cta">Leggi l\'articolo →</a>',
     index
 )
 
-# Aggiorna contatore articoli nella sezione
 index = re.sub(
     r'(<div class="section-count">)\d+(</div>)',
-    f'\\g<1>{total}\\g<2>',
+    f'\\g<1>{len(ARTICLES)}\\g<2>',
     index
 )
-
-with open(index_path, "w", encoding="utf-8") as f:
-    f.write(index)
-
-print(f"✅ index.html aggiornato — ultimo articolo: {LATEST['title']}")
-# ── AGGIORNA OG:IMAGE IN TUTTI GLI ARTICOLI ───────────────────
-OG_IMAGE = "https://theunchecked.github.io/_unchecked_/assets/og-cover.svg"
-
-for article in ARTICLES:
-    filepath = os.path.join(articles_dir, article["file"])
-    if not os.path.exists(filepath):
-        continue
-
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    # Aggiunge og:image se non c'è
-    if 'og:image' not in content:
-        content = content.replace(
-            '<meta name="twitter:card"',
-            f'<meta property="og:image" content="{OG_IMAGE}">\n  <meta name="twitter:image" content="{OG_IMAGE}">\n  <meta name="twitter:card"'
-        )
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(content)
-        print(f"✅ og:image aggiunto: {article['file']}")
-    else:
-        print(f"✅ og:image già presente: {article['file']}")
-
-# Aggiorna og:image in index.html
-with open(index_path, "r", encoding="utf-8") as f:
-    index = f.read()
 
 index = re.sub(
     r'<meta property="og:image" content="[^"]*">',
@@ -184,5 +153,5 @@ index = re.sub(
 with open(index_path, "w", encoding="utf-8") as f:
     f.write(index)
 
-print("✅ og:image aggiornato in index.html")
+print(f"✅ index.html aggiornato — ultimo articolo: {LATEST['title']}")
 print("\nDone!")
