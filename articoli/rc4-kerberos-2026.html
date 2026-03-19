@@ -4,7 +4,7 @@
   <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RC4 e Kerberos: hai tempo fino a luglio 2026. Non sprecarlo. — The Unchecked</title>
+  <title>RC4 e Kerberos: hai tempo fino a luglio 2026. Non sprecarlo.   The Unchecked</title>
   <meta name="description" content="Da luglio 2026 Microsoft disabiliterà RC4 in Kerberos per impostazione predefinita. La maggior parte delle infrastrutture aziendali arriverà a quella data impreparata.">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="The Unchecked">
@@ -84,7 +84,7 @@
 
     <p>RC4 è un algoritmo crittografico del 1987. Era veloce, leggero, perfetto per le CPU dell'epoca. Windows lo ha usato per decenni come standard in Kerberos e molti ambienti Active Directory lo hanno ancora attivo oggi, non per scelta consapevole, ma per inerzia.</p>
 
-    <p>Il problema è che RC4 ha debolezze strutturali note. Un ticket Kerberos cifrato con RC4 è circa mille volte più veloce da craccare rispetto a uno cifrato con AES. Non è un dettaglio — è la base del Kerberoasting, una delle tecniche di attacco più usate contro Active Directory.</p>
+    <p>Il problema è che RC4 ha debolezze strutturali note. Un ticket Kerberos cifrato con RC4 è circa mille volte più veloce da craccare rispetto a uno cifrato con AES. Non è un dettaglio   è la base del Kerberoasting, una delle tecniche di attacco più usate contro Active Directory.</p>
 
     <div class="warning-box fade-in">
       <p>Lasciare RC4 abilitato sui tuoi account di servizio nel 2026 non è un rischio accettabile. È una scelta.</p>
@@ -98,7 +98,7 @@
       <div class="pipeline-step">
         <div class="step-num">Gen</div>
         <div class="step-name">2026</div>
-        <div class="step-detail">I Domain Controller iniziano a favorire AES e generano nuovi eventi di audit, con ID da 201 a 209. Sono i tuoi strumenti di osservazione — usali.</div>
+        <div class="step-detail">I Domain Controller iniziano a favorire AES e generano nuovi eventi di audit, con ID da 201 a 209. Sono i tuoi strumenti di osservazione   usali.</div>
       </div>
       <div class="pipeline-step">
         <div class="step-num">Apr</div>
@@ -153,7 +153,7 @@
     </div>
 
     <div class="warning-box fade-in">
-      <p><strong>Attenzione:</strong> le chiavi AES vengono generate solo quando la password viene cambiata. Se un account di servizio non ruota la password da anni, le chiavi AES potrebbero non esistere. Impostare il valore 24 non basta — devi anche verificare che la password sia stata aggiornata di recente.</p>
+      <p><strong>Attenzione:</strong> le chiavi AES vengono generate solo quando la password viene cambiata. Se un account di servizio non ruota la password da anni, le chiavi AES potrebbero non esistere. Impostare il valore 24 non basta   devi anche verificare che la password sia stata aggiornata di recente.</p>
     </div>
 
     <div class="two-cols fade-in">
