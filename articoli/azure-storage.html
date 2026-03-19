@@ -4,7 +4,7 @@
   <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Azure Storage GRS — The Unchecked</title>
+  <title>Azure Storage GRS   The Unchecked</title>
   <meta name="description" content="Scegli GRS e pensi di essere al sicuro. Poi arriva il disastro e scopri che il secondario è passivo. Ecco cosa devi sapere prima.">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="The Unchecked">
@@ -57,7 +57,7 @@
 
     <p>Ti sei mai trovato a configurare uno Storage Account, scegliere GRS perché "tanto è geo-ridondante", e andare avanti senza pensarci più?</p>
 
-    <p>Succede continuamente. E il problema non emerge in fase di configurazione — emerge quando hai davvero bisogno di quella ridondanza.</p>
+    <p>Succede continuamente. E il problema non emerge in fase di configurazione   emerge quando hai davvero bisogno di quella ridondanza.</p>
 
     <blockquote>Il secondario in GRS è passivo. Lo scopri quando è troppo tardi.</blockquote>
 
@@ -94,7 +94,7 @@
       <div class="pipeline-step">
         <div class="step-num">LRS</div>
         <div class="step-name">Locally Redundant Storage</div>
-        <div class="step-detail">Tre copie in un singolo data center. Economico, ma fragile. Un incendio, un'alluvione, un'interruzione localizzata — e sei fuori.</div>
+        <div class="step-detail">Tre copie in un singolo data center. Economico, ma fragile. Un incendio, un'alluvione, un'interruzione localizzata   e sei fuori.</div>
       </div>
       <div class="pipeline-step">
         <div class="step-num">ZRS</div>
@@ -104,7 +104,7 @@
       <div class="pipeline-step">
         <div class="step-num">GRS</div>
         <div class="step-name">Geo-Redundant Storage</div>
-        <div class="step-detail">LRS nella regione primaria più LRS in una regione secondaria accoppiata. Sei copie totali. Il secondario è passivo — solo Microsoft può attivare il failover.</div>
+        <div class="step-detail">LRS nella regione primaria più LRS in una regione secondaria accoppiata. Sei copie totali. Il secondario è passivo   solo Microsoft può attivare il failover.</div>
       </div>
       <div class="pipeline-step">
         <div class="step-num">RA-GRS</div>
@@ -147,7 +147,7 @@
 
     <h2>Cosa scegliere</h2>
 
-    <p>Non esiste la scelta giusta in assoluto — esiste la scelta giusta per il tuo contesto.</p>
+    <p>Non esiste la scelta giusta in assoluto   esiste la scelta giusta per il tuo contesto.</p>
 
     <div class="insight-box fade-in">
       <p>Se i tuoi dati devono essere accessibili in lettura anche durante un'interruzione regionale, <strong>RA-GRS o RA-GZRS</strong> sono l'unica opzione sensata.</p>
