@@ -55,30 +55,30 @@
 
     <p>Ogni tanto dico che Copilot 365 è "ciuoto". E meno male!</p>
 
-    <p>Nel dialetto anglolucano :), "ciuoto" significa stupido. Ed è esattamente quello che dico ogni tanto su Copilot quando lo uso nel contesto aziendale, e non sono il solo a dirlo.</p>
+    <p>Nel dialetto anglolucano :), "ciuoto" significa stupido, ed è esattamente quello che dico ogni tanto su Copilot quando lo uso nel contesto aziendale, e non sono il solo a dirlo.</p>
 
     <p>"Non sa rispondere come ChatGPT."<br>
     "È limitato."<br>
     "Non capisce quello che gli chiedo."</p>
 
-    <p>E in parte hanno ragione. Copilot, usato come se fosse ChatGPT, delude. Risponde in modo più cauto, meno creativo, meno disinvolto. Non si avventura in territori che non conosce. Non inventa.</p>
+    <p>Copilot, usato come se fosse ChatGPT, delude, risponde in modo più cauto, meno creativo, meno disinvolto. Non si avventura in territori che non conosce. Non inventa... quasi mai (anche lui soffre di allucinazioni).</p>
 
-    <p>Il problema è che quella non è stupidità. È una scelta progettuale precisa. E chi non lo capisce sta usando lo strumento sbagliato nel modo sbagliato.</p>
+    <p>Il problema è che quella non è stupidità, è una scelta progettuale precisa.</p>
 
     <h2>Tre componenti che la maggior parte degli utenti ignora</h2>
 
-    <p>Copilot non è un chatbot. È un sistema orchestrato composto da tre strati che lavorano insieme.</p>
+    <p>Copilot non è un chatbot, è un sistema orchestrato composto da tre strati che lavorano insieme.</p>
 
     <div class="pipeline-steps fade-in">
       <div class="pipeline-step">
         <div class="step-num">01</div>
         <div class="step-name">Il modello linguistico (GPT-4)</div>
-        <div class="step-detail">Genera il testo. È il motore creativo, ma da solo non basta. È ciò che condivide con ChatGPT — ma è solo uno dei tre strati.</div>
+        <div class="step-detail">Genera il testo. È il motore creativo, ma da solo non basta. È ciò che condivide con ChatGPT, ma è solo uno dei tre strati.</div>
       </div>
       <div class="pipeline-step">
         <div class="step-num">02</div>
         <div class="step-name">Microsoft Graph</div>
-        <div class="step-detail">L'API che connette Copilot a tutti i dati di Microsoft 365: email su Exchange, file su OneDrive e SharePoint, chat di Teams, eventi calendario, Planner. È anche un filtro di sicurezza: Copilot accede solo ai dati a cui l'utente ha già accesso. Mai un byte in più.</div>
+        <div class="step-detail">L'API che connette Copilot a tutti i dati di Microsoft 365: email su Exchange, file su OneDrive e SharePoint, chat di Teams, eventi calendario, contatti, liste di Planner. È anche un filtro di sicurezza: Copilot accede solo ai dati a cui l'utente ha già accesso. Se un file è riservato, Copilot non lo considererà. Mai.</div>
       </div>
       <div class="pipeline-step">
         <div class="step-num">03</div>
@@ -87,25 +87,27 @@
       </div>
     </div>
 
-    <h2>Il grounding: perché risponde così</h2>
+    <h2>Il grounding: che cos'è e perché risponde così</h2>
 
-    <p>Quando fai una domanda a Copilot, lui non attinge solo alla conoscenza interna del modello. Prima di rispondere, interroga i tuoi dati aziendali attraverso Graph: cerca nelle email, nei file SharePoint, nelle chat di Teams, nei calendari. Seleziona le informazioni più rilevanti, le assembla in un contesto, e costruisce la risposta su quella base.</p>
+    <p>Quando fai una domanda a Copilot, lui non attinge solo alla conoscenza interna del modello, prima di rispondere, interroga i tuoi dati aziendali attraverso Graph: cerca nelle email, nei file SharePoint, nelle chat di Teams, nei calendari. Seleziona le informazioni più rilevanti, le assembla in un contesto, e costruisce la risposta su quella base.</p>
 
     <p>Questo meccanismo si chiama grounding, ed è il motivo per cui Copilot a volte sembra meno brillante di ChatGPT su domande generiche. Non sta cercando di impressionarti con la sua conoscenza del mondo. Sta cercando di risponderti in base a quello che esiste davvero nella tua organizzazione.</p>
 
-    <blockquote>Se Copilot non trova niente di rilevante nei tuoi dati, la risposta sarà più piatta. Non perché sia ciuoto. Perché non vuole inventare.</blockquote>
-
-    <p>Se chiedi "riassumi il progetto XYZ degli ultimi tre mesi", Copilot cercherà le email rilevanti degli ultimi 90 giorni, i file SharePoint del team di progetto, le trascrizioni delle riunioni Teams, i report su OneDrive. Incroccerà quelle fonti e produrrà un documento con risultati, problemi incontrati e prossimi passi. Tutto basato su dati reali, con i riferimenti alle fonti originali.</p>
+    <p>Se chiedi "riassumi il progetto XYZ degli ultimi tre mesi", Copilot cercherà le email rilevanti degli ultimi 90 giorni, i file SharePoint del team di progetto, le trascrizioni delle riunioni Teams, i report su OneDrive. Incrocerà quelle fonti e produrrà un documento con risultati, problemi incontrati e prossimi passi. Tutto basato su dati reali, con i riferimenti alle fonti originali.</p>
 
     <p>Se ponessi la stessa domanda a ChatGPT, otterresti una risposta generica. ChatGPT non sa nulla dei tuoi file interni.</p>
+
+    <blockquote>Se Copilot non trova niente di rilevante nei tuoi dati, la risposta sarà più piatta. Non perché sia ciuoto. Perché non vuole inventare.</blockquote>
 
     <h2>Perché Copilot non si addestra con i tuoi dati</h2>
 
     <p>I tuoi prompt, le tue domande, le tue conversazioni non vengono mai usati per addestrare il modello. Mai.</p>
 
     <div class="insight-box fade-in">
-      <p>Microsoft lo garantisce contrattualmente per tutti gli utenti business: <strong>"Prompts, responses, and data accessed through Microsoft Graph aren't used to train foundation LLMs."</strong></p>
+      <p>Microsoft lo garantisce contrattualmente per tutti gli utenti business: tutto quello che scrivi rimane confinato nel tuo tenant, non esce, non viene letto da ingegneri, non contribuisce ad aggiornare nessun modello.</p>
     </div>
+
+    <p>In gergo tecnico si chiama data isolation: ogni organizzazione ha il proprio spazio e l'AI non impara nulla sui tuoi documenti che possa poi trapelare ad altri clienti.</p>
 
     <p>Tutto quello che Copilot elabora rimane dentro i confini dell'infrastruttura Microsoft 365. Le comunicazioni sono cifrate end-to-end. I permessi impostati sui documenti vengono rispettati: se un file è classificato come confidenziale, Copilot non lo userà per rispondere a chi non dovrebbe vederlo. Le policy di Data Loss Prevention, il Conditional Access, la Multi-Factor Authentication che hai configurato su Microsoft 365 valgono anche per Copilot. Non ci sono eccezioni.</p>
 
@@ -123,8 +125,6 @@
         <div class="stat-label">conformità europea garantita</div>
       </div>
     </div>
-
-    <p>Se la tua azienda ha già scelto Microsoft 365 per gestire email e documenti, Copilot non introduce nuovi rischi. Segue le stesse regole.</p>
 
     <h2>La differenza con ChatGPT</h2>
 
@@ -153,8 +153,18 @@
 
     <p>Copilot è ciuoto solo se gli chiedi di essere qualcosa che non è.</p>
 
+    <p>Se invece lo usi per quello per cui è stato costruito, ovvero lavorare con i tuoi dati reali all'interno del tuo perimetro aziendale, smette di sembrare stupido. E inizia a sembrare quello che è: uno strumento serio, costruito per chi ha dati da proteggere.</p>
+
+    <h2>Detto questo, nessuno strumento è infallibile</h2>
+
+    <p>Anche Copilot ha le sue vulnerabilità. Sono state documentate tecniche di prompt injection che permettevano di esfiltrare dati attraverso risposte manipolate. Microsoft ha corretto queste falle, ma il concetto rimane: nessun sistema è sicuro al 100%, nemmeno quello progettato con i migliori standard del mercato.</p>
+
+    <div class="warning-box fade-in">
+      <p>La sicurezza non è uno stato. È un processo continuo.</p>
+    </div>
+
     <div class="conclusion-box fade-in">
-      <div class="quote">Uno strumento serio, costruito per chi<br>ha dati da proteggere.</div>
+      <div class="quote">Uno strumento serio non significa blindato per sempre.<br>Significa che parte da una base solida e va monitorato<br>come qualsiasi altro componente del tuo ecosistema.</div>
     </div>
 
     <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
