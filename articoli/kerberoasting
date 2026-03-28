@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerberoasting: lab hands-on — The Unchecked</title>
+  <meta name="description" content="Un utente senza privilegi può compromettere l'intero dominio Active Directory. Ho replicato l'attacco in lab. Ecco come funziona, come si rileva e come si ferma.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Unchecked">
+  <meta property="og:title" content="Kerberoasting: dall'account svc-sql alla compromissione del dominio.">
+  <meta property="og:description" content="Un utente senza privilegi può compromettere l'intero dominio Active Directory. Ho replicato l'attacco in lab.">
+  <meta property="og:url" content="https://theunchecked.github.io/_unchecked_/articoli/kerberoasting.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <nav>
+    <a href="../index.html" class="logo"><span style="color:#c0392b">[</span> Unchecked <span style="color:#c0392b">]</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#articoli">Articoli</a></li>
+        <li><a href="https://github.com/TheUnchecked/theunchecked" target="_blank">GitHub</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button id="theme-toggle" aria-label="Toggle theme">
+        <svg id="theme-icon-dark" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="theme-icon-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="article-header">
+    <p class="article-meta">2026-03-19 | The Unchecked<span class="read-time" id="read-time"></span></p>
+    <span class="article-number">11</span>
+    <h1 class="article-page-title">Kerberoasting: dall'account <mark>svc-sql</mark><br>alla compromissione del dominio.</h1>
+    <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:var(--ink-light); margin-top:1.2rem; line-height:1.7;">
+      Un utente senza nessun privilegio può richiedere un ticket di servizio, portarselo a casa, craccare la password offline e rientrare nel dominio come se nulla fosse. Ho replicato l'attacco in lab. Ecco cosa succede, passo per passo.
+    </p>
+    <div class="tags" style="margin-top:1.5rem;">
+      <span class="tag">Active Directory</span>
+      <span class="tag">Kerberos</span>
+      <span class="tag">Red Team</span>
+      <span class="tag">Blue Team</span>
+      <span class="tag">Lab</span>
+    </div>
+  </header>
+
+  <article class="article-content">
+
+    <p>Ti sei mai chiesto quanti account di servizio nel tuo dominio hanno la password che non scade mai, configurata anni fa, con una stringa che qualcuno ha digitato di fretta?</p>
+
+    <p>Il Kerberoasting non sfrutta una vulnerabilità del codice. Abusa del funzionamento standard di Kerberos. Qualsiasi utente autenticato nel dominio, anche senza privilegi, può richiedere un ticket di servizio per qualsiasi SPN registrato. Il KDC lo emette senza verificare se quell'utente abbia effettivamente il permesso di usare quel servizio.</p>
+
+    <p>Il ticket arriva cifrato con l'hash della password dell'account di servizio. L'attaccante se lo porta offline e lo crackca con Hashcat o John the Ripper. Nessun tentativo di accesso fallito. Nessun account bloccato. Nessun alert.</p>
+
+    <blockquote>Il cracking avviene offline. Il dominio non sa niente.</blockquote>
+
+    <p>Ho replicato l'intero scenario nel mio lab su <code>staging.lab</code>. Di seguito il walkthrough completo: dalla creazione dell'account vulnerabile fino alla detection e alla remediation.</p>
+
+    <h2>Fase 0: preparazione del target</h2>
+
+    <p>Prima di tutto creo l'account di servizio vulnerabile e registro lo SPN. Questo è esattamente quello che succede in produzione quando qualcuno configura un servizio SQL senza pensare alle implicazioni di sicurezza.</p>
+
+    <div class="code-block" data-lang="powershell">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># Crea l'account di servizio</span></td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">New-ADUser</span> -Name <span class="cv">"svc-sql"</span> <span class="cc">`</span></td></tr>
+        <tr><td class="ln">3</td><td class="code">  -SamAccountName <span class="cv">"svc-sql"</span> <span class="cc">`</span></td></tr>
+        <tr><td class="ln">4</td><td class="code">  -UserPrincipalName <span class="cv">"svc-sql@staging.lab"</span> <span class="cc">`</span></td></tr>
+        <tr><td class="ln">5</td><td class="code">  -AccountPassword (ConvertTo-SecureString <span class="cv">"Password123!"</span> -AsPlainText -Force) <span class="cc">`</span></td></tr>
+        <tr><td class="ln">6</td><td class="code">  -Enabled <span class="cn">$true</span> <span class="cc">`</span></td></tr>
+        <tr><td class="ln">7</td><td class="code">  -PasswordNeverExpires <span class="cn">$true</span></td></tr>
+        <tr><td class="ln">8</td><td class="code"></td></tr>
+        <tr><td class="ln">9</td><td class="code"><span class="cc"># Registra lo SPN</span></td></tr>
+        <tr><td class="ln">10</td><td class="code"><span class="ck">setspn</span> -A MSSQLSvc/DC01.staging.lab:1433 staging\svc-sql</td></tr>
+        <tr><td class="ln">11</td><td class="code"></td></tr>
+        <tr><td class="ln">12</td><td class="code"><span class="cc"># Verifica</span></td></tr>
+        <tr><td class="ln">13</td><td class="code"><span class="ck">setspn</span> -L staging\svc-sql</td></tr>
+      </table></div>
+    </div>
+
+    <p>Abilito anche il logging sul Domain Controller — senza questo, la detection della fase successiva non funziona:</p>
+
+    <div class="code-block" data-lang="gpo">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># gpmc.msc → Default Domain Controllers Policy → Edit</span></td></tr>
+        <tr><td class="ln">2</td><td class="code">Computer Configuration</td></tr>
+        <tr><td class="ln">3</td><td class="code">  → Policies → Windows Settings → Security Settings</td></tr>
+        <tr><td class="ln">4</td><td class="code">    → Advanced Audit Policy Configuration → Account Logon</td></tr>
+        <tr><td class="ln">5</td><td class="code">      ✅ Audit Kerberos Service Ticket Operations → Success + Failure</td></tr>
+        <tr><td class="ln">6</td><td class="code">      ✅ Audit Kerberos Authentication Service   → Success + Failure</td></tr>
+        <tr><td class="ln">7</td><td class="code"><span class="ck">gpupdate</span> /force</td></tr>
+      </table></div>
+    </div>
+
+    <div class="code-block" data-lang="powershell">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># Aumenta Security Log a 1GB</span></td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">wevtutil</span> sl Security /ms:1073741824</td></tr>
+        <tr><td class="ln">3</td><td class="code"></td></tr>
+        <tr><td class="ln">4</td><td class="code"><span class="cc"># Abilita PowerShell Script Block Logging</span></td></tr>
+        <tr><td class="ln">5</td><td class="code"><span class="ck">reg add</span> <span class="cv">"HKLM\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging"</span> <span class="cc">`</span></td></tr>
+        <tr><td class="ln">6</td><td class="code">  /v EnableScriptBlockLogging /t REG_DWORD /d 1 /f</td></tr>
+      </table></div>
+    </div>
+
+    <div class="warning-box fade-in">
+      <p>Se la password di <code>svc-sql</code> è debole, l'attaccante richiede il TGS senza alert, crackca offline senza alert, si autentica con le credenziali e sembra un login normale. Tre passi, zero rumore.</p>
+    </div>
+
+    <h2>Fase 1: discovery degli account vulnerabili</h2>
+
+    <p>Prima ancora di scaricare qualsiasi strumento sulla macchina vittima, un attaccante può usare <code>setspn.exe</code>, già presente su qualsiasi sistema Windows nel dominio, per enumerare tutti gli account con SPN registrato.</p>
+
+    <div class="code-block" data-lang="powershell">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># Wildcard: controlla tutta la foresta</span></td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">setspn</span> -T * -F -Q */*</td></tr>
+      </table></div>
+    </div>
+
+    <p>Nel mio lab la foresta contiene un solo dominio, <code>staging.lab</code>, e il comando restituisce subito <code>svc-sql</code>. In un ambiente di produzione con decine di account di servizio, questo comando è una mappa del territorio.</p>
+
+    <p>Per avere una visione più completa con i livelli di rischio associati a ogni account, uso questo script:</p>
+
+    <div class="code-block" data-lang="powershell">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">Get-ADUser</span> -Filter {ServicePrincipalNames -ne <span class="cv">"$null"</span>} <span class="cc">`</span></td></tr>
+        <tr><td class="ln">2</td><td class="code">    -Properties ServicePrincipalNames, PasswordLastSet, PasswordNeverExpires, adminCount |</td></tr>
+        <tr><td class="ln">3</td><td class="code">    Where-Object { <span class="cn">$_</span>.Enabled -eq <span class="cn">$true</span> -and <span class="cn">$_</span>.SamAccountName -notlike <span class="cv">"*$"</span> } |</td></tr>
+        <tr><td class="ln">4</td><td class="code">    Select-Object <span class="cc">`</span></td></tr>
+        <tr><td class="ln">5</td><td class="code">        SamAccountName,</td></tr>
+        <tr><td class="ln">6</td><td class="code">        @{N=<span class="cv">"SPN"</span>;           E={ <span class="cn">$_</span>.ServicePrincipalNames -join <span class="cv">", "</span> }},</td></tr>
+        <tr><td class="ln">7</td><td class="code">        @{N=<span class="cv">"PwdLastSet"</span>;    E={ <span class="cn">$_</span>.PasswordLastSet.ToString(<span class="cv">"dd/MM/yyyy"</span>) }},</td></tr>
+        <tr><td class="ln">8</td><td class="code">        @{N=<span class="cv">"PwdNeverExp"</span>;   E={ <span class="cn">$_</span>.PasswordNeverExpires }},</td></tr>
+        <tr><td class="ln">9</td><td class="code">        @{N=<span class="cv">"AdminCount"</span>;    E={ <span class="cn">$_</span>.adminCount -eq 1 }},</td></tr>
+        <tr><td class="ln">10</td><td class="code">        @{N=<span class="cv">"PwdAge(giorni)"</span>;E={ (New-TimeSpan -Start <span class="cn">$_</span>.PasswordLastSet -End (Get-Date)).Days }},</td></tr>
+        <tr><td class="ln">11</td><td class="code">        @{N=<span class="cv">"Rischio"</span>;       E={</td></tr>
+        <tr><td class="ln">12</td><td class="code">            <span class="cn">$age</span> = (New-TimeSpan -Start <span class="cn">$_</span>.PasswordLastSet -End (Get-Date)).Days</td></tr>
+        <tr><td class="ln">13</td><td class="code">            if (<span class="cn">$_</span>.adminCount -eq 1 -and <span class="cn">$_</span>.PasswordNeverExpires)  { <span class="cv">"CRITICO"</span> }</td></tr>
+        <tr><td class="ln">14</td><td class="code">            elseif (<span class="cn">$age</span> -gt 180 -and <span class="cn">$_</span>.PasswordNeverExpires)     { <span class="cv">"Alto"</span> }</td></tr>
+        <tr><td class="ln">15</td><td class="code">            elseif (<span class="cn">$age</span> -gt 180)                                   { <span class="cv">"Medio"</span> }</td></tr>
+        <tr><td class="ln">16</td><td class="code">            else                                                    { <span class="cv">"Basso"</span> }</td></tr>
+        <tr><td class="ln">17</td><td class="code">        }} |</td></tr>
+        <tr><td class="ln">18</td><td class="code">    Sort-Object PwdLastSet |</td></tr>
+        <tr><td class="ln">19</td><td class="code">    Out-GridView -Title <span class="cv">"Kerberoastable Accounts - staging.lab"</span></td></tr>
+      </table></div>
+    </div>
+
+    <h2>Fase 2: richiesta del ticket</h2>
+
+    <p>Mi collego a un client Windows 10 con l'utente <code>test</code>, senza nessun privilegio sul dominio. Da qui richiedo il TGS per lo SPN di <code>svc-sql</code>.</p>
+
+    <div class="code-block" data-lang="powershell">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># Richiedi il TGS — genera Event 4769 sul DC</span></td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">Add-Type</span> -AssemblyName System.IdentityModel</td></tr>
+        <tr><td class="ln">3</td><td class="code"></td></tr>
+        <tr><td class="ln">4</td><td class="code"><span class="cn">$ticket</span> = New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken <span class="cc">`</span></td></tr>
+        <tr><td class="ln">5</td><td class="code">  -ArgumentList <span class="cv">"MSSQLSvc/DC01.staging.lab:1433"</span></td></tr>
+        <tr><td class="ln">6</td><td class="code"></td></tr>
+        <tr><td class="ln">7</td><td class="code"><span class="cc"># Verifica il ticket in cache</span></td></tr>
+        <tr><td class="ln">8</td><td class="code"><span class="ck">klist</span></td></tr>
+      </table></div>
+    </div>
+
+    <p>Il ticket è ora in cache. Cifrato con l'hash della password di <code>svc-sql</code>. Pronto per essere estratto e portato offline.</p>
+
+    <h2>Fase 3: detection sul Domain Controller</h2>
+
+    <p>Questo è il punto in cui il blue team può intercettare l'attacco. La chiave è l'Event ID 4769 con encryption type <code>0x17</code>, che indica RC4. AES non è vulnerabile al Kerberoasting nella stessa misura: se vedi RC4 nei ticket di servizio, è un segnale da investigare.</p>
+
+    <div class="stats-row fade-in">
+      <div class="stat-card">
+        <div class="stat-number">4769</div>
+        <div class="stat-label">TGS Request con RC4 — segnale di Kerberoasting</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4768</div>
+        <div class="stat-label">TGT Request — baseline normale</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4771</div>
+        <div class="stat-label">Pre-auth fallita — possibile brute force</div>
+      </div>
+    </div>
+
+    <div class="code-block" data-lang="powershell">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># Cerca Event 4769 con RC4 (0x17) generati da staging\test</span></td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">Get-WinEvent</span> -FilterHashtable @{</td></tr>
+        <tr><td class="ln">3</td><td class="code">  LogName   = <span class="cv">'Security'</span></td></tr>
+        <tr><td class="ln">4</td><td class="code">  Id        = 4769</td></tr>
+        <tr><td class="ln">5</td><td class="code">  StartTime = (Get-Date).AddHours(-1)</td></tr>
+        <tr><td class="ln">6</td><td class="code">} | Where-Object {</td></tr>
+        <tr><td class="ln">7</td><td class="code">  <span class="cn">$_</span>.Message -match <span class="cv">"0x17"</span> -and</td></tr>
+        <tr><td class="ln">8</td><td class="code">  <span class="cn">$_</span>.Message -match <span class="cv">"test"</span></td></tr>
+        <tr><td class="ln">9</td><td class="code">} | ForEach-Object {</td></tr>
+        <tr><td class="ln">10</td><td class="code">  [PSCustomObject]@{</td></tr>
+        <tr><td class="ln">11</td><td class="code">    Tempo      = <span class="cn">$_</span>.TimeCreated</td></tr>
+        <tr><td class="ln">12</td><td class="code">    Account    = (<span class="cn">$_</span>.Message | Select-String <span class="cv">"Account Name:\s+(\S+)"</span>).Matches.Groups[1].Value</td></tr>
+        <tr><td class="ln">13</td><td class="code">    Servizio   = (<span class="cn">$_</span>.Message | Select-String <span class="cv">"Service Name:\s+(\S+)"</span>).Matches.Groups[1].Value</td></tr>
+        <tr><td class="ln">14</td><td class="code">    Encryption = (<span class="cn">$_</span>.Message | Select-String <span class="cv">"Ticket Encryption Type:\s+(\S+)"</span>).Matches.Groups[1].Value</td></tr>
+        <tr><td class="ln">15</td><td class="code">    IP         = (<span class="cn">$_</span>.Message | Select-String <span class="cv">"Client Address:\s+(\S+)"</span>).Matches.Groups[1].Value</td></tr>
+        <tr><td class="ln">16</td><td class="code">  }</td></tr>
+        <tr><td class="ln">17</td><td class="code">} | Format-Table -AutoSize</td></tr>
+      </table></div>
+    </div>
+
+    <h2>Fase 4: remediation</h2>
+
+    <p>L'attacco funziona perché le password degli account di servizio sono deboli e non ruotano. La remediation parte da lì.</p>
+
+    <div class="pipeline-steps fade-in">
+      <div class="pipeline-step">
+        <div class="step-num">01</div>
+        <div class="step-name">Password lunga e complessa</div>
+        <div class="step-detail">Il Kerberoasting crackka l'hash offline. 25 caratteri casuali lo rendono computazionalmente impossibile anche con hardware dedicato. È il rimedio principale e più immediato.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">02</div>
+        <div class="step-name">Group Managed Service Accounts (gMSA)</div>
+        <div class="step-detail">La soluzione ideale. Windows gestisce la password automaticamente ogni 30 giorni con 120 caratteri casuali. Zero intervento umano, zero rischio di password deboli dimenticate in produzione.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">03</div>
+        <div class="step-name">Abilita AES256, disabilita RC4</div>
+        <div class="step-detail">RC4 è l'encryption type più veloce da crackare. Forzare AES256 rallenta drasticamente il crack offline. Event ID 4769 con 0x17 nei log è il primo segnale da monitorare.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">04</div>
+        <div class="step-name">Rimuovi SPN inutili</div>
+        <div class="step-detail">Ogni SPN registrato su un account con password debole è una superficie di attacco. Se un servizio non è più attivo, lo SPN va rimosso.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">05</div>
+        <div class="step-name">Monitora Event ID 4769</div>
+        <div class="step-detail">Imposta alert su richieste TGS con RC4 (0x17), specialmente da account non di servizio o da IP insoliti. È l'unico modo per accorgersi dell'attacco prima che il crack sia completato.</div>
+      </div>
+    </div>
+
+    <div class="code-block" data-lang="powershell">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># Forza AES256 sull'account</span></td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">Set-ADUser</span> svc-sql -KerberosEncryptionType AES256</td></tr>
+      </table></div>
+    </div>
+
+    <div class="conclusion-box fade-in">
+      <div class="quote">Il Kerberoasting non urla. Entra piano,<br>lavora offline e rientra come se nulla fosse.<br>L'unica difesa è non dargli niente da craccare.</div>
+    </div>
+
+    <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
+      <a id="back-link" href="../index.html" style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-light); text-decoration:none;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-light)'">← Torna agli articoli</a>
+      <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-xlight);">The Unchecked</span>
+    </div>
+
+  </article>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Torna su">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <footer>
+    <span>theunchecked</span>
+    <span>pubblicato su <a href="https://github.com/TheUnchecked/theunchecked">github</a></span>
+  </footer>
+
+  <script>
+    const burger = document.getElementById("burger");
+    const navLinks = document.querySelector(".nav-links");
+    if (burger) {
+      burger.addEventListener("click", () => {
+        burger.classList.toggle("open");
+        navLinks.classList.toggle("mobile-open");
+        document.body.style.overflow = navLinks.classList.contains("mobile-open") ? "hidden" : "";
+      });
+      navLinks.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          burger.classList.remove("open");
+          navLinks.classList.remove("mobile-open");
+          document.body.style.overflow = "";
+        });
+      });
+    }
+
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    const progressBar = document.getElementById("progress-bar");
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollTop / docHeight * 100) + "%";
+    });
+
+    const backToTop = document.getElementById("back-to-top");
+    window.addEventListener("scroll", () => {
+      backToTop.classList.toggle("visible", window.scrollY > 400);
+    });
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const content = document.querySelector(".article-content");
+    if (content) {
+      const words = content.innerText.split(/\s+/).length;
+      const mins = Math.max(1, Math.round(words / 200));
+      const rt = document.getElementById("read-time");
+      if (rt) rt.textContent = " · " + mins + " min";
+    }
+
+    const backLink = document.getElementById("back-link");
+    if (backLink) {
+      backLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => { window.location.href = backLink.href; }, 260);
+      });
+    }
+  </script>
+
+</body>
+</html>
