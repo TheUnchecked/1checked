@@ -19,6 +19,22 @@
   <link rel="alternate" type="application/rss+xml" title="The Unchecked" href="https://theunchecked.github.io/1checked/feed.xml">
   <link rel="stylesheet" href="style.css">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="04641f83-68da-43d1-af67-7ea3b798c434"></script>
+  <style>
+    .card-cover {
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 4px 4px 0 0;
+    }
+    .card-body {
+      padding: 1.2rem;
+    }
+    .card {
+      padding: 0 !important;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
 
@@ -28,7 +44,6 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="#articoli">Articoli</a></li>
-        <li><a href="https://github.com/theunchecked/1checked" target="_blank">GitHub</a></li>
       </ul>
       <button id="theme-toggle" aria-label="Toggle theme">
         <svg id="theme-icon-dark" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -64,88 +79,124 @@
     </div>
     <div class="grid">
       <a class="card" href="articoli/kerberoasting.html">
-        <div class="card-num">01</div>
-        <div class="card-date">Mar 28 · 4 min</div>
-        <h3>Kerberoasting: come funziona l'attacco e come difendersi .</h3>
-        <p>Ti sei mai chiesto quanti account di servizio nel tuo dominio hanno una password che non cambia da anni?</p>
-        <div class="tags"><span class="tag">Active Directory</span><span class="tag">Kerberos</span><span class="tag">Red Team</span><span class="tag">Blue Team</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/images/Kerberos.jpeg')"></div>
+        <div class="card-body">
+          <div class="card-num">01</div>
+          <div class="card-date">Mar 28 · 4 min</div>
+          <h3>Kerberoasting: come funziona l'attacco e come difendersi .</h3>
+          <p>Ti sei mai chiesto quanti account di servizio nel tuo dominio hanno una password che non cambia da anni?</p>
+          <div class="tags"><span class="tag">Active Directory</span><span class="tag">Kerberos</span><span class="tag">Red Team</span><span class="tag">Blue Team</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/copilot-il-ciuoto.html">
-        <div class="card-num">02</div>
-        <div class="card-date">Mar 18 · 3 min</div>
-        <h3>M365 Copilot è "ciuoto" . E meno male.</h3>
-        <p>Ogni tanto dico che M365 Copilot è "ciuoto". E meno male!</p>
-        <div class="tags"><span class="tag">Microsoft 365</span><span class="tag">Copilot</span><span class="tag">Security</span><span class="tag">Cloud</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/images/copilot.jpeg')"></div>
+        <div class="card-body">
+          <div class="card-num">02</div>
+          <div class="card-date">Mar 18 · 3 min</div>
+          <h3>M365 Copilot è "ciuoto" . E meno male.</h3>
+          <p>Ogni tanto dico che M365 Copilot è "ciuoto". E meno male!</p>
+          <div class="tags"><span class="tag">Microsoft 365</span><span class="tag">Copilot</span><span class="tag">Security</span><span class="tag">Cloud</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/organizzazione - lavoro.html">
-        <div class="card-num">03</div>
-        <div class="card-date">Mar 17 · 3 min</div>
-        <h3>Organizzarsi non è ovvio. E i numeri lo dimostrano.</h3>
-        <p>Ho sempre cercato di organizzare il mio lavoro. Di darmi delle priorità, di rispettarle, di non lasciare che l'urgente cannibalizzasse l'importante.</p>
-        <div class="tags"><span class="tag">Consulenza</span><span class="tag">Produttività</span><span class="tag">Organizzazione</span><span class="tag">Automazione</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">03</div>
+          <div class="card-date">Mar 17 · 3 min</div>
+          <h3>Organizzarsi non è ovvio. E i numeri lo dimostrano.</h3>
+          <p>Ho sempre cercato di organizzare il mio lavoro. Di darmi delle priorità, di rispettarle, di non lasciare che l'urgente cannibalizzasse l'importante.</p>
+          <div class="tags"><span class="tag">Consulenza</span><span class="tag">Produttività</span><span class="tag">Organizzazione</span><span class="tag">Automazione</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/IA-Lavoro.html">
-        <div class="card-num">04</div>
-        <div class="card-date">Mar 16 · 2 min</div>
-        <h3>L'IA ci ruberà il lavoro? Solo se lo meriti.</h3>
-        <p>Sento questa domanda ovunque. Nei convegni, sui social, nei corridoi delle aziende, ovunque, anche alla fermata del bus :)</p>
-        <div class="tags"><span class="tag">Intelligenza artificiale</span><span class="tag">Lavoro</span><span class="tag">Società</span><span class="tag">Riflessioni</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">04</div>
+          <div class="card-date">Mar 16 · 2 min</div>
+          <h3>L'IA ci ruberà il lavoro? Solo se lo meriti.</h3>
+          <p>Sento questa domanda ovunque. Nei convegni, sui social, nei corridoi delle aziende, ovunque, anche alla fermata del bus :)</p>
+          <div class="tags"><span class="tag">Intelligenza artificiale</span><span class="tag">Lavoro</span><span class="tag">Società</span><span class="tag">Riflessioni</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/la-vita-và-così.html">
-        <div class="card-num">05</div>
-        <div class="card-date">Mar 16 · 3 min</div>
-        <h3>Ovidio Marras: l'eroe che nessuno di noi sarebbe.</h3>
-        <p>Chi rinuncerebbe oggi a milioni di euro?</p>
-        <div class="tags"><span class="tag">Società</span><span class="tag">Valori</span><span class="tag">Italia</span><span class="tag">Riflessioni</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">05</div>
+          <div class="card-date">Mar 16 · 3 min</div>
+          <h3>Ovidio Marras: l'eroe che nessuno di noi sarebbe.</h3>
+          <p>Chi rinuncerebbe oggi a milioni di euro?</p>
+          <div class="tags"><span class="tag">Società</span><span class="tag">Valori</span><span class="tag">Italia</span><span class="tag">Riflessioni</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/azure-storage.html">
-        <div class="card-num">06</div>
-        <div class="card-date">Mar 15 · 3 min</div>
-        <h3>Azure Storage: scegli la ridondanza sbagliata e lo scopri nel momento peggiore .</h3>
-        <p>Ti sei mai trovato a configurare uno Storage Account, scegliere GRS perché "tanto è geo-ridondante", e andare avanti senza pensarci più?</p>
-        <div class="tags"><span class="tag">Azure</span><span class="tag">Storage</span><span class="tag">Cloud</span><span class="tag">Disaster Recovery</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">06</div>
+          <div class="card-date">Mar 15 · 3 min</div>
+          <h3>Azure Storage: scegli la ridondanza sbagliata e lo scopri nel momento peggiore .</h3>
+          <p>Ti sei mai trovato a configurare uno Storage Account, scegliere GRS perché "tanto è geo-ridondante", e andare avanti senza pensarci più?</p>
+          <div class="tags"><span class="tag">Azure</span><span class="tag">Storage</span><span class="tag">Cloud</span><span class="tag">Disaster Recovery</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/rc4-kerberos-2026.html">
-        <div class="card-num">07</div>
-        <div class="card-date">Mar 15 · 3 min</div>
-        <h3>RC4 e Kerberos: hai tempo fino a luglio 2026 . Non sprecarlo.</h3>
-        <p>Ti sei mai trovato a gestire un'interruzione di servizio su Active Directory senza capire immediatamente da dove venisse?</p>
-        <div class="tags"><span class="tag">Kerberos</span><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">RC4</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">07</div>
+          <div class="card-date">Mar 15 · 3 min</div>
+          <h3>RC4 e Kerberos: hai tempo fino a luglio 2026 . Non sprecarlo.</h3>
+          <p>Ti sei mai trovato a gestire un'interruzione di servizio su Active Directory senza capire immediatamente da dove venisse?</p>
+          <div class="tags"><span class="tag">Kerberos</span><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">RC4</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/adminsdholder.html">
-        <div class="card-num">08</div>
-        <div class="card-date">Mar 13 · 3 min</div>
-        <h3>AdminSDHolder: perché i tuoi permessi spariscono ogni 60 minuti .</h3>
-        <p>Hai appena passato mezz'ora a sistemare i permessi su un account in Active Directory. Riabiliti l'ereditarietà, salvi, tutto ok. Un'ora dopo il tuo collega ti c...</p>
-        <div class="tags"><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">RBAC</span><span class="tag">IT Career</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">08</div>
+          <div class="card-date">Mar 13 · 3 min</div>
+          <h3>AdminSDHolder: perché i tuoi permessi spariscono ogni 60 minuti .</h3>
+          <p>Hai appena passato mezz'ora a sistemare i permessi su un account in Active Directory. Riabiliti l'ereditarietà, salvi, tutto ok. Un'ora dopo il tuo collega ti c...</p>
+          <div class="tags"><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">RBAC</span><span class="tag">IT Career</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/domain-join-risks.html">
-        <div class="card-num">09</div>
-        <div class="card-date">Mar 13 · 6 min</div>
-        <h3>La falla silenziosa: i rischi dell'account Domain Join in Active Directory .</h3>
-        <p>Un tecnico dell'Help Desk scarta un nuovo laptop aziendale. Avvia l'installazione di Windows 11. Preme F12 per il boot PXE.</p>
-        <div class="tags"><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">Blue Team</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">09</div>
+          <div class="card-date">Mar 13 · 6 min</div>
+          <h3>La falla silenziosa: i rischi dell'account Domain Join in Active Directory .</h3>
+          <p>Un tecnico dell'Help Desk scarta un nuovo laptop aziendale. Avvia l'installazione di Windows 11. Preme F12 per il boot PXE.</p>
+          <div class="tags"><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">Blue Team</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/zero-trust.html">
-        <div class="card-num">10</div>
-        <div class="card-date">Mar 11 · 4 min</div>
-        <h3>Zero Trust non è un prodotto. È una mentalità .</h3>
-        <p>Ogni vendor di sicurezza ha una soluzione Zero Trust. Firewall Zero Trust. VPN Zero Trust. Antivirus Zero Trust. Se metti "Zero Trust" su qualsiasi cosa, il pre...</p>
-        <div class="tags"><span class="tag">Zero Trust</span><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">Strategia</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">10</div>
+          <div class="card-date">Mar 11 · 4 min</div>
+          <h3>Zero Trust non è un prodotto. È una mentalità .</h3>
+          <p>Ogni vendor di sicurezza ha una soluzione Zero Trust. Firewall Zero Trust. VPN Zero Trust. Antivirus Zero Trust. Se metti "Zero Trust" su qualsiasi cosa, il pre...</p>
+          <div class="tags"><span class="tag">Zero Trust</span><span class="tag">Active Directory</span><span class="tag">Security</span><span class="tag">Strategia</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/exchange-split-permissions.html">
-        <div class="card-num">11</div>
-        <div class="card-date">Mar 06 · 3 min</div>
-        <h3>Exchange on-prem: il rischio che dorme nella tua configurazione di default</h3>
-        <p>Si chiamaShared Permissions Modella configurazione con cui Exchange viene installato per impostazione predefinita. Funziona così: Exchange riceve permessi ampi ...</p>
-        <div class="tags"><span class="tag">Exchange</span><span class="tag">Active Directory</span><span class="tag">RBAC</span><span class="tag">Security</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">11</div>
+          <div class="card-date">Mar 06 · 3 min</div>
+          <h3>Exchange on-prem: il rischio che dorme nella tua configurazione di default</h3>
+          <p>Si chiamaShared Permissions Modella configurazione con cui Exchange viene installato per impostazione predefinita. Funziona così: Exchange riceve permessi ampi ...</p>
+          <div class="tags"><span class="tag">Exchange</span><span class="tag">Active Directory</span><span class="tag">RBAC</span><span class="tag">Security</span></div>
+        </div>
       </a>
       <a class="card" href="articoli/la-matematica-degli-agent.html">
-        <div class="card-num">12</div>
-        <div class="card-date">Mar 06 · 2 min</div>
-        <h3>La matematica degli agent non mente, ma siamo sicuri che basti questo?</h3>
-        <p>Un'azienda, 10.000 dipendenti. Costo medio: 5.000€ al mese a persona, tasse incluse. Diciamo che la metà fa lavoro eseguibile da un sistema automatizzato. Sono2...</p>
-        <div class="tags"><span class="tag">AI</span><span class="tag">Lavoro</span><span class="tag">Agent</span><span class="tag">Strategia</span></div>
+        <div class="card-cover" style="background-image:url('https://theunchecked.github.io/1checked/assets/og-default.png')"></div>
+        <div class="card-body">
+          <div class="card-num">12</div>
+          <div class="card-date">Mar 06 · 2 min</div>
+          <h3>La matematica degli agent non mente, ma siamo sicuri che basti questo?</h3>
+          <p>Un'azienda, 10.000 dipendenti. Costo medio: 5.000€ al mese a persona, tasse incluse. Diciamo che la metà fa lavoro eseguibile da un sistema automatizzato. Sono2...</p>
+          <div class="tags"><span class="tag">AI</span><span class="tag">Lavoro</span><span class="tag">Agent</span><span class="tag">Strategia</span></div>
+        </div>
       </a>
     </div>
   </section>
