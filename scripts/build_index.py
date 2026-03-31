@@ -7,6 +7,7 @@ ARTICLES_DIR = "articoli"
 OUTPUT_FILE = "index.html"
 FEED_FILE = "feed.xml"
 BASE_URL = "https://theunchecked.github.io/1checked"
+DEFAULT_IMAGE = f"{BASE_URL}/assets/og-default.png"
 
 def extract_article_data(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
@@ -41,6 +42,12 @@ def extract_article_data(filepath):
         words = len(content.get_text().split())
         read_time = max(1, round(words / 200))
 
+    # Legge og:image per la thumbnail della card
+    image = DEFAULT_IMAGE
+    og_image = soup.find("meta", property="og:image")
+    if og_image and og_image.get("content"):
+        image = og_image["content"]
+
     filename = os.path.basename(filepath)
     return {
         "title": title,
@@ -48,7 +55,8 @@ def extract_article_data(filepath):
         "date": date,
         "tags": tags,
         "file": filename,
-        "read_time": read_time
+        "read_time": read_time,
+        "image": image
     }
 
 def format_date_short(date_str):
@@ -65,11 +73,14 @@ def build_card(article, index):
     num = str(index + 1).zfill(2)
     return f"""
       <a class="card" href="articoli/{article['file']}">
-        <div class="card-num">{num}</div>
-        <div class="card-date">{date_short} · {article['read_time']} min</div>
-        <h3>{article['title']}</h3>
-        <p>{article['subtitle']}</p>
-        <div class="tags">{tags_html}</div>
+        <div class="card-cover" style="background-image:url('{article['image']}')"></div>
+        <div class="card-body">
+          <div class="card-num">{num}</div>
+          <div class="card-date">{date_short} · {article['read_time']} min</div>
+          <h3>{article['title']}</h3>
+          <p>{article['subtitle']}</p>
+          <div class="tags">{tags_html}</div>
+        </div>
       </a>"""
 
 def date_to_rfc822(date_str):
@@ -143,6 +154,22 @@ def build_index(articles):
   <link rel="alternate" type="application/rss+xml" title="The Unchecked" href="{BASE_URL}/feed.xml">
   <link rel="stylesheet" href="style.css">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="04641f83-68da-43d1-af67-7ea3b798c434"></script>
+  <style>
+    .card-cover {{
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 4px 4px 0 0;
+    }}
+    .card-body {{
+      padding: 1.2rem;
+    }}
+    .card {{
+      padding: 0 !important;
+      overflow: hidden;
+    }}
+  </style>
 </head>
 <body>
 
@@ -152,7 +179,6 @@ def build_index(articles):
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="#articoli">Articoli</a></li>
-        <li><a href="https://github.com/theunchecked/1checked" target="_blank">GitHub</a></li>
       </ul>
       <button id="theme-toggle" aria-label="Toggle theme">
         <svg id="theme-icon-dark" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
