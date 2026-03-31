@@ -201,12 +201,6 @@ def build_index(articles):
     </div>
   </section>
 
-  <div class="featured">
-    <div class="featured-label">The Unchecked</div>
-    <div class="featured-quote">"Non dare niente per scontato. Mai. dentro alla realtà."</div>
-    <div class="featured-byline">theunchecked</div>
-  </div>
-
   <section class="section" id="articoli">
     <div class="section-header">
       <div class="section-title">Articoli recenti</div>
