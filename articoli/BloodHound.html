@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodHound CE: guida rapida al primo avvio — The Unchecked</title>
+  <meta name="description" content="Hai installato BloodHound CE su Kali Linux con Docker. Ecco come avviarlo, raccogliere i dati e leggere i risultati senza perdere un'ora a inseguire errori.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Unchecked">
+  <meta property="og:title" content="BloodHound CE: guida rapida al primo avvio.">
+  <meta property="og:description" content="Hai installato BloodHound CE su Kali Linux con Docker. Ecco come avviarlo, raccogliere i dati e leggere i risultati senza perdere un'ora a inseguire errori.">
+  <meta property="og:url" content="https://theunchecked.github.io/1checked/articoli/bloodhound-ce.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../style.css">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="04641f83-68da-43d1-af67-7ea3b798c434"></script>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <nav>
+    <a href="../index.html" class="logo"><span style="color:#C3D809">[</span> Unchecked <span style="color:#C3D809">]</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#articoli">Articoli</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button id="theme-toggle" aria-label="Toggle theme">
+        <svg id="theme-icon-dark" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="theme-icon-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="article-header">
+    <p class="article-meta">2026-04-02 | The Unchecked<span class="read-time" id="read-time"></span></p>
+    <span class="article-number">12</span>
+    <h1 class="article-page-title">BloodHound CE su Kali Linux:<br>guida rapida al <mark>primo avvio</mark>.</h1>
+    <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:var(--ink-light); margin-top:1.2rem; line-height:1.7;">
+      Hai installato BloodHound CE con Docker. Adesso vuoi capire come avviarlo, raccogliere i dati dal dominio e leggere i risultati senza perdere un'ora a inseguire errori stupidi. Questa guida va dritta al punto.
+    </p>
+    <div class="tags" style="margin-top:1.5rem;">
+      <span class="tag">BloodHound</span>
+      <span class="tag">Active Directory</span>
+      <span class="tag">Kali Linux</span>
+      <span class="tag">Red Team</span>
+    </div>
+  </header>
+
+  <article class="article-content">
+
+    <h2>Avvio di BloodHound</h2>
+
+    <p>La prima volta, scarica il file di configurazione e avvia i container:</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">mkdir</span> ~/bloodhound && <span class="ck">cd</span> ~/bloodhound</td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">curl</span> -L https://ghst.ly/getbhce -o docker-compose.yml</td></tr>
+        <tr><td class="ln">3</td><td class="code"><span class="ck">sudo docker compose up</span></td></tr>
+      </table></div>
+    </div>
+
+    <p>Nei log trovi la password iniziale dell'utente admin:</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">sudo docker compose logs</span> bloodhound | <span class="ck">grep</span> -i password</td></tr>
+      </table></div>
+    </div>
+
+    <p>Accedi su <code>http://localhost:8080/ui/login</code> con utente <code>admin</code> e la password trovata nei log. Al primo accesso ti verrà chiesto di cambiarla.</p>
+
+    <p>Dagli avvii successivi ti basta:</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">cd</span> ~/bloodhound</td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">sudo docker compose up</span></td></tr>
+      </table></div>
+    </div>
+
+    <p>Per spegnere:</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">sudo docker compose down</span></td></tr>
+      </table></div>
+    </div>
+
+    <h2>Configurazione di rete</h2>
+
+    <p>Se la tua VM usa un'interfaccia <code>eth1</code> per raggiungere il dominio, tieni presente che la configurazione IP non è persistente: si perde a ogni riavvio della VM e va riassegnata manualmente.</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">sudo ip addr add</span> 192.168.10.50/24 dev eth1</td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">sudo ip link set</span> eth1 up</td></tr>
+        <tr><td class="ln">3</td><td class="code"><span class="ck">echo</span> <span class="cs">"nameserver 192.168.10.10"</span> | <span class="ck">sudo tee</span> /etc/resolv.conf</td></tr>
+      </table></div>
+    </div>
+
+    <div class="warning-box fade-in">
+      <p>Verifica sempre la connettività prima di lanciare la scansione. Se non risponde, l'IP è saltato — riassegna e riprova.</p>
+    </div>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">ping</span> -c 3 192.168.10.10</td></tr>
+      </table></div>
+    </div>
+
+    <h2>Raccolta dati con bloodhound-python</h2>
+
+    <p>Installa il collector:</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">pip install</span> bloodhound --break-system-packages</td></tr>
+      </table></div>
+    </div>
+
+    <p>Crea una cartella dedicata e lancia la scansione:</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="ck">mkdir</span> ~/bloodhound-data && <span class="ck">cd</span> ~/bloodhound-data</td></tr>
+        <tr><td class="ln">2</td><td class="code"></td></tr>
+        <tr><td class="ln">3</td><td class="code"><span class="ck">bloodhound-python</span> -u &lt;utente&gt; -p &lt;password&gt; -d staging.lab -ns 192.168.10.10 -c all</td></tr>
+      </table></div>
+    </div>
+
+    <div class="pipeline-steps fade-in">
+      <div class="pipeline-step">
+        <div class="step-num">-u / -p</div>
+        <div class="step-name">Credenziali utente di dominio</div>
+        <div class="step-detail">Funziona anche con un account senza privilegi. Non serve essere Domain Admin per raccogliere i dati.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">-d</div>
+        <div class="step-name">Nome del dominio</div>
+        <div class="step-detail">Il nome FQDN del dominio Active Directory da analizzare. Es: staging.lab</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">-ns</div>
+        <div class="step-name">IP del Domain Controller</div>
+        <div class="step-detail">L'indirizzo IP del DC che funge da nameserver per il dominio.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">-c all</div>
+        <div class="step-name">Raccoglie tutti i dati disponibili</div>
+        <div class="step-detail">Utenti, gruppi, computer, sessioni, ACL, trust. I file .json vengono salvati nella cartella corrente.</div>
+      </div>
+    </div>
+
+    <p>Tieni la cartella ordinata: se lanci più scansioni, i file si accumulano e puoi perdere traccia di quale set è aggiornato.</p>
+
+    <h2>Importazione dati e utilizzo dell'interfaccia</h2>
+
+    <p>Apri <code>http://localhost:8080/ui/login</code>, clicca sull'icona di upload nella barra sinistra e seleziona tutti i file <code>.json</code> da <code>~/bloodhound-data</code>. L'importazione richiede qualche secondo.</p>
+
+    <p>Vai su Explore e cerca il dominio nella barra di ricerca. Da lì puoi navigare la struttura del dominio e lanciare le query predefinite dall'icona con il fulmine.</p>
+
+    <div class="two-cols fade-in">
+      <div class="col-side col-left">
+        <div class="col-side-title">Query di attacco</div>
+        <p>Shortest Paths to Domain Admins</p>
+        <p>List all Kerberoastable Users</p>
+        <p>List all AS-REP Roastable Users</p>
+      </div>
+      <div class="col-side col-right">
+        <div class="col-side-title">Query di ricognizione</div>
+        <p>Find Computers with Sessions</p>
+        <p>Find all Domain Admins</p>
+        <p>Find Shortest Paths to High Value Targets</p>
+      </div>
+    </div>
+
+    <p>Per query più avanzate: <a href="https://queries.specterops.io" target="_blank" style="color:var(--accent);">queries.specterops.io</a></p>
+
+    <h2>Errori comuni</h2>
+
+    <div class="pipeline-steps fade-in">
+      <div class="pipeline-step">
+        <div class="step-num">!</div>
+        <div class="step-name">Porta 7474 già in uso</div>
+        <div class="step-detail">Messaggio: "failed to bind host port 127.0.0.1:7474". Causa: Neo4j installato sul sistema occupa la porta. Soluzione: sudo systemctl stop neo4j</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">!</div>
+        <div class="step-name">DNS timeout durante la scansione</div>
+        <div class="step-detail">Messaggio: "dns.resolver.LifetimeTimeout". Causa: eth1 ha perso l'IP o il DC non è raggiungibile. Verifica connettività e riassegna l'IP se necessario.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">!</div>
+        <div class="step-name">dhclient non trovato</div>
+        <div class="step-detail">Usa dhcpcd al posto di dhclient: sudo dhcpcd eth0</div>
+      </div>
+    </div>
+
+    <h2>Reinstallazione completa</h2>
+
+    <p>Se qualcosa è andato storto e vuoi ripartire da zero:</p>
+
+    <div class="code-block" data-lang="bash">
+      <div class="code-wrap"><table>
+        <tr><td class="ln">1</td><td class="code"><span class="cc"># Rimuovi container e volumi</span></td></tr>
+        <tr><td class="ln">2</td><td class="code"><span class="ck">sudo docker compose down</span> -v</td></tr>
+        <tr><td class="ln">3</td><td class="code"><span class="ck">sudo docker system prune</span> -a --volumes</td></tr>
+        <tr><td class="ln">4</td><td class="code"></td></tr>
+        <tr><td class="ln">5</td><td class="code"><span class="cc"># Rimuovi Neo4j dal sistema</span></td></tr>
+        <tr><td class="ln">6</td><td class="code"><span class="ck">sudo apt remove</span> --purge neo4j python3-neo4j -y</td></tr>
+        <tr><td class="ln">7</td><td class="code"><span class="ck">sudo apt autoremove</span> -y</td></tr>
+        <tr><td class="ln">8</td><td class="code"><span class="ck">sudo rm</span> -rf /var/lib/neo4j /var/log/neo4j /etc/neo4j</td></tr>
+        <tr><td class="ln">9</td><td class="code"></td></tr>
+        <tr><td class="ln">10</td><td class="code"><span class="cc"># Reinstalla</span></td></tr>
+        <tr><td class="ln">11</td><td class="code"><span class="ck">curl</span> -L https://ghst.ly/getbhce -o docker-compose.yml</td></tr>
+        <tr><td class="ln">12</td><td class="code"><span class="ck">sudo docker compose up</span></td></tr>
+      </table></div>
+    </div>
+
+    <div class="conclusion-box fade-in">
+      <div class="quote">BloodHound non è uno strumento offensivo.<br>È uno strumento di visibilità. Usalo per vedere quello<br>che un attaccante vedrebbe prima di te.</div>
+    </div>
+
+    <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
+      <a id="back-link" href="../index.html" style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-light); text-decoration:none;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-light)'">← Torna agli articoli</a>
+      <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-xlight);">The Unchecked</span>
+    </div>
+
+  </article>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Torna su">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <footer>
+    <span>the.unchecked</span>
+    <span>pubblicato su <a href="https://github.com/theunchecked/1checked">github</a></span>
+  </footer>
+
+  <script>
+    const burger = document.getElementById("burger");
+    const navLinks = document.querySelector(".nav-links");
+    if (burger) {
+      burger.addEventListener("click", () => {
+        burger.classList.toggle("open");
+        navLinks.classList.toggle("mobile-open");
+        document.body.style.overflow = navLinks.classList.contains("mobile-open") ? "hidden" : "";
+      });
+      navLinks.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          burger.classList.remove("open");
+          navLinks.classList.remove("mobile-open");
+          document.body.style.overflow = "";
+        });
+      });
+    }
+
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    const progressBar = document.getElementById("progress-bar");
+    const backToTop = document.getElementById("back-to-top");
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollTop / docHeight * 100) + "%";
+      backToTop.classList.toggle("visible", scrollTop > 400);
+    });
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const content = document.querySelector(".article-content");
+    if (content) {
+      const words = content.innerText.split(/\s+/).length;
+      const mins = Math.max(1, Math.round(words / 200));
+      const rt = document.getElementById("read-time");
+      if (rt) rt.textContent = " · " + mins + " min";
+    }
+
+    const backLink = document.getElementById("back-link");
+    if (backLink) {
+      backLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => { window.location.href = backLink.href; }, 260);
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
