@@ -4,52 +4,43 @@
   <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SC-900: Sistema di studio ad alta ritenzione — The Unchecked</title>
+  <title>SC-900: Sistema di studio ad alta ritenzione &mdash; The Unchecked</title>
   <meta name="description" content="Guida completa per superare l'esame SC-900 Microsoft Security, Compliance and Identity Fundamentals. Principi, flash card, piano di studio e gli errori da evitare.">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="The Unchecked">
   <meta property="og:title" content="SC-900: Sistema di studio ad alta ritenzione">
   <meta property="og:description" content="Guida completa per superare l'esame SC-900. Principi, flash card, piano di studio e gli errori da evitare.">
   <link rel="icon" type="image/png" href="../assets/favicon.png">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;900&family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Instrument+Serif:ital@0;1&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-
   <style>
-    /* ============================================
-       VARIABLES — identiche al blog
-    ============================================ */
     :root {
-      --bg:         #f2f5e8;
-      --bg-sec:     #e5e8d8;
-      --ink:        #222022;
-      --ink-light:  #555255;
+      --bg: #f2f5e8;
+      --bg-sec: #e5e8d8;
+      --ink: #222022;
+      --ink-light: #555255;
       --ink-xlight: #c8ccb8;
-      --ink-black:  #222022;
-      --accent:     #C3D809;
-      --font-head:  'Barlow Condensed', sans-serif;
-      --font-body:  'Lora', serif;
+      --ink-black: #222022;
+      --accent: #C3D809;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Lora', serif;
       --font-serif: 'Instrument Serif', serif;
-      --font-disp:  'Bebas Neue', cursive;
+      --font-disp: 'Bebas Neue', cursive;
       --transition: 0.2s ease;
     }
-
     [data-theme="dark"] {
-      --bg:         #222022;
-      --bg-sec:     #2e2c2e;
-      --ink:        #f2f5e8;
-      --ink-light:  #888688;
+      --bg: #222022;
+      --bg-sec: #2e2c2e;
+      --ink: #f2f5e8;
+      --ink-light: #888688;
       --ink-xlight: #333133;
-      --ink-black:  #f2f5e8;
-      --accent:     #C3D809;
+      --ink-black: #f2f5e8;
+      --accent: #C3D809;
     }
-
     ::selection { background: #C3D809; color: #222022; }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--ink);
@@ -59,16 +50,12 @@
       transition: background var(--transition), color var(--transition);
       animation: pageFadeIn 0.3s ease;
     }
-
     @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
     .fade-out { opacity: 0 !important; transition: opacity 0.25s ease !important; }
-
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
 
-    /* ============================================
-       NAV
-    ============================================ */
+    /* NAV */
     nav {
       display: flex;
       justify-content: space-between;
@@ -81,949 +68,209 @@
       z-index: 100;
       transition: background var(--transition), border-color var(--transition);
     }
-
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink);
-      white-space: nowrap;
-    }
-
+    .logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
     .logo span { color: #C3D809; font-weight: 800; }
-
     .nav-right { display: flex; align-items: center; gap: 2.5rem; }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      font-family: var(--font-head);
-    }
-
+    .nav-links { display: flex; gap: 2rem; list-style: none; font-size: 0.7rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); font-family: var(--font-head); }
     .nav-links a:hover { color: var(--ink); }
-
-    .burger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.3rem;
-      z-index: 110;
-    }
-
-    .burger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: var(--ink);
-      transition: all 0.25s ease;
-      transform-origin: center;
-    }
-
+    .burger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.3rem; z-index: 110; }
+    .burger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: all 0.25s ease; transform-origin: center; }
     .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .burger.open span:nth-child(2) { opacity: 0; }
     .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    .nav-links.mobile-open {
-      display: flex !important;
-      flex-direction: column;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--bg);
-      z-index: 105;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-      font-size: 1.2rem;
-      letter-spacing: 4px;
-      animation: menuFadeIn 0.2s ease;
-    }
-
+    .nav-links.mobile-open { display: flex !important; flex-direction: column; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 105; align-items: center; justify-content: center; gap: 2.5rem; font-size: 1.2rem; letter-spacing: 4px; animation: menuFadeIn 0.2s ease; }
     @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
-
     .nav-links.mobile-open a { color: var(--ink); font-size: 1.1rem; letter-spacing: 4px; }
     .nav-links.mobile-open a:hover { color: #C3D809; }
-
-    #theme-toggle {
-      background: none;
-      border: 1px solid var(--ink-xlight);
-      cursor: pointer;
-      padding: 0.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      transition: border-color var(--transition);
-    }
-
+    #theme-toggle { background: none; border: 1px solid var(--ink-xlight); cursor: pointer; padding: 0.4rem; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; transition: border-color var(--transition); }
     #theme-toggle:hover { border-color: var(--ink); }
-
-    #theme-toggle svg {
-      width: 14px;
-      height: 14px;
-      stroke: var(--ink);
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    [data-theme="dark"]  #theme-icon-dark  { display: none; }
+    #theme-toggle svg { width: 14px; height: 14px; stroke: var(--ink); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    [data-theme="dark"] #theme-icon-dark { display: none; }
     [data-theme="light"] #theme-icon-light { display: none; }
 
-    /* ============================================
-       PROGRESS BAR
-    ============================================ */
-    .progress-bar {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: #C3D809;
-      width: 0%;
-      z-index: 999;
-      transition: width 0.1s linear;
-    }
+    /* PROGRESS BAR */
+    .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: #C3D809; width: 0%; z-index: 999; transition: width 0.1s linear; }
 
-    /* ============================================
-       ARTICLE HEADER
-    ============================================ */
-    .article-header {
-      padding: 5rem 3rem 3rem;
-      border-bottom: 1px solid var(--ink-xlight);
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .article-number {
-      display: block;
-      font-family: var(--font-disp);
-      font-size: 6rem;
-      line-height: 0.85;
-      color: var(--ink-xlight);
-      margin-bottom: -0.5rem;
-      user-select: none;
-    }
-
-    .article-meta {
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .article-meta::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--ink-light);
-    }
-
-    .article-page-title {
-      font-family: var(--font-head);
-      font-size: 3.2rem;
-      font-weight: 900;
-      line-height: 0.95;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 1.5rem;
-    }
-
-    .article-page-title mark {
-      background: #C3D809;
-      color: #222022;
-      padding: 0 0.2rem;
-    }
-
+    /* ARTICLE HEADER */
+    .article-header { padding: 5rem 3rem 3rem; border-bottom: 1px solid var(--ink-xlight); max-width: 860px; margin: 0 auto; }
+    .article-number { display: block; font-family: var(--font-disp); font-size: 6rem; line-height: 0.85; color: var(--ink-xlight); margin-bottom: -0.5rem; user-select: none; }
+    .article-meta { font-family: var(--font-head); font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+    .article-meta::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--ink-light); }
+    .article-page-title { font-family: var(--font-head); font-size: 3.2rem; font-weight: 900; line-height: 0.95; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; }
+    .article-page-title mark { background: #C3D809; color: #222022; padding: 0 0.2rem; }
     .tags { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; }
+    .tag { font-family: var(--font-head); font-size: 0.6rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); }
+    .tag::before { content: '-- '; }
 
-    .tag {
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-    }
-
-    .tag::before { content: '— '; }
-
-    /* ============================================
-       ARTICLE CONTENT
-    ============================================ */
-    .article-content {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 3rem 3rem 5rem;
-    }
-
-    .article-content p {
-      font-family: 'Lora', serif;
-      font-size: 1.15rem;
-      line-height: 2;
-      color: var(--ink);
-      margin-bottom: 1.8rem;
-    }
-
-    .article-content h2 {
-      font-family: var(--font-head);
-      font-size: 1.8rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-top: 2px solid var(--ink);
-      padding-top: 1.5rem;
-      margin: 4rem 0 1.2rem;
-    }
-
-    .article-content blockquote {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 1.3rem;
-      line-height: 1.7;
-      border-left: 3px solid #C3D809;
-      padding: 0.8rem 0 0.8rem 1.5rem;
-      margin: 2.5rem 0;
-      color: var(--ink);
-    }
-
+    /* ARTICLE CONTENT */
+    .article-content { max-width: 680px; margin: 0 auto; padding: 3rem 3rem 5rem; }
+    .article-content p { font-family: 'Lora', serif; font-size: 1.15rem; line-height: 2; color: var(--ink); margin-bottom: 1.8rem; }
+    .article-content h2 { font-family: var(--font-head); font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border-top: 2px solid var(--ink); padding-top: 1.5rem; margin: 4rem 0 1.2rem; }
+    .article-content blockquote { font-family: 'Lora', serif; font-style: italic; font-size: 1.3rem; line-height: 1.7; border-left: 3px solid #C3D809; padding: 0.8rem 0 0.8rem 1.5rem; margin: 2.5rem 0; color: var(--ink); }
     .article-content ul, .article-content ol { padding-left: 1.5rem; margin-bottom: 1.4rem; }
-
-    .article-content li {
-      font-family: 'Lora', serif;
-      font-size: 1.05rem;
-      line-height: 1.9;
-      margin-bottom: 0.4rem;
-    }
-
-    .article-content a {
-      color: var(--ink);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--ink-xlight);
-      transition: text-decoration-color var(--transition);
-    }
-
+    .article-content li { font-family: 'Lora', serif; font-size: 1.05rem; line-height: 1.9; margin-bottom: 0.4rem; }
+    .article-content a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--ink-xlight); transition: text-decoration-color var(--transition); }
     .article-content a:hover { text-decoration-color: var(--ink); }
 
-    /* Boxes */
-    .insight-box {
-      border: 1px solid var(--ink-xlight);
-      border-left: 3px solid var(--ink);
-      padding: 1.2rem 1.5rem;
-      margin: 1.5rem 0;
-      background: var(--bg-sec);
-    }
-
+    /* BOXES */
+    .insight-box { border: 1px solid var(--ink-xlight); border-left: 3px solid var(--ink); padding: 1.2rem 1.5rem; margin: 1.5rem 0; background: var(--bg-sec); }
     .insight-box p { margin: 0; font-style: normal !important; }
-
-    .warning-box {
-      border: 1px solid var(--ink-xlight);
-      border-left: 3px solid #C3D809;
-      padding: 1.2rem 1.5rem;
-      margin: 1.5rem 0;
-      background: var(--bg-sec);
-    }
-
+    .warning-box { border: 1px solid var(--ink-xlight); border-left: 3px solid #C3D809; padding: 1.2rem 1.5rem; margin: 1.5rem 0; background: var(--bg-sec); }
     .warning-box p { margin: 0; font-style: normal !important; }
+    .conclusion-box { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 2rem 0; margin: 3rem 0; text-align: center; }
+    .conclusion-box .quote { font-family: var(--font-head); font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; line-height: 1.1; }
 
-    .conclusion-box {
-      border-top: 2px solid var(--ink);
-      border-bottom: 2px solid var(--ink);
-      padding: 2rem 0;
-      margin: 3rem 0;
-      text-align: center;
-    }
-
-    .conclusion-box .quote {
-      font-family: var(--font-head);
-      font-size: 1.8rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      line-height: 1.1;
-    }
-
-    /* Stats */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    .stat-card {
-      padding: 1.5rem 1.2rem;
-      text-align: center;
-      border: 1px solid var(--ink-xlight);
-      border-top: 3px solid var(--ink);
-    }
-
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .stat-card { padding: 1.5rem 1.2rem; text-align: center; border: 1px solid var(--ink-xlight); border-top: 3px solid var(--ink); }
     .stat-card:nth-child(odd) { border-top-color: #C3D809; }
     .stat-card:nth-child(even) { border-top-color: var(--ink); }
     .stat-card:nth-child(odd) .stat-number { color: #C3D809; }
-    .stat-card:nth-child(even) .stat-number { color: var(--ink); }
+    .stat-number { font-family: var(--font-disp); font-size: 2.5rem; line-height: 1; }
+    .stat-label { font-family: var(--font-head); font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); margin-top: 0.4rem; }
 
-    [data-theme="dark"] .stat-card:nth-child(odd) .stat-number { color: #C3D809; }
-
-    .stat-number {
-      font-family: var(--font-disp);
-      font-size: 2.5rem;
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-top: 0.4rem;
-    }
-
-    /* Pipeline */
-    .pipeline-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1px;
-      background: var(--ink-xlight);
-      border: 1px solid var(--ink-xlight);
-      margin: 1.5rem 0;
-    }
-
-    .pipeline-step { background: var(--bg); padding: 1.5rem 1.2rem; text-align: center; }
-
-    .step-num {
-      font-family: var(--font-disp);
-      font-size: 2.5rem;
-      line-height: 1;
-      color: var(--ink-xlight);
-    }
-
-    .step-name {
-      font-family: var(--font-head);
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 0.5rem;
-      color: var(--ink);
-    }
-
-    .step-detail {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 0.82rem;
-      color: var(--ink-light);
-      margin-top: 0.4rem;
-      line-height: 1.6;
-    }
-
-    /* Two cols */
-    .two-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border: 1px solid var(--ink-xlight);
-      margin: 1.5rem 0;
-    }
-
+    /* TWO COLS */
+    .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--ink-xlight); margin: 1.5rem 0; }
     .col-side { padding: 1.5rem; }
     .col-left { border-right: 1px solid var(--ink-xlight); }
+    .col-side-title { font-family: var(--font-head); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--ink-xlight); }
+    .col-side p { font-family: 'Lora', serif !important; font-size: 0.9rem !important; line-height: 1.7 !important; margin: 0.4rem 0 !important; }
 
-    .col-side-title {
-      font-family: var(--font-head);
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--ink-xlight);
-    }
-
-    .col-side p {
-      font-family: 'Lora', serif !important;
-      font-size: 0.9rem !important;
-      line-height: 1.7 !important;
-      margin: 0.4rem 0 !important;
-    }
-
-    /* Fade-in */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
+    /* FADE IN */
+    .fade-in { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    /* ============================================
-       TABS NAVIGATION — stile blog
-    ============================================ */
-    .tabs-wrapper {
-      border-bottom: 2px solid #C3D809;
-      margin: 4rem 0 0;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .tabs-nav {
-      display: flex;
-      gap: 0;
-      list-style: none;
-      min-width: max-content;
-    }
-
-    .tab-btn {
-      font-family: var(--font-head);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.8rem 1.4rem;
-      border-bottom: 3px solid transparent;
-      margin-bottom: -2px;
-      transition: color var(--transition), border-color var(--transition);
-      white-space: nowrap;
-    }
-
+    /* TABS */
+    .tabs-wrapper { border-bottom: 2px solid #C3D809; margin: 4rem 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tabs-nav { display: flex; gap: 0; list-style: none; min-width: max-content; }
+    .tab-btn { font-family: var(--font-head); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); background: none; border: none; cursor: pointer; padding: 0.8rem 1.4rem; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color var(--transition), border-color var(--transition); white-space: nowrap; }
     .tab-btn:hover { color: var(--ink); }
-
-    .tab-btn.active {
-      color: var(--ink);
-      border-bottom-color: var(--ink);
-    }
-
-    /* ============================================
-       TAB PANELS
-    ============================================ */
+    .tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
     .tab-panel { display: none; padding-top: 2.5rem; }
     .tab-panel.active { display: block; }
 
-    /* ---- Domini (barre peso) ---- */
+    /* DOMAIN LIST */
     .domain-list { display: grid; gap: 1px; background: var(--ink-xlight); border: 1px solid var(--ink-xlight); margin: 1.5rem 0; }
-
     .domain-item { background: var(--bg); padding: 1.2rem 1.5rem; }
+    .domain-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.6rem; }
+    .domain-name { font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink); }
+    .domain-pct { font-family: var(--font-disp); font-size: 1.6rem; line-height: 1; color: #C3D809; }
+    .domain-bar-bg { height: 3px; background: var(--ink-xlight); margin-bottom: 0.5rem; }
+    .domain-bar-fill { height: 100%; background: #C3D809; }
+    .domain-detail { font-family: var(--font-head); font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-light); }
 
-    .domain-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 0.6rem;
-    }
-
-    .domain-name {
-      font-family: var(--font-head);
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ink);
-    }
-
-    .domain-pct {
-      font-family: var(--font-disp);
-      font-size: 1.6rem;
-      line-height: 1;
-      color: #C3D809;
-    }
-
-    .domain-bar-bg {
-      height: 3px;
-      background: var(--ink-xlight);
-      margin-bottom: 0.5rem;
-    }
-
-    .domain-bar-fill { height: 100%; background: #C3D809; transition: width 1.2s ease; }
-
-    .domain-detail {
-      font-family: var(--font-head);
-      font-size: 0.62rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-    }
-
-    /* ---- Principi ---- */
+    /* PRINCIPLE LIST */
     .principle-list { display: grid; gap: 1px; background: var(--ink-xlight); border: 1px solid var(--ink-xlight); margin: 1.5rem 0; }
-
     .principle-item { background: var(--bg); padding: 1.4rem 1.5rem; display: flex; gap: 1.2rem; align-items: flex-start; }
+    .principle-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; width: 2rem; text-align: center; }
+    .principle-label { font-family: var(--font-head); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink-light); margin-bottom: 0.3rem; }
+    .principle-text { font-family: 'Lora', serif; font-size: 0.95rem; line-height: 1.7; color: var(--ink); }
 
-    .principle-icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-      width: 2rem;
-      text-align: center;
-    }
-
-    .principle-label {
-      font-family: var(--font-head);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--ink-light);
-      margin-bottom: 0.3rem;
-    }
-
-    .principle-text {
-      font-family: 'Lora', serif;
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--ink);
-    }
-
-    /* ---- Concetti 20/80 ---- */
+    /* CONCEPT LIST */
     .concept-list { display: grid; gap: 1px; background: var(--ink-xlight); border: 1px solid var(--ink-xlight); margin: 1.5rem 0; }
-
     .concept-item { background: var(--bg); padding: 1.2rem 1.5rem; display: flex; gap: 1.2rem; align-items: flex-start; }
-
-    .concept-num {
-      font-family: var(--font-disp);
-      font-size: 2.5rem;
-      line-height: 0.9;
-      color: var(--ink-xlight);
-      flex-shrink: 0;
-      user-select: none;
-      min-width: 2.5rem;
-    }
-
-    .concept-title {
-      font-family: var(--font-head);
-      font-size: 1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ink);
-      margin-bottom: 0.3rem;
-    }
-
-    .concept-body {
-      font-family: 'Lora', serif;
-      font-size: 0.88rem;
-      line-height: 1.65;
-      color: var(--ink-light);
-      margin-bottom: 0.6rem;
-    }
-
+    .concept-num { font-family: var(--font-disp); font-size: 2.5rem; line-height: 0.9; color: var(--ink-xlight); flex-shrink: 0; user-select: none; min-width: 2.5rem; }
+    .concept-title { font-family: var(--font-head); font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink); margin-bottom: 0.3rem; }
+    .concept-body { font-family: 'Lora', serif; font-size: 0.88rem; line-height: 1.65; color: var(--ink-light); margin-bottom: 0.6rem; }
     .concept-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .concept-tag { font-family: var(--font-head); font-size: 0.58rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); }
+    .concept-tag::before { content: '-- '; }
 
-    .concept-tag {
-      font-family: var(--font-head);
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-    }
+    /* QUIZ */
+    .quiz-counter { font-family: var(--font-head); font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-light); text-align: center; margin-bottom: 1.2rem; }
+    .quiz-card { border: 1px solid var(--ink-xlight); border-top: 3px solid #C3D809; background: var(--bg-sec); padding: 2rem; margin-bottom: 1rem; }
+    .quiz-tag { font-family: var(--font-head); font-size: 0.62rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #C3D809; margin-bottom: 0.8rem; }
+    .quiz-question { font-family: var(--font-head); font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.15; color: var(--ink); margin-bottom: 1.2rem; }
+    .quiz-options { display: grid; gap: 0.5rem; margin-bottom: 1rem; }
+    .quiz-option { font-family: var(--font-head); font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; background: none; border: 1px solid var(--ink-xlight); color: var(--ink-light); padding: 0.75rem 1rem; cursor: pointer; text-align: left; transition: all var(--transition); }
+    .quiz-option:hover { border-color: var(--ink); color: var(--ink); }
+    .quiz-option.correct { border-color: #C3D809; color: #C3D809; background: rgba(195,216,9,0.06); }
+    .quiz-option.wrong { border-color: var(--ink-light); color: var(--ink-light); text-decoration: line-through; }
+    .quiz-option.disabled { pointer-events: none; }
+    .quiz-explanation { font-family: 'Lora', serif; font-style: italic; font-size: 0.88rem; line-height: 1.65; color: var(--ink-light); border-left: 3px solid #C3D809; padding-left: 1rem; margin-top: 1rem; display: none; }
+    .quiz-explanation.show { display: block; }
+    .quiz-score { font-family: var(--font-disp); font-size: 3rem; color: #C3D809; text-align: center; margin: 1rem 0 0.5rem; }
+    .quiz-score-label { font-family: var(--font-head); font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-light); text-align: center; margin-bottom: 1.5rem; }
 
-    .concept-tag::before { content: '— '; }
-
-    /* ---- Flash card ---- */
-    .flashcard-counter {
-      font-family: var(--font-head);
-      font-size: 0.62rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      text-align: center;
-      margin-bottom: 1.2rem;
-    }
-
-    .flashcard {
-      border: 1px solid var(--ink-xlight);
-      border-top: 3px solid #C3D809;
-      background: var(--bg-sec);
-      padding: 2.5rem 2rem;
-      min-height: 220px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      cursor: pointer;
-      transition: background var(--transition), border-color var(--transition);
-      margin-bottom: 1rem;
-      user-select: none;
-    }
-
+    /* FLASHCARD */
+    .flashcard-counter { font-family: var(--font-head); font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-light); text-align: center; margin-bottom: 1.2rem; }
+    .flashcard { border: 1px solid var(--ink-xlight); border-top: 3px solid #C3D809; background: var(--bg-sec); padding: 2.5rem 2rem; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: background var(--transition), border-color var(--transition); margin-bottom: 1rem; user-select: none; }
     .flashcard:hover { border-color: var(--ink); }
-
     .flashcard.flipped { border-top-color: var(--ink); background: var(--bg); }
-
-    .fc-hint {
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--ink-xlight);
-      margin-bottom: 1rem;
-    }
-
-    .fc-tag {
-      font-family: var(--font-head);
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #C3D809;
-      margin-bottom: 0.8rem;
-    }
-
-    .fc-question {
-      font-family: var(--font-head);
-      font-size: 1.4rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1.1;
-      color: var(--ink);
-      max-width: 500px;
-    }
-
-    .fc-answer {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: var(--ink);
-      max-width: 500px;
-      text-align: left;
-      white-space: pre-line;
-    }
-
-    .fc-controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .fc-controls-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
-
-    .fc-btn {
-      font-family: var(--font-head);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      background: none;
-      border: 1px solid var(--ink-xlight);
-      color: var(--ink-light);
-      padding: 0.8rem 1rem;
-      cursor: pointer;
-      transition: all var(--transition);
-    }
-
+    .fc-hint { font-family: var(--font-head); font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-xlight); margin-bottom: 1rem; }
+    .fc-tag { font-family: var(--font-head); font-size: 0.62rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #C3D809; margin-bottom: 0.8rem; }
+    .fc-question { font-family: var(--font-head); font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.1; color: var(--ink); max-width: 500px; }
+    .fc-answer { font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem; line-height: 1.75; color: var(--ink); max-width: 500px; text-align: left; white-space: pre-line; }
+    .fc-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
+    .fc-controls-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .fc-btn { font-family: var(--font-head); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: none; border: 1px solid var(--ink-xlight); color: var(--ink-light); padding: 0.8rem 1rem; cursor: pointer; transition: all var(--transition); }
     .fc-btn:hover { border-color: var(--ink); color: var(--ink); }
-
     .fc-btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
     .fc-btn.primary:hover { opacity: 0.8; }
-
-    .fc-btn.good {
-      border-color: #C3D809;
-      color: #C3D809;
-    }
-
+    .fc-btn.good { border-color: #C3D809; color: #C3D809; }
     .fc-btn.good:hover { background: #C3D809; color: #222022; }
+    .fc-status { font-family: var(--font-head); font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-xlight); text-align: center; margin-top: 0.8rem; }
 
-    .fc-btn.bad { border-color: var(--ink-light); color: var(--ink-light); }
-
-    .fc-status {
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-xlight);
-      text-align: center;
-      margin-top: 0.8rem;
-    }
-
-    /* ---- Piano ---- */
+    /* PIANO */
     .plan-list { display: grid; gap: 1px; background: var(--ink-xlight); border: 1px solid var(--ink-xlight); margin: 1.5rem 0; }
-
-    .plan-item {
-      background: var(--bg);
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 0;
-    }
-
-    .plan-date {
-      padding: 1rem;
-      border-right: 1px solid var(--ink-xlight);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .plan-day-name {
-      font-family: var(--font-head);
-      font-size: 0.55rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.2rem;
-    }
-
-    .plan-day-num {
-      font-family: var(--font-disp);
-      font-size: 2rem;
-      line-height: 1;
-      color: var(--ink);
-    }
-
-    .plan-month {
-      font-family: var(--font-head);
-      font-size: 0.55rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-    }
-
+    .plan-item { background: var(--bg); display: grid; grid-template-columns: 80px 1fr; }
+    .plan-date { padding: 1rem; border-right: 1px solid var(--ink-xlight); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .plan-day-name { font-family: var(--font-head); font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.2rem; }
+    .plan-day-num { font-family: var(--font-disp); font-size: 2rem; line-height: 1; color: var(--ink); }
+    .plan-month { font-family: var(--font-head); font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); }
     .plan-content { padding: 1rem 1.4rem; }
-
-    .plan-focus {
-      font-family: var(--font-head);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #C3D809;
-      margin-bottom: 0.3rem;
-    }
-
-    .plan-tasks {
-      font-family: 'Lora', serif;
-      font-size: 0.87rem;
-      line-height: 1.6;
-      color: var(--ink-light);
-      margin-bottom: 0.4rem;
-    }
-
-    .plan-time {
-      font-family: var(--font-head);
-      font-size: 0.58rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-xlight);
-    }
-
+    .plan-focus { font-family: var(--font-head); font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C3D809; margin-bottom: 0.3rem; }
+    .plan-tasks { font-family: 'Lora', serif; font-size: 0.87rem; line-height: 1.6; color: var(--ink-light); margin-bottom: 0.4rem; }
+    .plan-time { font-family: var(--font-head); font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-xlight); }
     .plan-item.today { background: var(--bg-sec); }
     .plan-item.today .plan-day-num { color: #C3D809; }
     .plan-item.rest .plan-focus { color: var(--ink-light); }
     .plan-item.review .plan-focus { color: var(--ink); }
     .plan-item.exam { background: var(--bg-sec); }
     .plan-item.exam .plan-day-num { color: #C3D809; }
-    .plan-item.exam .plan-focus { font-size: 0.75rem; }
 
-    /* ---- Errori ---- */
+    /* ERRORI */
     .mistake-list { display: grid; gap: 1px; background: var(--ink-xlight); border: 1px solid var(--ink-xlight); margin: 1.5rem 0; }
-
     .mistake-item { background: var(--bg); }
-
-    .mistake-bad {
-      padding: 1rem 1.4rem;
-      border-left: 3px solid var(--ink-xlight);
-      display: flex;
-      gap: 0.8rem;
-      border-bottom: 1px solid var(--ink-xlight);
-    }
-
-    .mistake-good {
-      padding: 1rem 1.4rem;
-      border-left: 3px solid #C3D809;
-      display: flex;
-      gap: 0.8rem;
-    }
-
-    .mistake-icon {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-      margin-top: 0.15rem;
-    }
-
+    .mistake-bad { padding: 1rem 1.4rem; border-left: 3px solid var(--ink-xlight); display: flex; gap: 0.8rem; border-bottom: 1px solid var(--ink-xlight); }
+    .mistake-good { padding: 1rem 1.4rem; border-left: 3px solid #C3D809; display: flex; gap: 0.8rem; }
+    .mistake-icon { font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; flex-shrink: 0; margin-top: 0.15rem; }
     .mistake-icon.bad { color: var(--ink-light); }
     .mistake-icon.ok { color: #C3D809; }
-
-    .mistake-text {
-      font-family: 'Lora', serif;
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--ink);
-    }
-
+    .mistake-text { font-family: 'Lora', serif; font-size: 0.9rem; line-height: 1.65; color: var(--ink); }
     .mistake-bad .mistake-text { color: var(--ink-light); font-style: italic; }
 
-    /* ---- Top 1% ---- */
+    /* ELITE */
     .elite-list { display: grid; gap: 1px; background: var(--ink-xlight); border: 1px solid var(--ink-xlight); margin: 1.5rem 0; }
-
     .elite-item { background: var(--bg); padding: 1.4rem 1.5rem; }
+    .elite-title { font-family: var(--font-head); font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink); margin-bottom: 0.5rem; }
+    .elite-body { font-family: 'Lora', serif; font-size: 0.9rem; line-height: 1.7; color: var(--ink-light); }
 
-    .elite-title {
-      font-family: var(--font-head);
-      font-size: 0.9rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-
-    .elite-body {
-      font-family: 'Lora', serif;
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: var(--ink-light);
-    }
-
-    /* Mappa prodotto */
-    .product-map {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--ink-xlight);
-      border: 1px solid var(--ink-xlight);
-      margin: 2rem 0;
-    }
-
+    /* MAPPA PRODOTTO */
+    .product-map { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--ink-xlight); border: 1px solid var(--ink-xlight); margin: 2rem 0; }
     .product-map-cell { background: var(--bg); padding: 1.4rem 1.5rem; }
     .product-map-cell.full { grid-column: 1 / -1; }
+    .product-map-title { font-family: var(--font-head); font-size: 0.62rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #C3D809; margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--ink-xlight); }
+    .product-map-list { font-family: 'Lora', serif; font-size: 0.87rem; line-height: 1.9; color: var(--ink-light); }
+    .product-map-list strong { font-family: var(--font-head); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink); font-style: normal; }
 
-    .product-map-title {
-      font-family: var(--font-head);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #C3D809;
-      margin-bottom: 0.8rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--ink-xlight);
-    }
+    /* FORMULA BOX */
+    .formula-box { border: 1px solid var(--ink-xlight); border-left: 3px solid #C3D809; padding: 1.2rem 1.5rem; margin: 1.5rem 0; background: var(--bg-sec); }
+    .formula-line { font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--ink); line-height: 2; }
 
-    .product-map-list {
-      font-family: 'Lora', serif;
-      font-size: 0.87rem;
-      line-height: 1.9;
-      color: var(--ink-light);
-    }
-
-    .product-map-list strong {
-      font-family: var(--font-head);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ink);
-      font-style: normal;
-    }
-
-    /* Formula box */
-    .formula-box {
-      border: 1px solid var(--ink-xlight);
-      border-left: 3px solid #C3D809;
-      padding: 1.2rem 1.5rem;
-      margin: 1.5rem 0;
-      background: var(--bg-sec);
-    }
-
-    .formula-line {
-      font-family: var(--font-head);
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--ink);
-      line-height: 2;
-    }
-
-    /* ============================================
-       FOOTER
-    ============================================ */
-    footer {
-      border-top: 2px solid var(--ink);
-      padding: 1.5rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-head);
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ink-light);
-    }
-
+    /* FOOTER */
+    footer { border-top: 2px solid var(--ink); padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-head); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); }
     footer a { color: var(--ink-light); }
     footer a:hover { color: var(--ink); }
+    .read-time { font-family: var(--font-head); font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); margin-left: 0.5rem; }
 
-    /* ============================================
-       BACK TO TOP
-    ============================================ */
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem; right: 2rem;
-      width: 44px; height: 44px;
-      background: var(--ink);
-      color: var(--bg);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 200;
-    }
-
+    /* BACK TO TOP */
+    .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 44px; height: 44px; background: var(--ink); color: var(--bg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; z-index: 200; }
     .back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .back-to-top:hover { background: #C3D809; }
+    .back-to-top svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
-    .back-to-top svg {
-      width: 16px; height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* ============================================
-       RESPONSIVE
-    ============================================ */
+    /* RESPONSIVE */
     @media (max-width: 900px) {
       nav, footer { padding: 1rem 1.5rem; }
       .burger { display: flex; }
@@ -1037,18 +284,16 @@
       .article-content h2 { font-size: 1.5rem; }
       .two-cols { grid-template-columns: 1fr; }
       .col-left { border-right: none; border-bottom: 1px solid var(--ink-xlight); }
-      .pipeline-steps { grid-template-columns: 1fr 1fr; }
-      .stats-row { grid-template-columns: 1fr 1fr; }
       .plan-item { grid-template-columns: 68px 1fr; }
       .product-map { grid-template-columns: 1fr; }
       .product-map-cell.full { grid-column: 1; }
+      .product-map-list.two-col { grid-template-columns: 1fr !important; }
       .fc-controls, .fc-controls-2 { grid-template-columns: 1fr 1fr; }
       .back-to-top { bottom: 1.5rem; right: 1rem; }
     }
   </style>
 </head>
 <body>
-
   <div class="progress-bar" id="progress-bar"></div>
 
   <nav>
@@ -1069,10 +314,10 @@
   </nav>
 
   <header class="article-header">
-    <p class="article-meta" id="article-meta">2025-04-11 · The Unchecked <span class="read-time" id="read-time"></span></p>
+    <p class="article-meta">2025-04-11 &middot; The Unchecked <span class="read-time" id="read-time"></span></p>
     <span class="article-number">SC</span>
     <h1 class="article-page-title">Sistema di studio<br><mark>SC-900</mark></h1>
-    <p id="hero-subtitle" style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:#C3D809; margin-top:1.2rem; line-height:1.7; min-height:4rem;"></p>
+    <p id="hero-subtitle" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:1.05rem;color:#C3D809;margin-top:1.2rem;line-height:1.7;min-height:4rem;"></p>
     <div class="tags">
       <span class="tag">Microsoft SC-900</span>
       <span class="tag">Security</span>
@@ -1084,102 +329,87 @@
 
   <article class="article-content">
 
-    <p>Il 9 maggio sostengo l'esame SC-900 — Microsoft Security, Compliance and Identity Fundamentals. Ho costruito questo sistema di studio per non limitarmi a prendere appunti ma per ritenere davvero quello che studio. È pubblico perché potrebbe essere utile anche a te.</p>
+    <p>Il 9 maggio sostengo l'esame SC-900, Microsoft Security, Compliance and Identity Fundamentals. Ho costruito questo sistema per non limitarmi a prendere appunti ma per ritenere davvero quello che studio. E lo pubblico perche' potrebbe essere utile anche a te.</p>
 
-    <p>L'esame richiede un punteggio minimo di 700 su 1000. Non chiede di saper configurare nulla: chiede di capire cosa fa ogni strumento Microsoft nell'ecosistema di sicurezza cloud, e perché esiste. La distinzione è importante, perché cambia completamente il modo in cui si studia.</p>
+    <p>L'esame richiede un punteggio minimo di 700 su 1000. Non chiede di saper configurare nulla: chiede di capire cosa fa ogni strumento Microsoft nell'ecosistema di sicurezza cloud, e perche' esiste. La distinzione e' importante, perche' cambia completamente il modo in cui si studia.</p>
 
     <blockquote>Non memorizzare. Costruisci una mappa mentale di come i prodotti Microsoft si relazionano tra loro. L'esame ragiona sempre per scenari.</blockquote>
 
-    <!-- TABS NAVIGATION -->
     <div class="tabs-wrapper fade-in">
       <ul class="tabs-nav" role="tablist">
-        <li><button class="tab-btn active" role="tab" onclick="switchTab('principi', this)">Principi</button></li>
-        <li><button class="tab-btn" role="tab" onclick="switchTab('concetti', this)">20 / 80</button></li>
-        <li><button class="tab-btn" role="tab" onclick="switchTab('ripasso', this)">Ripasso attivo</button></li>
-        <li><button class="tab-btn" role="tab" onclick="switchTab('piano', this)">Piano 28 giorni</button></li>
-        <li><button class="tab-btn" role="tab" onclick="switchTab('errori', this)">Errori comuni</button></li>
-        <li><button class="tab-btn" role="tab" onclick="switchTab('elite', this)">Top 1%</button></li>
+        <li><button class="tab-btn active" onclick="switchTab('principi',this)">Principi</button></li>
+        <li><button class="tab-btn" onclick="switchTab('concetti',this)">20 / 80</button></li>
+        <li><button class="tab-btn" onclick="switchTab('flashcard',this)">Flash card</button></li>
+        <li><button class="tab-btn" onclick="switchTab('quiz',this)">Quiz MCQ</button></li>
+        <li><button class="tab-btn" onclick="switchTab('piano',this)">Piano 28 giorni</button></li>
+        <li><button class="tab-btn" onclick="switchTab('errori',this)">Errori comuni</button></li>
+        <li><button class="tab-btn" onclick="switchTab('elite',this)">Top 1%</button></li>
       </ul>
     </div>
 
-    <!-- ========== PANEL: PRINCIPI ========== -->
+    <!-- PRINCIPI -->
     <div class="tab-panel active" id="panel-principi">
-
       <h2>I 4 domini dell'esame</h2>
-      <p>L'esame è suddiviso in quattro aree tematiche con pesi diversi. Allocare il tempo di studio in modo proporzionale è già di per sé una strategia.</p>
-
+      <p>I pesi ufficiali determinano come allocare il tempo. Studiare ogni dominio in modo uniforme e' gia' un errore.</p>
       <div class="domain-list fade-in">
         <div class="domain-item">
-          <div class="domain-header">
-            <span class="domain-name">🔒 Microsoft security solutions</span>
-            <span class="domain-pct">35–40%</span>
-          </div>
+          <div class="domain-header"><span class="domain-name">Sicurezza Microsoft (Defender, Sentinel, Azure)</span><span class="domain-pct">35-40%</span></div>
           <div class="domain-bar-bg"><div class="domain-bar-fill" style="width:37.5%"></div></div>
-          <div class="domain-detail">Defender XDR · Sentinel · Azure security · Defender for Cloud</div>
+          <div class="domain-detail">Defender XDR -- Sentinel SIEM+SOAR -- Azure Firewall -- Defender for Cloud CSPM</div>
         </div>
         <div class="domain-item">
-          <div class="domain-header">
-            <span class="domain-name">🪪 Microsoft Entra</span>
-            <span class="domain-pct">25–30%</span>
-          </div>
+          <div class="domain-header"><span class="domain-name">Microsoft Entra (identita' e accessi)</span><span class="domain-pct">25-30%</span></div>
           <div class="domain-bar-bg"><div class="domain-bar-fill" style="width:27.5%"></div></div>
-          <div class="domain-detail">Entra ID · MFA · Accesso condizionale · PIM · RBAC</div>
+          <div class="domain-detail">Entra ID -- MFA -- Accesso condizionale -- PIM -- RBAC -- Identity Protection</div>
         </div>
         <div class="domain-item">
-          <div class="domain-header">
-            <span class="domain-name">📋 Microsoft compliance solutions</span>
-            <span class="domain-pct">20–25%</span>
-          </div>
+          <div class="domain-header"><span class="domain-name">Soluzioni di conformita' Microsoft (Purview)</span><span class="domain-pct">20-25%</span></div>
           <div class="domain-bar-bg"><div class="domain-bar-fill" style="width:22.5%"></div></div>
-          <div class="domain-detail">Purview · Compliance Manager · DLP · eDiscovery · Audit</div>
+          <div class="domain-detail">Purview -- Compliance Manager -- DLP -- Etichette riservatezza -- eDiscovery -- Audit</div>
         </div>
         <div class="domain-item">
-          <div class="domain-header">
-            <span class="domain-name">💡 Concetti fondamentali SCI</span>
-            <span class="domain-pct">10–15%</span>
-          </div>
+          <div class="domain-header"><span class="domain-name">Concetti fondamentali SCI</span><span class="domain-pct">10-15%</span></div>
           <div class="domain-bar-bg"><div class="domain-bar-fill" style="width:12.5%"></div></div>
-          <div class="domain-detail">Zero Trust · Difesa in profondità · Responsabilità condivisa</div>
+          <div class="domain-detail">Zero Trust -- Difesa in profondita' -- Responsabilita' condivisa -- Crittografia -- GRC</div>
         </div>
       </div>
 
       <h2>I 5 principi che reggono tutto</h2>
-      <p>Questi non sono concetti da memorizzare: sono le lenti attraverso cui leggere ogni domanda dell'esame.</p>
-
+      <p>Queste non sono definizioni da memorizzare. Sono le lenti attraverso cui leggere ogni domanda dell'esame.</p>
       <div class="principle-list fade-in">
         <div class="principle-item">
           <div class="principle-icon">🏰</div>
           <div>
-            <div class="principle-label">Difesa in profondità</div>
-            <div class="principle-text">La sicurezza non è un muro unico ma una serie di strati sovrapposti. Ogni strato assume che il precedente possa fallire: Fisica → Identità → Perimetro → Rete → Calcolo → Applicazione → Dati.</div>
+            <div class="principle-label">Difesa in profondita' -- 7 strati</div>
+            <div class="principle-text">La sicurezza non e' un muro unico ma una serie di strati sovrapposti. Ogni strato assume che il precedente possa fallire: Fisica -- Identita' -- Perimetro -- Rete -- Calcolo -- Applicazione -- Dati.</div>
           </div>
         </div>
         <div class="principle-item">
           <div class="principle-icon">🔐</div>
           <div>
-            <div class="principle-label">Zero Trust — non fidarsi mai, verificare sempre</div>
-            <div class="principle-text">Nessun utente, dispositivo o rete è affidabile per definizione. Ogni accesso richiede verifica esplicita. Principio del minimo privilegio. Assumi sempre la violazione.</div>
+            <div class="principle-label">Zero Trust -- tre pilastri</div>
+            <div class="principle-text">Verifica esplicita: autenticare sempre basandosi su tutti i segnali disponibili. Minimo privilegio: accesso Just-In-Time e Just-Enough-Access. Assumi la violazione: segmenta, cripta, minimizza il raggio d'esplosione.</div>
           </div>
         </div>
         <div class="principle-item">
           <div class="principle-icon">🪪</div>
           <div>
-            <div class="principle-label">L'identità è il nuovo perimetro</div>
-            <div class="principle-text">In un mondo cloud non esiste un confine fisico da difendere. L'identità — utente, dispositivo, applicazione — è l'unico controllo perimetrale rimasto.</div>
+            <div class="principle-label">L'identita' e' il nuovo perimetro</div>
+            <div class="principle-text">In un mondo cloud non esiste un confine fisico da difendere. L'identita' -- utente, dispositivo, applicazione -- e' l'unico controllo perimetrale rimasto. Il cliente e' SEMPRE responsabile di identita' e accessi, in qualsiasi modello cloud.</div>
           </div>
         </div>
         <div class="principle-item">
           <div class="principle-icon">⚖️</div>
           <div>
-            <div class="principle-label">Responsabilità condivisa</div>
-            <div class="principle-text">Microsoft gestisce l'infrastruttura fisica; il cliente rimane sempre responsabile dei propri dati, degli accessi e delle identità. Il confine si sposta in base al modello: IaaS, PaaS o SaaS.</div>
+            <div class="principle-label">Responsabilita' condivisa</div>
+            <div class="principle-text">Microsoft gestisce l'infrastruttura fisica. Il cliente gestisce dati, identita' e accessi sempre -- in IaaS, PaaS e SaaS. Il confine si sposta, ma la responsabilita' sui dati non si sposta mai.</div>
           </div>
         </div>
         <div class="principle-item">
           <div class="principle-icon">🎛️</div>
           <div>
-            <div class="principle-label">Autenticazione ≠ Autorizzazione</div>
-            <div class="principle-text">Autenticazione = sei chi dici di essere? (chi sei). Autorizzazione = hai il permesso di fare questo? (cosa puoi fare). Due fasi distinte e sequenziali, sempre.</div>
+            <div class="principle-label">Autenticazione prima, autorizzazione dopo</div>
+            <div class="principle-text">Autenticazione: sei chi dici di essere? Risponde alla domanda CHI. Accade prima. Autorizzazione: hai il permesso di fare questo? Risponde alla domanda COSA. Accade dopo. Mai invertire l'ordine.</div>
           </div>
         </div>
       </div>
@@ -1187,225 +417,113 @@
       <div class="formula-box fade-in">
         <div class="formula-line">Sicurezza = Prevenzione + Rilevamento + Risposta</div>
         <div class="formula-line">Zero Trust = Verifica esplicita + Minimo privilegio + Assumi la violazione</div>
-        <div class="formula-line">Identità = Autenticazione (chi) + Autorizzazione (cosa) + Governance (quanto)</div>
+        <div class="formula-line">Identita' = Autenticazione (chi) + Autorizzazione (cosa) + Governance (quanto)</div>
       </div>
-
     </div>
 
-    <!-- ========== PANEL: 20/80 ========== -->
+    <!-- 20/80 -->
     <div class="tab-panel" id="panel-concetti">
-
       <h2>I 10 concetti che valgono l'80%</h2>
-      <p>Se dovessi studiare solo questi dieci argomenti, probabilmente passeresti l'esame lo stesso. Padroneggiali prima di tutto il resto.</p>
-
-      <div class="concept-list fade-in">
-        <div class="concept-item">
-          <div class="concept-num">01</div>
-          <div>
-            <div class="concept-title">Zero Trust — i tre principi</div>
-            <div class="concept-body">Verifica esplicita · Minimo privilegio · Assumi la violazione. La domanda preferita dell'esame: «quale principio Zero Trust si applica a questo scenario?»</div>
-            <div class="concept-tags"><span class="concept-tag">35–40%</span><span class="concept-tag">Concetti base</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">02</div>
-          <div>
-            <div class="concept-title">Microsoft Entra ID — tipi di identità</div>
-            <div class="concept-body">Utenti · Utenti guest · Gruppi · Entità servizio · Identità gestite. Sapere cosa è ciascuna e perché esiste.</div>
-            <div class="concept-tags"><span class="concept-tag">25–30%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">03</div>
-          <div>
-            <div class="concept-title">MFA — autenticazione a più fattori</div>
-            <div class="concept-body">Qualcosa che sai · Qualcosa che hai · Qualcosa che sei. Il controllo di sicurezza con il miglior rapporto costo/beneficio in assoluto.</div>
-            <div class="concept-tags"><span class="concept-tag">25–30%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">04</div>
-          <div>
-            <div class="concept-title">Accesso condizionale</div>
-            <div class="concept-body">Il motore IF-THEN di Microsoft: SE (utente + posizione + dispositivo + app), ALLORA (consenti / blocca / richiedi MFA). È l'implementazione pratica di Zero Trust.</div>
-            <div class="concept-tags"><span class="concept-tag">25–30%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">05</div>
-          <div>
-            <div class="concept-title">RBAC — controllo degli accessi in base al ruolo</div>
-            <div class="concept-body">Si assegnano ruoli, non permessi individuali. Azure RBAC (risorse) vs Entra RBAC (directory) — distinzione spesso testata.</div>
-            <div class="concept-tags"><span class="concept-tag">25–30%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">06</div>
-          <div>
-            <div class="concept-title">Microsoft Defender XDR — l'ecosistema</div>
-            <div class="concept-body">Defender for Office 365 (email) · Defender for Endpoint (dispositivi) · Defender for Identity (AD on-prem) · Defender for Cloud Apps (CASB). Sapere quale protegge cosa.</div>
-            <div class="concept-tags"><span class="concept-tag">35–40%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">07</div>
-          <div>
-            <div class="concept-title">Microsoft Sentinel — SIEM + SOAR</div>
-            <div class="concept-body">SIEM = raccoglie e analizza log. SOAR = automatizza le risposte agli incidenti. Sentinel fa entrambe le cose su scala cloud-native.</div>
-            <div class="concept-tags"><span class="concept-tag">35–40%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">08</div>
-          <div>
-            <div class="concept-title">Defender for Cloud — CSPM</div>
-            <div class="concept-body">Gestione del profilo di sicurezza cloud (Cloud Security Posture Management). Rileva configurazioni errate. Fornisce un Secure Score. Copre ambienti multi-cloud.</div>
-            <div class="concept-tags"><span class="concept-tag">35–40%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">09</div>
-          <div>
-            <div class="concept-title">Microsoft Purview — DLP + etichette di riservatezza</div>
-            <div class="concept-body">DLP impedisce la fuga di dati sensibili. Le etichette classificano e proteggono i documenti. Purview unifica governance dei dati e conformità normativa.</div>
-            <div class="concept-tags"><span class="concept-tag">20–25%</span></div>
-          </div>
-        </div>
-        <div class="concept-item">
-          <div class="concept-num">10</div>
-          <div>
-            <div class="concept-title">Compliance Manager + punteggio di conformità</div>
-            <div class="concept-body">Strumento di valutazione della conformità normativa. Il punteggio misura il progresso verso gli standard (GDPR, ISO 27001). Non è una certificazione automatica.</div>
-            <div class="concept-tags"><span class="concept-tag">20–25%</span></div>
-          </div>
-        </div>
-      </div>
-
+      <p>Se dovessi studiare solo dieci argomenti, probabilmente passeresti l'esame comunque. Padroneggiali prima di tutto il resto.</p>
+      <div class="concept-list fade-in" id="concept-list"></div>
     </div>
 
-    <!-- ========== PANEL: RIPASSO ========== -->
-    <div class="tab-panel" id="panel-ripasso">
-
-      <h2>Flash card — ripasso attivo</h2>
-      <p>Leggi la domanda, formula la risposta mentalmente, poi tocca la scheda per girarla. Usa i pulsanti per tracciare cosa sai e cosa devi ripassare.</p>
-
-      <div class="flashcard-counter" id="fc-counter">1 / 20</div>
-
+    <!-- FLASH CARD -->
+    <div class="tab-panel" id="panel-flashcard">
+      <h2>Flash card -- ripasso attivo</h2>
+      <p>Leggi la domanda, formula la risposta mentalmente, poi tocca la scheda per girarla. Traccia cosa sai e cosa devi ripassare.</p>
+      <div class="flashcard-counter" id="fc-counter">1 / 25</div>
       <div class="flashcard" id="flashcard" onclick="flipCard()">
         <div id="fc-front">
           <div class="fc-hint">Tocca per la risposta</div>
-          <div class="fc-tag" id="fc-tag">CONCETTI BASE</div>
-          <div class="fc-question" id="fc-question">Quali sono i tre principi fondamentali del modello Zero Trust?</div>
+          <div class="fc-tag" id="fc-tag"></div>
+          <div class="fc-question" id="fc-question"></div>
         </div>
-        <div id="fc-back" style="display:none;">
+        <div id="fc-back" style="display:none">
           <div class="fc-hint">Risposta</div>
           <div class="fc-answer" id="fc-answer"></div>
         </div>
       </div>
-
       <div class="fc-controls">
-        <button class="fc-btn" onclick="prevCard()">← Precedente</button>
-        <button class="fc-btn primary" onclick="nextCard()">Successiva →</button>
+        <button class="fc-btn" onclick="prevCard()">Precedente</button>
+        <button class="fc-btn primary" onclick="nextCard()">Successiva</button>
       </div>
       <div class="fc-controls-2">
-        <button class="fc-btn bad" onclick="markHard()">Difficile</button>
-        <button class="fc-btn good" onclick="markEasy()">✓ Saputa</button>
+        <button class="fc-btn" onclick="markHard()">Difficile</button>
+        <button class="fc-btn good" onclick="markEasy()">Saputa</button>
       </div>
-      <div class="fc-status" id="fc-status">Sapute: 0 · Da ripassare: 0</div>
-
+      <div class="fc-status" id="fc-status">Sapute: 0 -- Da ripassare: 0</div>
     </div>
 
-    <!-- ========== PANEL: PIANO ========== -->
+    <!-- QUIZ MCQ -->
+    <div class="tab-panel" id="panel-quiz">
+      <h2>Quiz a risposta multipla</h2>
+      <p>Domande nello stile reale dell'esame SC-900. Seleziona la risposta e scopri la spiegazione.</p>
+      <div id="quiz-score-box" style="display:none">
+        <div class="quiz-score" id="quiz-score-num"></div>
+        <div class="quiz-score-label" id="quiz-score-label"></div>
+        <button class="fc-btn primary" onclick="restartQuiz()" style="display:block;margin:0 auto;">Ricomincia</button>
+      </div>
+      <div id="quiz-container"></div>
+      <div class="quiz-counter" id="quiz-counter" style="margin-top:1rem;"></div>
+    </div>
+
+    <!-- PIANO -->
     <div class="tab-panel" id="panel-piano">
-
-      <h2>Piano di studio — 28 giorni</h2>
-      <p>Dal 11 aprile al 9 maggio. Trenta, quaranta minuti al giorno sono sufficienti se costanti. La domenica è riposo: il consolidamento della memoria avviene durante il sonno, non durante lo studio.</p>
-
+      <h2>Piano di studio -- 28 giorni</h2>
+      <p>Dal 11 aprile al 9 maggio. Trenta, quaranta minuti al giorno costanti valgono piu' di sei ore il weekend.</p>
       <div class="stats-row fade-in">
-        <div class="stat-card">
-          <div class="stat-number">28</div>
-          <div class="stat-label">giorni di studio</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">40'</div>
-          <div class="stat-label">al giorno in media</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">700</div>
-          <div class="stat-label">punti per passare</div>
-        </div>
+        <div class="stat-card"><div class="stat-number">28</div><div class="stat-label">giorni</div></div>
+        <div class="stat-card"><div class="stat-number">40'</div><div class="stat-label">al giorno</div></div>
+        <div class="stat-card"><div class="stat-number">700</div><div class="stat-label">punti per passare</div></div>
       </div>
-
       <div class="plan-list fade-in" id="plan-list"></div>
-
     </div>
 
-    <!-- ========== PANEL: ERRORI ========== -->
+    <!-- ERRORI -->
     <div class="tab-panel" id="panel-errori">
-
       <h2>Errori che eliminano candidati preparati</h2>
-      <p>Questi non sono errori di chi non ha studiato. Sono errori di chi ha studiato ma ha studiato nel modo sbagliato.</p>
-
+      <p>Non sono errori di chi non ha studiato. Sono errori di chi ha studiato nel modo sbagliato.</p>
       <div class="mistake-list fade-in" id="mistake-list"></div>
-
     </div>
 
-    <!-- ========== PANEL: ELITE ========== -->
+    <!-- ELITE -->
     <div class="tab-panel" id="panel-elite">
-
       <h2>Come studia il top 1%</h2>
-      <p>La differenza non è la quantità di ore, ma la qualità del metodo e il tipo di domande che ci si fa mentre si studia.</p>
-
+      <p>La differenza non e' la quantita' di ore. E' il tipo di domande che ci si fa mentre si studia.</p>
       <div class="elite-list fade-in" id="elite-list"></div>
-
       <h2>Mappa prodotto in 60 secondi</h2>
       <p>Se sai collocare ogni prodotto in questa mappa, sei pronto per l'esame.</p>
-
       <div class="product-map fade-in">
         <div class="product-map-cell">
-          <div class="product-map-title">Identità — Entra</div>
-          <div class="product-map-list">
-            <strong>Entra ID</strong> = directory cloud<br>
-            <strong>MFA</strong> = verifica identità<br>
-            <strong>Accesso condizionale</strong> = regole IF-THEN<br>
-            <strong>PIM</strong> = accesso privilegiato temporaneo<br>
-            <strong>RBAC</strong> = permessi per ruolo
-          </div>
+          <div class="product-map-title">Identita' -- Entra</div>
+          <div class="product-map-list"><strong>Entra ID</strong> = directory cloud (ex Azure AD)<br><strong>MFA</strong> = verifica identita' (3 fattori)<br><strong>Accesso condizionale</strong> = regole IF-THEN<br><strong>PIM</strong> = accesso privilegiato Just-in-Time<br><strong>RBAC</strong> = permessi per ruolo<br><strong>ID Protection</strong> = rilevamento rischio account</div>
         </div>
         <div class="product-map-cell">
-          <div class="product-map-title">Sicurezza — Defender + Azure</div>
-          <div class="product-map-list">
-            <strong>Defender XDR</strong> = piattaforma unificata<br>
-            <strong>Sentinel</strong> = SIEM + SOAR<br>
-            <strong>Defender for Cloud</strong> = postura CSPM<br>
-            <strong>Key Vault</strong> = segreti e certificati<br>
-            <strong>Azure Firewall</strong> = traffico di rete
-          </div>
+          <div class="product-map-title">Sicurezza -- Defender + Azure</div>
+          <div class="product-map-list"><strong>Defender XDR</strong> = piattaforma unificata<br><strong>Sentinel</strong> = SIEM + SOAR cloud-native<br><strong>Defender for Cloud</strong> = postura CSPM<br><strong>Key Vault</strong> = segreti, chiavi, certificati<br><strong>Azure Firewall</strong> = traffico L3-L7<br><strong>WAF</strong> = protezione app web (OWASP)</div>
         </div>
         <div class="product-map-cell full">
-          <div class="product-map-title">Conformità — Purview</div>
-          <div class="product-map-list" style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
-            <span><strong>Compliance Manager</strong> = punteggio conformità</span>
+          <div class="product-map-title">Conformita' -- Purview</div>
+          <div class="product-map-list two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
+            <span><strong>Compliance Manager</strong> = punteggio conformita'</span>
             <span><strong>DLP</strong> = blocca fuga di dati</span>
-            <span><strong>Etichette riservatezza</strong> = classifica documenti</span>
+            <span><strong>Etichette riservatezza</strong> = classifica e protegge</span>
             <span><strong>eDiscovery</strong> = indagini legali</span>
             <span><strong>Insider risk</strong> = minacce interne</span>
-            <span><strong>Audit</strong> = tracciamento attività</span>
+            <span><strong>Audit</strong> = tracciamento attivita'</span>
           </div>
         </div>
       </div>
-
       <div class="warning-box fade-in">
         <p>Prima di iniziare a studiare: fai il <a href="https://learn.microsoft.com/en-us/credentials/certifications/exams/sc-900/practice/assessment?assessment-type=practice&assessmentId=11" target="_blank">test di pratica gratuito Microsoft</a>. Non per studiare le risposte, ma per capire lo stile delle domande e identificare subito le lacune.</p>
       </div>
-
     </div>
 
-    <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
-      <a id="back-link" href="../index.html" style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-light); text-decoration:none;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-light)'">← Torna agli articoli</a>
-      <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-xlight);">The Unchecked</span>
+    <div style="margin-top:3rem;display:flex;justify-content:space-between;align-items:center;">
+      <a id="back-link" href="../index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--ink-light);text-decoration:none;">Torna agli articoli</a>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--ink-xlight);">The Unchecked</span>
     </div>
-
   </article>
 
   <button class="back-to-top" id="back-to-top" aria-label="Torna su">
@@ -1417,310 +535,283 @@
     <span>pubblicato su <a href="https://github.com/theunchecked/1checked">github</a></span>
   </footer>
 
-  <script>
-  // ============================================
-  // DATI
-  // ============================================
-  const cards = [
-    { tag: 'CONCETTI BASE', q: 'Quali sono i tre principi fondamentali del modello Zero Trust?', a: 'Verifica esplicita: autenticare e autorizzare sempre, basandosi su tutti i dati disponibili.\n\nMinimo privilegio: limitare l\'accesso con Just-In-Time e Just-Enough-Access.\n\nAssumi la violazione: minimizzare il raggio d\'esplosione, segmentare gli accessi.' },
-    { tag: 'CONCETTI BASE', q: 'Qual è la differenza tra autenticazione e autorizzazione?', a: 'Autenticazione = verifica dell\'identità (sei chi dici di essere?). Accade PRIMA.\n\nAutorizzazione = concessione dei permessi (hai il permesso di fare questo?). Accade DOPO l\'autenticazione.' },
-    { tag: 'CONCETTI BASE', q: 'Nel modello di responsabilità condivisa, cosa rimane sempre a carico del cliente, anche in SaaS?', a: 'I dati e le informazioni, la gestione delle identità e degli accessi, e la responsabilità dei dispositivi degli utenti finali.\n\nMicrosoft gestisce l\'infrastruttura; il cliente gestisce ciò che ci mette dentro.' },
-    { tag: 'CONCETTI BASE', q: 'Descrivi i 7 strati della difesa in profondità.', a: 'Dall\'esterno verso l\'interno:\n1. Sicurezza fisica\n2. Identità e accessi\n3. Perimetro (firewall, DDoS)\n4. Rete (segmentazione, NSG)\n5. Calcolo (aggiornamenti, antimalware)\n6. Applicazione (WAF, codice sicuro)\n7. Dati (crittografia, controllo accessi)' },
-    { tag: 'MICROSOFT ENTRA', q: 'Cos\'è Microsoft Entra ID e come si differenzia da Active Directory Domain Services (AD DS)?', a: 'Entra ID è un servizio di gestione identità cloud (IAM), basato su OAuth, OIDC e SAML.\n\nAD DS è una directory on-premises basata su Kerberos e LDAP.\n\nNon sono la stessa cosa: architetture diverse con scopi diversi.' },
-    { tag: 'MICROSOFT ENTRA', q: 'Quali sono i cinque tipi di identità supportati da Microsoft Entra ID?', a: '1. Utenti (dipendenti interni)\n2. Utenti guest (esterni, collaboratori)\n3. Gruppi\n4. Entità servizio (applicazioni)\n5. Identità gestite (risorse Azure che si autenticano senza credenziali)' },
-    { tag: 'MICROSOFT ENTRA', q: 'Come funziona l\'accesso condizionale? Spiega il meccanismo IF-THEN.', a: 'IF (segnali: utente + posizione + dispositivo + applicazione + rischio rilevato)\nTHEN (decisione: consenti / blocca / richiedi MFA / richiedi dispositivo conforme).\n\nÈ il motore di policy di Zero Trust: adatta la risposta al contesto specifico.' },
-    { tag: 'MICROSOFT ENTRA', q: 'Cos\'è PIM (Privileged Identity Management) e quale principio Zero Trust implementa?', a: 'PIM consente l\'accesso privilegiato Just-In-Time: gli utenti richiedono un ruolo elevato solo quando serve, per un tempo limitato, con approvazione opzionale.\n\nImplementa il principio del minimo privilegio.' },
-    { tag: 'MICROSOFT ENTRA', q: 'Cos\'è la federazione delle identità e perché è utile?', a: 'La federazione stabilisce una relazione di fiducia tra provider di identità di organizzazioni diverse.\n\nPermette SSO cross-organizzazione senza creare nuovi account per gli utenti.' },
-    { tag: 'SECURITY', q: 'Qual è la differenza tra SIEM e SOAR? Come li implementa Microsoft Sentinel?', a: 'SIEM = raccoglie, correla e analizza log per rilevare minacce.\n\nSOAR = automatizza la risposta agli incidenti con playbook.\n\nSentinel integra entrambi in una piattaforma cloud-native scalabile.' },
-    { tag: 'SECURITY', q: 'Quale prodotto Defender protegge email, endpoint, cloud app e identità AD?', a: 'Email → Defender for Office 365\nEndpoint → Defender for Endpoint\nApp cloud (shadow IT) → Defender for Cloud Apps (CASB)\nIdentità Active Directory on-prem → Defender for Identity' },
-    { tag: 'SECURITY', q: 'Cos\'è il CSPM e quale prodotto Microsoft lo implementa?', a: 'CSPM (Cloud Security Posture Management) = analisi continua delle configurazioni cloud per rilevare errori di sicurezza e fornire raccomandazioni.\n\nMicrosoft Defender for Cloud implementa il CSPM e fornisce un Secure Score.' },
-    { tag: 'SECURITY', q: 'A cosa serve Azure Key Vault?', a: 'Archivia in modo sicuro: segreti (password, stringhe di connessione), chiavi crittografiche e certificati.\n\nEvita che le credenziali vengano inserite nel codice sorgente o nei file di configurazione.' },
-    { tag: 'SECURITY', q: 'Qual è la differenza tra Azure DDoS Protection Basic e Standard?', a: 'Basic = incluso automaticamente per tutti i servizi Azure, protezione di piattaforma generale.\n\nStandard = protezione avanzata dedicata alle risorse del cliente, con telemetria, avvisi e garanzie SLA.' },
-    { tag: 'SECURITY', q: 'Cos\'è Microsoft Defender Vulnerability Management?', a: 'Identifica, valuta e prioritizza le vulnerabilità nei dispositivi aziendali.\n\nFornisce raccomandazioni di remediation basate sull\'esposizione reale al rischio, non solo sulla gravità teorica CVE.' },
-    { tag: 'COMPLIANCE', q: 'Cos\'è il Compliance Manager e cosa misura il punteggio di conformità?', a: 'Strumento nel portale Purview che valuta la postura di conformità rispetto a standard normativi (GDPR, ISO 27001).\n\nIl punteggio misura il PROGRESSO verso la conformità — non la certifica. Non sostituisce un audit esterno.' },
-    { tag: 'COMPLIANCE', q: 'Qual è la differenza tra DLP e etichette di riservatezza in Microsoft Purview?', a: 'Etichette di riservatezza = classificano e proteggono i contenuti (crittografia, watermark, restrizioni accesso).\n\nDLP = rileva e blocca la condivisione non autorizzata di dati sensibili, basandosi su classificazioni e pattern.' },
-    { tag: 'COMPLIANCE', q: 'A cosa serve l\'eDiscovery in Microsoft Purview?', a: 'Permette di cercare, raccogliere, rivedere ed esportare contenuti elettronici per indagini legali, contenziosi o richieste normative.\n\nGarantisce integrità e catena di custodia dei dati.' },
-    { tag: 'COMPLIANCE', q: 'Cos\'è il Service Trust Portal di Microsoft?', a: 'Portale pubblico dove Microsoft pubblica report di audit, documentazione sulla conformità (SOC, ISO, FedRAMP, GDPR) e informazioni su come i servizi cloud proteggono i dati.\n\nÈ trasparenza verso i clienti, non uno strumento operativo.' },
-    { tag: 'COMPLIANCE', q: 'Cos\'è la gestione del rischio insider in Purview?', a: 'Rileva e risponde ad attività potenzialmente rischiose da parte di utenti interni: download massivi, accessi anomali, trasferimenti verso dispositivi non autorizzati.\n\nOpera nel rispetto della privacy degli utenti.' },
-  ];
+<script>
+// ============ DATI ============
 
-  const planData = [
-    { date: '11', month: 'Apr', day: 'Sab', focus: 'Orientamento', tasks: 'Leggi gli obiettivi ufficiali. Fai il test di pratica Microsoft. Identifica i punti deboli.', time: '45 min', type: 'today' },
-    { date: '12', month: 'Apr', day: 'Dom', focus: 'Riposo', tasks: 'Giornata libera. Il riposo è parte del sistema.', time: '—', type: 'rest' },
-    { date: '13', month: 'Apr', day: 'Lun', focus: 'Concetti base', tasks: 'Zero Trust (3 principi). Difesa in profondità (7 strati). Autenticazione vs autorizzazione.', time: '40 min', type: 'study' },
-    { date: '14', month: 'Apr', day: 'Mar', focus: 'Concetti base — revisione', tasks: 'Responsabilità condivisa. Crittografia e hashing. Flash card concetti base.', time: '35 min', type: 'study' },
-    { date: '15', month: 'Apr', day: 'Mer', focus: 'Entra — identità', tasks: 'Entra ID vs AD DS. Tipi di identità (5). Identità ibride. Flash card Entra.', time: '40 min', type: 'study' },
-    { date: '16', month: 'Apr', day: 'Gio', focus: 'Entra — autenticazione', tasks: 'MFA (3 fattori + metodi). Password protection. Reimpostazione password self-service.', time: '40 min', type: 'study' },
-    { date: '17', month: 'Apr', day: 'Ven', focus: 'Entra — accesso', tasks: 'Accesso condizionale (IF-THEN). RBAC Azure vs Entra. Domande scenario.', time: '40 min', type: 'study' },
-    { date: '18', month: 'Apr', day: 'Sab', focus: 'Entra — governance', tasks: 'PIM. Entra ID Protection. Access reviews. ID Governance. Flash card ripasso Entra.', time: '45 min', type: 'study' },
-    { date: '19', month: 'Apr', day: 'Dom', focus: 'Riposo', tasks: 'Giornata libera.', time: '—', type: 'rest' },
-    { date: '20', month: 'Apr', day: 'Lun', focus: '↩ Revisione 1', tasks: 'Ripassa Concetti base + Entra con flash card. 15 domande su questi due domini.', time: '45 min', type: 'review' },
-    { date: '21', month: 'Apr', day: 'Mar', focus: 'Security — infrastruttura', tasks: 'DDoS Protection. Azure Firewall. WAF. NSG. Azure Bastion. Key Vault.', time: '40 min', type: 'study' },
-    { date: '22', month: 'Apr', day: 'Mer', focus: 'Security — Defender for Cloud', tasks: 'CSPM. Secure Score. Policy e raccomandazioni. Protezione workload.', time: '40 min', type: 'study' },
-    { date: '23', month: 'Apr', day: 'Gio', focus: 'Security — Sentinel', tasks: 'SIEM vs SOAR. Sentinel cloud-native. Rilevamento minacce. Playbook. Connettori.', time: '40 min', type: 'study' },
-    { date: '24', month: 'Apr', day: 'Ven', focus: 'Security — Defender XDR (1)', tasks: 'Defender for Office 365. Defender for Endpoint. Defender for Identity.', time: '40 min', type: 'study' },
-    { date: '25', month: 'Apr', day: 'Sab', focus: 'Security — Defender XDR (2)', tasks: 'Defender for Cloud Apps. Vulnerability Management. Defender TI. Portale unificato.', time: '45 min', type: 'study' },
-    { date: '26', month: 'Apr', day: 'Dom', focus: 'Riposo', tasks: 'Giornata libera.', time: '—', type: 'rest' },
-    { date: '27', month: 'Apr', day: 'Lun', focus: '↩ Revisione 2', tasks: 'Ripassa tutto il dominio Security (35–40%). 20 domande scenario. Identifica le lacune.', time: '50 min', type: 'review' },
-    { date: '28', month: 'Apr', day: 'Mar', focus: 'Compliance — Purview', tasks: 'Portale Purview. Service Trust Portal. Privacy Microsoft. Microsoft Priva.', time: '35 min', type: 'study' },
-    { date: '29', month: 'Apr', day: 'Mer', focus: 'Compliance — protezione dati', tasks: 'Classificazione dati. Content Explorer. Etichette riservatezza. DLP.', time: '40 min', type: 'study' },
-    { date: '30', month: 'Apr', day: 'Gio', focus: 'Compliance — governance', tasks: 'Compliance Manager. Gestione record. Policy di conservazione. Insider risk. eDiscovery. Audit.', time: '40 min', type: 'study' },
-    { date: '1', month: 'Mag', day: 'Ven', focus: '↩ Revisione 3', tasks: 'Ripassa tutto il dominio Compliance. 15 domande. Flash card Purview.', time: '45 min', type: 'review' },
-    { date: '2', month: 'Mag', day: 'Sab', focus: 'Simulazione esame', tasks: 'Test di pratica Microsoft completo. Cronometro. Identifica le aree deboli.', time: '60 min', type: 'review' },
-    { date: '3', month: 'Mag', day: 'Dom', focus: 'Riposo', tasks: 'Giornata libera. Riposo mentale.', time: '—', type: 'rest' },
-    { date: '4', month: 'Mag', day: 'Lun', focus: 'Rinforzo lacune', tasks: 'Studia solo i temi deboli emersi dalla simulazione. Nient\'altro.', time: '45 min', type: 'study' },
-    { date: '5', month: 'Mag', day: 'Mar', focus: '↩ Revisione totale', tasks: 'Mappa prodotto completa. Flash card tutti i concetti chiave. Rapido.', time: '40 min', type: 'review' },
-    { date: '6', month: 'Mag', day: 'Mer', focus: 'Errori comuni', tasks: 'Rivedi la lista degli errori più frequenti. Ripassi i prodotti che si confondono.', time: '30 min', type: 'review' },
-    { date: '7', month: 'Mag', day: 'Gio', focus: 'Ripasso leggero', tasks: 'Solo flash card, niente materiale nuovo. Fermati qui.', time: '20 min', type: 'review' },
-    { date: '8', month: 'Mag', day: 'Ven', focus: 'Preparazione', tasks: 'Controlla la logistica dell\'esame. Dormi presto. Zero studio.', time: '—', type: 'rest' },
-    { date: '9', month: 'Mag', day: 'Sab', focus: '— ESAME SC-900', tasks: 'Arriva 15 minuti prima. Leggi ogni domanda due volte. Segna le incerte e torna alla fine.', time: '—', type: 'exam' },
-  ];
+const concepts = [
+  {n:'01',title:'Zero Trust -- tre pilastri',body:'Verifica esplicita, minimo privilegio, assumi la violazione. La domanda preferita dell\'esame: quale principio Zero Trust si applica a questo scenario?',tags:['Concetti base','10-15%']},
+  {n:'02',title:'Entra ID -- tipi di identita\'',body:'Utenti interni, utenti guest (B2B), entita\' servizio (applicazioni), identita\' gestite (risorse Azure senza credenziali), identita\' ibride (AD DS + Entra). Cinque tipi, ognuno con uno scopo diverso.',tags:['Entra','25-30%']},
+  {n:'03',title:'MFA -- autenticazione a piu\' fattori',body:'Qualcosa che sai (password, PIN), qualcosa che hai (app, token, smart card), qualcosa che sei (biometrico). Blocca oltre il 99% degli attacchi basati su credenziali.',tags:['Entra','25-30%']},
+  {n:'04',title:'Accesso condizionale',body:'Il motore IF-THEN di Entra ID: SE (utente + posizione + dispositivo + app + rischio), ALLORA (consenti / blocca / richiedi MFA / richiedi dispositivo conforme). E\' l\'implementazione pratica di Zero Trust.',tags:['Entra','25-30%']},
+  {n:'05',title:'RBAC -- controllo accessi per ruolo',body:'Si assegnano ruoli, non permessi individuali. Azure RBAC governa le risorse Azure (VM, storage). Entra RBAC governa la directory. Distinzione spesso testata all\'esame.',tags:['Entra','25-30%']},
+  {n:'06',title:'Defender XDR -- l\'ecosistema',body:'Defender for Office 365 (email e collaborazione), Defender for Endpoint (dispositivi), Defender for Identity (Active Directory on-prem), Defender for Cloud Apps (CASB, shadow IT). Tutti confluiscono nel portale Defender unificato.',tags:['Security','35-40%']},
+  {n:'07',title:'Microsoft Sentinel -- SIEM + SOAR',body:'SIEM raccoglie e correla log da tutta l\'organizzazione per rilevare minacce. SOAR automatizza la risposta tramite playbook (Azure Logic Apps). Sentinel fa entrambe le cose, e\' cloud-native e usa KQL per le query.',tags:['Security','35-40%']},
+  {n:'08',title:'Defender for Cloud -- CSPM',body:'Cloud Security Posture Management: analisi continua delle configurazioni cloud per rilevare errori. Fornisce un Secure Score (0-100%). Copre Azure, AWS e GCP. Include anche protezione workload (CWPP).',tags:['Security','35-40%']},
+  {n:'09',title:'Purview -- DLP + etichette riservatezza',body:'Le etichette classificano e proteggono i contenuti (crittografia, watermark, restrizioni). Viaggiano con il documento ovunque vada. La DLP rileva e blocca la condivisione non autorizzata di dati sensibili, anche su endpoint.',tags:['Compliance','20-25%']},
+  {n:'10',title:'Compliance Manager + punteggio conformita\'',body:'Strumento nel portale Purview che valuta la postura di conformita\' rispetto a oltre 300 standard normativi (GDPR, ISO 27001, HIPAA). Il punteggio misura il progresso -- non certifica la conformita\'. Non sostituisce un audit esterno.',tags:['Compliance','20-25%']},
+];
 
-  const mistakes = [
-    { bad: 'Confondere Entra ID con Active Directory Domain Services (AD DS) e studiarli come se fossero la stessa cosa.', good: 'Entra ID è un servizio di identità cloud (IAM). AD DS è una directory on-premises basata su Kerberos e LDAP. L\'esame distingue i due continuamente.' },
-    { bad: 'Pensare che Defender for Cloud sia un antivirus o un firewall.', good: 'Defender for Cloud è uno strumento di postura (CSPM): rileva configurazioni errate e fornisce raccomandazioni. La protezione workload è una funzionalità aggiuntiva.' },
-    { bad: 'Mescolare SIEM e SOAR, o pensare che Sentinel sia solo uno dei due.', good: 'SIEM = raccolta e analisi log. SOAR = automazione risposta agli incidenti. Sentinel è entrambe le cose in una piattaforma cloud-native.' },
-    { bad: 'Credere che il punteggio del Compliance Manager dimostri conformità normativa reale.', good: 'Il punteggio misura il progresso verso la conformità — non la certifica. La conformità reale richiede audit di terze parti.' },
-    { bad: 'Ignorare Microsoft Priva perché sembra secondario.', good: 'Priva è menzionata esplicitamente negli obiettivi d\'esame 2025. Gestisce la privacy dei dati personali all\'interno dell\'organizzazione.' },
-    { bad: 'Confondere autenticazione e autorizzazione nelle domande scenario.', good: 'Autenticazione = verifica dell\'identità (accade PRIMA). Autorizzazione = concessione dei permessi (accade DOPO). Mai invertire l\'ordine.' },
-    { bad: 'Studiare tutti i domini equamente, trattando quello da 10% come quello da 40%.', good: 'Alloca il tempo proporzionalmente: Security (40%) → Entra (28%) → Compliance (22%) → Concetti base (10%).' },
-  ];
+const flashcards = [
+  {tag:'CONCETTI BASE',q:'Quali sono i tre pilastri del modello Zero Trust?',a:'Verifica esplicita: autenticare e autorizzare sempre usando tutti i segnali disponibili.\n\nMinimo privilegio: accesso Just-In-Time e Just-Enough-Access, niente di piu\'.\n\nAssumi la violazione: segmenta, cripta, minimizza il raggio d\'esplosione.'},
+  {tag:'CONCETTI BASE',q:'Qual e\' la differenza tra autenticazione e autorizzazione?',a:'Autenticazione = verifica dell\'identita\' (chi sei?). Accade PRIMA.\n\nAutorizzazione = concessione dei permessi (cosa puoi fare?). Accade DOPO.\n\nSe l\'autenticazione fallisce, l\'autorizzazione non viene mai raggiunta.'},
+  {tag:'CONCETTI BASE',q:'Nel modello di responsabilita\' condivisa, cosa resta sempre a carico del cliente?',a:'Indipendentemente dal modello cloud (IaaS, PaaS, SaaS), il cliente e\' sempre responsabile di:\n- Dati e classificazione delle informazioni\n- Identita\' e gestione degli accessi\n- Sicurezza di dispositivi e endpoint'},
+  {tag:'CONCETTI BASE',q:'Descrivi i 7 strati della difesa in profondita\'.',a:'1. Sicurezza fisica (datacenter, guardie)\n2. Identita\' e accessi (MFA, Conditional Access, PIM)\n3. Perimetro (DDoS, firewall)\n4. Rete (NSG, segmentazione)\n5. Calcolo/host (antimalware, patching)\n6. Applicazione (WAF, codice sicuro)\n7. Dati (crittografia, controllo accessi)'},
+  {tag:'CONCETTI BASE',q:'Qual e\' la differenza tra crittografia simmetrica e asimmetrica?',a:'Simmetrica: stessa chiave per cifrare e decifrare. Veloce, usata per grandi volumi di dati. Esempio: AES.\n\nAsimmetrica: coppia chiave pubblica/privata. La pubblica cifra, la privata decifra. Risolve il problema dello scambio di chiavi. Esempio: RSA, usato in HTTPS/TLS.'},
+  {tag:'MICROSOFT ENTRA',q:'Cos\'e\' Microsoft Entra ID e come differisce da Active Directory (AD DS)?',a:'Entra ID e\' un servizio di identita\' cloud (IAM) basato su OAuth 2.0, OpenID Connect e SAML 2.0.\n\nAD DS e\' una directory on-premises basata su Kerberos, NTLM e LDAP.\n\nNon sono la stessa cosa: architetture diverse, protocolli diversi, scopi diversi.'},
+  {tag:'MICROSOFT ENTRA',q:'Quali sono i cinque tipi di identita\' in Entra ID?',a:'1. Utenti interni (dipendenti cloud-only)\n2. Utenti guest/B2B (esterni invitati)\n3. Entita\' servizio (applicazioni registrate)\n4. Identita\' gestite (risorse Azure senza credenziali nel codice)\n5. Identita\' ibride (sincronizzate da AD DS tramite Entra Connect)'},
+  {tag:'MICROSOFT ENTRA',q:'Come funziona l\'accesso condizionale? Spiega il meccanismo IF-THEN.',a:'IF (segnali: utente/gruppo + posizione IP + stato dispositivo + app target + livello di rischio sign-in)\n\nTHEN (decisione: consenti / blocca / richiedi MFA / richiedi dispositivo conforme / limita sessione)\n\nE\' il motore di policy di Zero Trust: adatta la risposta al contesto specifico di ogni richiesta.'},
+  {tag:'MICROSOFT ENTRA',q:'Cos\'e\' PIM e perche\' e\' importante per la sicurezza?',a:'Privileged Identity Management: consente accesso Just-In-Time ai ruoli privilegiati.\n\nSenza PIM: un account Global Admin compromesso da\' agli attaccanti accesso immediato e permanente.\n\nCon PIM: anche con account compromesso, gli attaccanti non hanno ruoli elevati. L\'attivazione richiede MFA, approvazione e genera alert.'},
+  {tag:'MICROSOFT ENTRA',q:'Cosa fa Entra ID Protection e quali rischi rileva?',a:'Rileva e risponde ai rischi account usando machine learning.\n\nRischio utente: credenziali trapelate, comportamento anomalo nel tempo.\n\nRischio sign-in: IP anonimo, viaggio impossibile (New York poi Tokyo in 45 min), proprieta\' di accesso non familiari.\n\nLivelli: Basso / Medio / Alto -- guidano le policy di remediation automatica.'},
+  {tag:'SECURITY',q:'Qual e\' la differenza tra SIEM e SOAR? Come li implementa Sentinel?',a:'SIEM (Security Information and Event Management): raccoglie e correla log da tutta l\'organizzazione per rilevare minacce. Usa KQL per analytics e threat hunting.\n\nSOAR (Security Orchestration Automated Response): automatizza la risposta tramite playbook (Azure Logic Apps). Riduce il MTTR da ore a secondi.\n\nSentinel integra entrambi in una piattaforma cloud-native scalabile.'},
+  {tag:'SECURITY',q:'Quale prodotto Defender protegge email, endpoint, AD on-prem e cloud app?',a:'Email e collaborazione (Teams, SharePoint) --> Defender for Office 365\nEndpoint (Windows, macOS, Linux) --> Defender for Endpoint\nActive Directory on-premises --> Defender for Identity\nApp cloud e shadow IT --> Defender for Cloud Apps (CASB)'},
+  {tag:'SECURITY',q:'Cos\'e\' il CSPM e quale prodotto Microsoft lo implementa?',a:'Cloud Security Posture Management: analisi continua delle configurazioni cloud per rilevare errori di sicurezza e fornire raccomandazioni prioritizzate.\n\nMicrosoft Defender for Cloud implementa il CSPM e fornisce un Secure Score da 0 a 100%. Copre Azure, AWS e GCP.'},
+  {tag:'SECURITY',q:'A cosa serve Azure Key Vault e cosa puo\' archiviare?',a:'Archivia in modo sicuro, centralizzato e verificabile:\n- Segreti: password, stringhe di connessione, API key\n- Chiavi crittografiche: RSA, ECC per operazioni di cifratura\n- Certificati: TLS/SSL con gestione del ciclo di vita\n\nEvita che le credenziali finiscano nel codice sorgente o nei file di configurazione.'},
+  {tag:'SECURITY',q:'Qual e\' la differenza tra DDoS Protection Basic e Standard in Azure?',a:'Basic: incluso automaticamente per tutti i servizi Azure. Protezione di piattaforma contro attacchi volumetrici. Nessuna configurazione richiesta.\n\nStandard: protezione avanzata dedicata alle risorse del cliente. Aggiunge telemetria, dashboard, report, protezione da costi aggiuntivi e SLA garantito.'},
+  {tag:'SECURITY',q:'Cosa blocca il Web Application Firewall (WAF) e dove si attiva?',a:'Blocca gli attacchi OWASP Top 10: SQL injection, Cross-Site Scripting (XSS), Command injection, Remote File Inclusion, bot e scanner.\n\nSi attiva su Azure Application Gateway, Azure Front Door o Azure CDN. Funziona a livello L7 (HTTP/HTTPS).'},
+  {tag:'SECURITY',q:'A cosa serve Azure Bastion e quale problema risolve?',a:'Fornisce accesso RDP e SSH sicuro alle VM tramite browser, senza esporre indirizzi IP pubblici sulle macchine.\n\nElimina l\'esposizione delle porte 3389 e 22 su internet. Integra MFA. L\'amministratore si connette dal portale Azure senza VPN ne\' client aggiuntivi.'},
+  {tag:'COMPLIANCE',q:'Cos\'e\' il Compliance Manager e cosa misura il punteggio?',a:'Strumento nel portale Purview con template preconfigurati per oltre 300 standard normativi (GDPR, ISO 27001, HIPAA, PCI-DSS).\n\nIl punteggio misura il PROGRESSO verso la conformita\', non la certifica. Ogni azione di miglioramento vale un certo numero di punti. Non sostituisce un audit esterno.'},
+  {tag:'COMPLIANCE',q:'Qual e\' la differenza tra etichette di riservatezza e DLP?',a:'Etichette di riservatezza: classificano e proteggono i contenuti (crittografia, watermark, restrizioni di accesso). Viaggiano con il documento ovunque. Possono essere applicate manualmente o automaticamente.\n\nDLP (Data Loss Prevention): rileva e blocca la condivisione non autorizzata di dati sensibili in Exchange, SharePoint, Teams, endpoint e app cloud di terze parti.'},
+  {tag:'COMPLIANCE',q:'A cosa serve l\'eDiscovery in Purview? Quali sono i due livelli?',a:'Permette di cercare, raccogliere e esportare contenuti elettronici per indagini legali, contenziosi o richieste normative.\n\nStandard: ricerca contenuti, blocchi legali, esportazione, gestione casi base.\n\nPremium: indicizzazione avanzata, analisi AI, rilevamento near-duplicate, email threading, comunicazioni con i custodi.'},
+  {tag:'COMPLIANCE',q:'Cos\'e\' il Service Trust Portal e a cosa serve?',a:'Portale pubblico su servicetrust.microsoft.com dove Microsoft pubblica:\n- Report di audit (SOC 1/2/3, ISO 27001, FedRAMP)\n- Guide alla conformita\' normativa\n- Documentazione su come i servizi cloud proteggono i dati\n\nE\' trasparenza verso i clienti, non uno strumento operativo interno.'},
+  {tag:'COMPLIANCE',q:'Cosa fa la gestione del rischio insider in Purview?',a:'Rileva attivita\' potenzialmente rischiose di utenti interni correlando segnali da Microsoft 365 e sistemi HR.\n\nEsempio: dipendente dimissiona --> il sistema segnala upload massivo di file su Dropbox personale quella settimana.\n\nCopre: furto di dati, fuga di informazioni, furto IP, violazioni policy, comportamenti inappropriati nelle comunicazioni.'},
+  {tag:'COMPLIANCE',q:'Cos\'e\' Microsoft Priva?',a:'Strumento di gestione della privacy dei dati personali all\'interno dell\'organizzazione.\n\nIdentifica i rischi per la privacy, automatizza le richieste dei diritti degli interessati (GDPR Subject Rights Requests), supporta la minimizzazione dei dati e le valutazioni di impatto sulla privacy.\n\nFa parte dell\'ecosistema Purview.'},
+  {tag:'CONCETTI BASE',q:'Cos\'e\' la federazione delle identita\'?',a:'Un accordo di fiducia tra provider di identita\' di organizzazioni diverse. Gli utenti di un\'organizzazione accedono alle risorse di un\'altra usando le proprie credenziali, senza creare account duplicati.\n\nLa fiducia non e\' automaticamente bidirezionale: se A si fida di B, B non si fida automaticamente di A.'},
+  {tag:'MICROSOFT ENTRA',q:'Cos\'e\' l\'autenticazione passwordless e quali metodi supporta Entra ID?',a:'Elimina la password sostituendola con fattori piu\' forti e resistenti al phishing basati su crittografia asimmetrica.\n\nWindows Hello for Business: biometria o PIN legato a uno specifico dispositivo (chiave privata nel TPM).\nMicrosoft Authenticator App: notifica push con conferma biometrica sul telefono.\nChiavi FIDO2: dispositivi fisici (YubiKey) completamente resistenti al phishing.'},
+];
 
-  const eliteItems = [
-    { title: 'Pensano per scenari, non per definizioni', body: 'Non memorizzano "Defender for Endpoint è un prodotto EDR". Si chiedono: "Se un laptop aziendale viene compromesso, quale strumento Microsoft interviene, come e perché?". L\'esame ragiona sempre per casi d\'uso.' },
-    { title: 'Usano la mappa mentale del prodotto', body: 'Disegnano a mano l\'ecosistema: Entra a sinistra, Defender nel centro, Purview a destra, Sentinel sopra che osserva tutto. Ogni freccia è un flusso di dati o una protezione.' },
-    { title: 'Fanno il test di pratica Microsoft prima di studiare', body: 'Non per studiare le risposte, ma per capire lo stile delle domande. L\'esame non chiede mai "definisci X". Chiede sempre "quale strumento risolve questo problema".' },
-    { title: 'Dedicano il 40% del tempo al dominio security solutions', body: 'Perché vale il 35–40% dell\'esame ed ha la maggiore densità di prodotti distinti da riconoscere. Gli altri domini sono più concettuali e richiedono meno memorizzazione.' },
-    { title: 'Sanno distinguere i prodotti "gemelli"', body: 'Le coppie che confondono di più: Defender for Identity vs Entra ID Protection · Purview DLP vs etichette di riservatezza · Compliance Manager vs Service Trust Portal.' },
-    { title: 'Smettono di studiare 48 ore prima', body: 'Il consolidamento della memoria avviene durante il sonno, non durante lo studio. Gli ultimi due giorni: solo ripasso leggero delle flash card. Poi riposo.' },
-  ];
+const quizData = [
+  {q:'Quale servizio Microsoft implementa il modello SIEM + SOAR?',opts:['Microsoft Defender for Cloud','Microsoft Sentinel','Microsoft Purview','Azure Key Vault'],ans:1,exp:'Microsoft Sentinel e\' la soluzione cloud-native SIEM (raccolta e analisi log) + SOAR (automazione risposta tramite playbook). Defender for Cloud si occupa di postura cloud (CSPM).'},
+  {q:'Nel modello Zero Trust, quale principio afferma che gli utenti devono ricevere solo i permessi strettamente necessari?',opts:['Assumi la violazione','Verifica esplicita','Minimo privilegio','Difesa in profondita\''],ans:2,exp:'Il minimo privilegio (Least Privilege) prevede accesso Just-In-Time e Just-Enough-Access: niente di piu\' di quanto necessario per il compito specifico.'},
+  {q:'Quale prodotto Microsoft protegge principalmente Active Directory on-premises da attacchi come pass-the-hash e Kerberoasting?',opts:['Microsoft Defender for Endpoint','Microsoft Defender for Identity','Microsoft Sentinel','Entra ID Protection'],ans:1,exp:'Defender for Identity monitora l\'Active Directory on-premises per rilevare attacchi specifici come pass-the-hash, golden ticket, Kerberoasting e lateral movement.'},
+  {q:'Cosa fa il Compliance Manager in Microsoft Purview?',opts:['Blocca la fuga di dati sensibili','Rileva rischi insider','Valuta la postura di conformita\' rispetto agli standard normativi','Archivia log di audit per 90 giorni'],ans:2,exp:'Compliance Manager valuta la postura di conformita\' rispetto a oltre 300 standard (GDPR, ISO 27001, HIPAA) e fornisce un punteggio che misura il progresso -- non la certificazione.'},
+  {q:'In quale modello cloud il cliente ha la maggiore responsabilita\' sulla sicurezza?',opts:['SaaS','PaaS','IaaS','CaaS'],ans:2,exp:'In IaaS (Infrastructure as a Service) il cliente gestisce OS, runtime, applicazioni e dati. Microsoft gestisce solo l\'hardware fisico e la rete di base.'},
+  {q:'Qual e\' lo scopo principale di Azure Key Vault?',opts:['Gestire le policy di accesso condizionale','Archiviare in modo sicuro segreti, chiavi crittografiche e certificati','Rilevare configurazioni errate nelle risorse cloud','Bloccare traffico di rete malevolo'],ans:1,exp:'Azure Key Vault e\' il servizio centralizzato per segreti (password, stringhe di connessione), chiavi crittografiche e certificati TLS/SSL. Evita che le credenziali finiscano nel codice.'},
+  {q:'Quale affermazione descrive meglio l\'accesso condizionale in Microsoft Entra ID?',opts:['Un firewall che blocca il traffico di rete non autorizzato','Un motore IF-THEN che valuta segnali contestuali e applica policy di accesso','Un sistema di backup delle identita\' cloud','Uno strumento per la classificazione dei dati sensibili'],ans:1,exp:'L\'accesso condizionale valuta segnali (utente, posizione, dispositivo, rischio) e applica controlli (consenti, blocca, richiedi MFA). E\' l\'implementazione pratica di Zero Trust.'},
+  {q:'Quale prodotto Microsoft implementa il CSPM (Cloud Security Posture Management)?',opts:['Microsoft Sentinel','Microsoft Defender for Endpoint','Microsoft Defender for Cloud','Azure Firewall'],ans:2,exp:'Defender for Cloud implementa il CSPM: analizza continuamente le configurazioni cloud, identifica errori di sicurezza e fornisce un Secure Score da 0 a 100%. Copre Azure, AWS e GCP.'},
+  {q:'Qual e\' la differenza principale tra l\'autenticazione e l\'autorizzazione?',opts:['Sono la stessa cosa, usati in contesti diversi','L\'autenticazione verifica l\'identita\', l\'autorizzazione determina i permessi','L\'autorizzazione avviene prima dell\'autenticazione','L\'autenticazione riguarda solo le password'],ans:1,exp:'Autenticazione (CHI sei?) avviene sempre prima. Autorizzazione (COSA puoi fare?) avviene dopo l\'autenticazione riuscita. Se l\'autenticazione fallisce, l\'autorizzazione non e\' mai raggiunta.'},
+  {q:'Cosa fa Microsoft Priva?',opts:['Rileva malware nelle email aziendali','Gestisce la privacy dei dati personali e automatizza le richieste GDPR','Archivia i log di sicurezza per le indagini forensi','Classifica i file in base alla sensibilita\''],ans:1,exp:'Priva e\' lo strumento di gestione della privacy: identifica rischi per i dati personali, automatizza le Subject Rights Requests GDPR e supporta la minimizzazione dei dati. Fa parte di Purview.'},
+  {q:'Quale protocollo e\' usato da Active Directory Domain Services (AD DS) per l\'autenticazione, ma NON da Microsoft Entra ID?',opts:['OAuth 2.0','SAML 2.0','Kerberos','OpenID Connect'],ans:2,exp:'AD DS usa Kerberos e NTLM per l\'autenticazione on-premises. Entra ID usa protocolli moderni basati su standard web: OAuth 2.0, OpenID Connect e SAML 2.0.'},
+  {q:'Quale affermazione su PIM (Privileged Identity Management) e\' corretta?',opts:['PIM assegna ruoli amministrativi permanenti agli utenti','PIM consente accesso Just-In-Time ai ruoli privilegiati, solo quando necessario','PIM e\' uno strumento per la classificazione dei dati','PIM sostituisce l\'autenticazione a piu\' fattori'],ans:1,exp:'PIM implementa l\'accesso Just-In-Time: i ruoli privilegiati non sono assegnati in modo permanente. L\'utente deve esplicitamente richiederli, specificare la durata e motivazione, e il ruolo scade automaticamente.'},
+  {q:'Quale prodotto Defender protegge le email aziendali da phishing e malware?',opts:['Defender for Identity','Defender for Endpoint','Defender for Office 365','Defender for Cloud Apps'],ans:2,exp:'Defender for Office 365 protegge Exchange Online, Teams e SharePoint da phishing, malware e spam tramite Safe Attachments (analisi allegati in sandbox) e Safe Links (verifica URL al momento del click).'},
+  {q:'Il punteggio di conformita\' nel Compliance Manager indica che l\'organizzazione e\':',opts:['Certificata conforme agli standard normativi selezionati','In fase di progresso verso la conformita\', non necessariamente certificata','Esente da audit esterni grazie alla conformita\' raggiunta','Protetta da sanzioni normative'],ans:1,exp:'Il punteggio misura il PROGRESSO verso la conformita\', non la certifica. La conformita\' reale richiede audit indipendenti di terze parti. Un punteggio alto non garantisce l\'assenza di sanzioni.'},
+  {q:'Azure Bastion risolve quale problema di sicurezza?',opts:['Blocca gli attacchi DDoS sulle applicazioni web','Consente accesso RDP/SSH alle VM senza esporre IP pubblici su internet','Gestisce la crittografia dei dati a riposo','Monitora le configurazioni errate nelle risorse cloud'],ans:1,exp:'Azure Bastion fornisce accesso RDP e SSH sicuro tramite browser dal portale Azure, senza richiedere indirizzi IP pubblici sulle VM. Elimina l\'esposizione delle porte 3389 e 22 su internet.'},
+];
 
-  // ============================================
-  // RENDER PIANO
-  // ============================================
-  const planList = document.getElementById('plan-list');
-  planData.forEach(d => {
-    const item = document.createElement('div');
-    item.className = 'plan-item ' + d.type;
-    item.innerHTML = `
-      <div class="plan-date">
-        <div class="plan-day-name">${d.day}</div>
-        <div class="plan-day-num">${d.date}</div>
-        <div class="plan-month">${d.month}</div>
-      </div>
-      <div class="plan-content">
-        <div class="plan-focus">${d.focus}</div>
-        <div class="plan-tasks">${d.tasks}</div>
-        <div class="plan-time">${d.time}</div>
-      </div>`;
-    planList.appendChild(item);
+const planData = [
+  {date:'11',month:'Apr',day:'Sab',focus:'Orientamento',tasks:'Test di pratica Microsoft gratuito. Leggi gli obiettivi ufficiali. Identifica i punti deboli.',time:'45 min',type:'today'},
+  {date:'12',month:'Apr',day:'Dom',focus:'Riposo',tasks:'Giornata libera. Il riposo e\' parte del sistema.',time:'--',type:'rest'},
+  {date:'13',month:'Apr',day:'Lun',focus:'Concetti base',tasks:'Zero Trust (3 pilastri). Difesa in profondita\' (7 strati). Autenticazione vs autorizzazione.',time:'40 min',type:'study'},
+  {date:'14',month:'Apr',day:'Mar',focus:'Concetti base -- revisione',tasks:'Responsabilita\' condivisa. Crittografia simmetrica vs asimmetrica vs hashing. Flash card.',time:'35 min',type:'study'},
+  {date:'15',month:'Apr',day:'Mer',focus:'Entra -- identita\'',tasks:'Entra ID vs AD DS (protocolli e differenze). Sei tipi di identita\'. Identita\' ibride.',time:'40 min',type:'study'},
+  {date:'16',month:'Apr',day:'Gio',focus:'Entra -- autenticazione',tasks:'MFA (3 fattori + metodi). Autenticazione passwordless. SSPR.',time:'40 min',type:'study'},
+  {date:'17',month:'Apr',day:'Ven',focus:'Entra -- accesso',tasks:'Accesso condizionale (segnali e controlli). RBAC Azure vs Entra. Domande scenario.',time:'40 min',type:'study'},
+  {date:'18',month:'Apr',day:'Sab',focus:'Entra -- governance',tasks:'PIM (JIT, approval, audit). Entra ID Protection (rischi). Access reviews. Flash card Entra.',time:'45 min',type:'study'},
+  {date:'19',month:'Apr',day:'Dom',focus:'Riposo',tasks:'Giornata libera.',time:'--',type:'rest'},
+  {date:'20',month:'Apr',day:'Lun',focus:'Revisione 1',tasks:'Flash card Concetti base + Entra. 15 domande quiz sui due domini. Identifica le lacune.',time:'45 min',type:'review'},
+  {date:'21',month:'Apr',day:'Mar',focus:'Security -- infrastruttura',tasks:'DDoS Basic vs Standard. Azure Firewall. WAF (OWASP). NSG. Azure Bastion. Key Vault.',time:'40 min',type:'study'},
+  {date:'22',month:'Apr',day:'Mer',focus:'Security -- Defender for Cloud',tasks:'CSPM. Secure Score. Raccomandazioni. CWPP (protezione workload). Multi-cloud.',time:'40 min',type:'study'},
+  {date:'23',month:'Apr',day:'Gio',focus:'Security -- Sentinel',tasks:'SIEM vs SOAR. KQL. Analytics rules. Playbook. Threat hunting. UEBA.',time:'40 min',type:'study'},
+  {date:'24',month:'Apr',day:'Ven',focus:'Security -- Defender XDR (1)',tasks:'Defender for Office 365 (Safe Links, Safe Attachments). Defender for Endpoint (EDR, ASR). Defender for Identity.',time:'40 min',type:'study'},
+  {date:'25',month:'Apr',day:'Sab',focus:'Security -- Defender XDR (2)',tasks:'Defender for Cloud Apps (CASB). Vulnerability Management. Defender TI. Portale Defender unificato.',time:'45 min',type:'study'},
+  {date:'26',month:'Apr',day:'Dom',focus:'Riposo',tasks:'Giornata libera.',time:'--',type:'rest'},
+  {date:'27',month:'Apr',day:'Lun',focus:'Revisione 2',tasks:'Flash card e quiz Security (35-40%). 20 domande scenario. Identifica le lacune rimanenti.',time:'50 min',type:'review'},
+  {date:'28',month:'Apr',day:'Mar',focus:'Compliance -- Purview',tasks:'Portale Purview. Service Trust Portal. Privacy Microsoft (6 principi). Microsoft Priva.',time:'35 min',type:'study'},
+  {date:'29',month:'Apr',day:'Mer',focus:'Compliance -- protezione dati',tasks:'Classificazione dati (SIT, classificatori). Content Explorer. Etichette riservatezza. DLP (Exchange, endpoint, cloud app).',time:'40 min',type:'study'},
+  {date:'30',month:'Apr',day:'Gio',focus:'Compliance -- governance',tasks:'Compliance Manager. Retention policies vs labels. Records management. Insider risk. eDiscovery Standard vs Premium. Audit.',time:'40 min',type:'study'},
+  {date:'1',month:'Mag',day:'Ven',focus:'Revisione 3',tasks:'Flash card e quiz Compliance. 15 domande. Chiudi le ultime lacune.',time:'45 min',type:'review'},
+  {date:'2',month:'Mag',day:'Sab',focus:'Simulazione esame',tasks:'Test di pratica Microsoft completo in condizioni reali. Cronometro attivo. Analizza ogni risposta sbagliata.',time:'60 min',type:'review'},
+  {date:'3',month:'Mag',day:'Dom',focus:'Riposo',tasks:'Giornata libera. Riposo mentale.',time:'--',type:'rest'},
+  {date:'4',month:'Mag',day:'Lun',focus:'Rinforzo lacune',tasks:'Studia solo i temi deboli emersi dalla simulazione. Nient\'altro.',time:'45 min',type:'study'},
+  {date:'5',month:'Mag',day:'Mar',focus:'Revisione totale',tasks:'Mappa prodotto completa. Flash card rapida di tutti i concetti chiave.',time:'40 min',type:'review'},
+  {date:'6',month:'Mag',day:'Mer',focus:'Errori comuni',tasks:'Rivedi la lista degli errori piu\' frequenti. I prodotti gemelli che si confondono.',time:'30 min',type:'review'},
+  {date:'7',month:'Mag',day:'Gio',focus:'Ripasso leggero',tasks:'Solo flash card. Niente materiale nuovo. Fermati qui.',time:'20 min',type:'review'},
+  {date:'8',month:'Mag',day:'Ven',focus:'Preparazione',tasks:'Controlla la logistica. Organizza i documenti. Dormi presto. Zero studio.',time:'--',type:'rest'},
+  {date:'9',month:'Mag',day:'Sab',focus:'ESAME SC-900',tasks:'Arriva 15 minuti prima. Leggi ogni domanda due volte. Segna le incerte e torna alla fine.',time:'--',type:'exam'},
+];
+
+const mistakes = [
+  {bad:'Confondere Entra ID con Active Directory Domain Services e studiarli come se fossero la stessa cosa.',good:'Entra ID usa OAuth/OIDC/SAML ed e\' cloud-native. AD DS usa Kerberos/NTLM/LDAP ed e\' on-premises. Protocolli diversi, architetture diverse, scopi diversi. L\'esame distingue i due continuamente.'},
+  {bad:'Pensare che Defender for Cloud sia un antivirus o un firewall.',good:'Defender for Cloud e\' uno strumento di postura (CSPM): analizza configurazioni, rileva errori e fornisce raccomandazioni con un Secure Score. La protezione workload (CWPP) e\' una funzionalita\' aggiuntiva.'},
+  {bad:'Mescolare SIEM e SOAR, o pensare che Sentinel sia solo uno dei due.',good:'SIEM = raccolta e analisi log per rilevare minacce. SOAR = automazione risposta tramite playbook. Sentinel e\' entrambe le cose in una piattaforma cloud-native che usa KQL.'},
+  {bad:'Credere che il punteggio del Compliance Manager certifichi la conformita\' normativa.',good:'Il punteggio misura il PROGRESSO verso la conformita\', non la certifica. La conformita\' reale (GDPR, ISO 27001) richiede audit indipendenti di terze parti.'},
+  {bad:'Ignorare Microsoft Priva perche\' sembra secondario rispetto al resto.',good:'Priva e\' menzionata esplicitamente negli obiettivi ufficiali dell\'esame 2025/2026. Gestisce la privacy dei dati personali e automatizza le Subject Rights Requests GDPR.'},
+  {bad:'Invertire l\'ordine di autenticazione e autorizzazione nelle domande scenario.',good:'Autenticazione (CHI sei?) avviene PRIMA. Autorizzazione (COSA puoi fare?) avviene DOPO. Se l\'autenticazione fallisce, l\'autorizzazione non viene mai raggiunta.'},
+  {bad:'Studiare tutti i domini equamente, dedicando lo stesso tempo al dominio da 10% e a quello da 40%.',good:'Alloca il tempo proporzionalmente ai pesi: Security solutions (40%) -- Entra (28%) -- Compliance (22%) -- Concetti base (10%). E\' gia\' una strategia.'},
+  {bad:'Confondere Defender for Identity con Entra ID Protection: sembrano simili ma proteggono cose diverse.',good:'Defender for Identity protegge l\'Active Directory on-premises da attacchi come pass-the-hash e Kerberoasting. Entra ID Protection analizza il rischio degli account cloud usando machine learning.'},
+];
+
+const eliteItems = [
+  {title:'Pensano per scenari, non per definizioni',body:'Non memorizzano "Defender for Endpoint e\' un prodotto EDR". Si chiedono: se un laptop aziendale viene compromesso da malware, quale strumento Microsoft interviene, come e perche\'? L\'esame SC-900 ragiona sempre per casi d\'uso.'},
+  {title:'Usano la mappa mentale del prodotto',body:'Disegnano a mano l\'ecosistema: Entra a sinistra, Defender nel centro, Purview a destra, Sentinel sopra che osserva tutto. Ogni freccia rappresenta un flusso di dati o una protezione. Vedere il sistema completo cambia il modo in cui si affrontano le domande.'},
+  {title:'Fanno il test di pratica Microsoft prima di iniziare a studiare',body:'Non per imparare le risposte, ma per capire lo stile delle domande e calibrare dove sono le lacune reali. L\'esame non chiede mai "definisci X". Chiede sempre "quale strumento risolve questo problema" o "quale principio si applica".'},
+  {title:'Dedicano il 40% del tempo al dominio Security solutions',body:'Perche\' vale il 35-40% dell\'esame e ha la maggiore densita\' di prodotti distinti da riconoscere. Gli altri domini sono piu\' concettuali. Security richiede memorizzazione precisa di quale prodotto fa cosa.'},
+  {title:'Sanno distinguere i prodotti gemelli',body:'Le coppie che confondono di piu\': Defender for Identity vs Entra ID Protection -- Purview DLP vs etichette riservatezza -- Compliance Manager vs Service Trust Portal -- Defender for Cloud (CSPM) vs Defender for Cloud Apps (CASB).'},
+  {title:'Smettono di studiare 48 ore prima dell\'esame',body:'Il consolidamento della memoria avviene durante il sonno, non durante lo studio. Gli ultimi due giorni: solo flash card leggere. La notte prima: riposo completo. La stanchezza cognitiva abbassa le performance molto piu\' di una lacuna su Priva.'},
+];
+
+// ============ RENDER CONCETTI ============
+const conceptList = document.getElementById('concept-list');
+concepts.forEach(c => {
+  const el = document.createElement('div');
+  el.className = 'concept-item';
+  el.innerHTML = '<div class="concept-num">'+c.n+'</div><div><div class="concept-title">'+c.title+'</div><div class="concept-body">'+c.body+'</div><div class="concept-tags">'+c.tags.map(t=>'<span class="concept-tag">'+t+'</span>').join('')+'</div></div>';
+  conceptList.appendChild(el);
+});
+
+// ============ FLASH CARD ============
+let cardIdx=0, flipped=false, easySet=new Set(), hardSet=new Set();
+function renderCard(){
+  const c=flashcards[cardIdx];
+  document.getElementById('fc-tag').textContent=c.tag;
+  document.getElementById('fc-question').textContent=c.q;
+  document.getElementById('fc-answer').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(cardIdx+1)+' / '+flashcards.length;
+  document.getElementById('fc-front').style.display='block';
+  document.getElementById('fc-back').style.display='none';
+  document.getElementById('flashcard').classList.remove('flipped');
+  flipped=false;
+  updateStatus();
+}
+function flipCard(){
+  flipped=!flipped;
+  document.getElementById('fc-front').style.display=flipped?'none':'block';
+  document.getElementById('fc-back').style.display=flipped?'block':'none';
+  document.getElementById('flashcard').classList.toggle('flipped',flipped);
+}
+function nextCard(){cardIdx=(cardIdx+1)%flashcards.length;renderCard();}
+function prevCard(){cardIdx=(cardIdx-1+flashcards.length)%flashcards.length;renderCard();}
+function markEasy(){easySet.add(cardIdx);hardSet.delete(cardIdx);nextCard();}
+function markHard(){hardSet.add(cardIdx);easySet.delete(cardIdx);nextCard();}
+function updateStatus(){document.getElementById('fc-status').textContent='Sapute: '+easySet.size+' -- Da ripassare: '+hardSet.size+' -- Rimanenti: '+(flashcards.length-easySet.size-hardSet.size);}
+renderCard();
+
+// ============ QUIZ ============
+let quizAnswered=0, quizCorrect=0;
+function buildQuiz(){
+  const container=document.getElementById('quiz-container');
+  container.innerHTML='';
+  quizAnswered=0; quizCorrect=0;
+  document.getElementById('quiz-score-box').style.display='none';
+  updateQuizCounter();
+  quizData.forEach((q,qi)=>{
+    const card=document.createElement('div');
+    card.className='quiz-card';
+    card.id='quiz-card-'+qi;
+    card.innerHTML='<div class="quiz-tag">Domanda '+(qi+1)+' di '+quizData.length+'</div><div class="quiz-question">'+q.q+'</div><div class="quiz-options" id="quiz-opts-'+qi+'">'+q.opts.map((o,oi)=>'<button class="quiz-option" onclick="answerQuiz('+qi+','+oi+')">'+String.fromCharCode(65+oi)+'. '+o+'</button>').join('')+'</div><div class="quiz-explanation" id="quiz-exp-'+qi+'">'+q.exp+'</div>';
+    container.appendChild(card);
   });
-
-  // ============================================
-  // RENDER ERRORI
-  // ============================================
-  const mistakeList = document.getElementById('mistake-list');
-  mistakes.forEach(m => {
-    const item = document.createElement('div');
-    item.className = 'mistake-item';
-    item.innerHTML = `
-      <div class="mistake-bad">
-        <span class="mistake-icon bad">✗</span>
-        <span class="mistake-text">${m.bad}</span>
-      </div>
-      <div class="mistake-good">
-        <span class="mistake-icon ok">✓</span>
-        <span class="mistake-text">${m.good}</span>
-      </div>`;
-    mistakeList.appendChild(item);
+}
+function answerQuiz(qi,chosen){
+  const q=quizData[qi];
+  const opts=document.querySelectorAll('#quiz-opts-'+qi+' .quiz-option');
+  opts.forEach((o,i)=>{
+    o.classList.add('disabled');
+    if(i===q.ans) o.classList.add('correct');
+    else if(i===chosen && chosen!==q.ans) o.classList.add('wrong');
   });
-
-  // ============================================
-  // RENDER ELITE
-  // ============================================
-  const eliteList = document.getElementById('elite-list');
-  eliteItems.forEach(e => {
-    const item = document.createElement('div');
-    item.className = 'elite-item';
-    item.innerHTML = `<div class="elite-title">${e.title}</div><div class="elite-body">${e.body}</div>`;
-    eliteList.appendChild(item);
-  });
-
-  // ============================================
-  // FLASH CARD LOGIC
-  // ============================================
-  let cardIdx = 0;
-  let flipped = false;
-  let easySet = new Set();
-  let hardSet = new Set();
-
-  function renderCard() {
-    const c = cards[cardIdx];
-    document.getElementById('fc-tag').textContent = c.tag;
-    document.getElementById('fc-question').textContent = c.q;
-    document.getElementById('fc-answer').textContent = c.a;
-    document.getElementById('fc-counter').textContent = (cardIdx + 1) + ' / ' + cards.length;
-    document.getElementById('fc-front').style.display = 'block';
-    document.getElementById('fc-back').style.display = 'none';
-    document.getElementById('flashcard').classList.remove('flipped');
-    flipped = false;
-    updateStatus();
+  document.getElementById('quiz-exp-'+qi).classList.add('show');
+  quizAnswered++;
+  if(chosen===q.ans) quizCorrect++;
+  updateQuizCounter();
+  if(quizAnswered===quizData.length){
+    setTimeout(()=>{
+      const pct=Math.round(quizCorrect/quizData.length*100);
+      document.getElementById('quiz-score-num').textContent=quizCorrect+'/'+quizData.length;
+      document.getElementById('quiz-score-label').textContent=pct+'% -- '+(pct>=70?'Ottimo lavoro':'Continua a studiare');
+      document.getElementById('quiz-score-box').style.display='block';
+    },400);
   }
+}
+function restartQuiz(){buildQuiz();}
+function updateQuizCounter(){document.getElementById('quiz-counter').textContent='Risposte: '+quizAnswered+' / '+quizData.length+' -- Corrette: '+quizCorrect;}
+buildQuiz();
 
-  function flipCard() {
-    flipped = !flipped;
-    document.getElementById('fc-front').style.display = flipped ? 'none' : 'block';
-    document.getElementById('fc-back').style.display = flipped ? 'block' : 'none';
-    document.getElementById('flashcard').classList.toggle('flipped', flipped);
-  }
+// ============ PIANO ============
+const planList=document.getElementById('plan-list');
+planData.forEach(d=>{
+  const el=document.createElement('div');
+  el.className='plan-item '+d.type;
+  el.innerHTML='<div class="plan-date"><div class="plan-day-name">'+d.day+'</div><div class="plan-day-num">'+d.date+'</div><div class="plan-month">'+d.month+'</div></div><div class="plan-content"><div class="plan-focus">'+d.focus+'</div><div class="plan-tasks">'+d.tasks+'</div><div class="plan-time">'+d.time+'</div></div>';
+  planList.appendChild(el);
+});
 
-  function nextCard() { cardIdx = (cardIdx + 1) % cards.length; renderCard(); }
-  function prevCard() { cardIdx = (cardIdx - 1 + cards.length) % cards.length; renderCard(); }
+// ============ ERRORI ============
+const mistakeList=document.getElementById('mistake-list');
+mistakes.forEach(m=>{
+  const el=document.createElement('div');
+  el.className='mistake-item';
+  el.innerHTML='<div class="mistake-bad"><span class="mistake-icon bad">X</span><span class="mistake-text">'+m.bad+'</span></div><div class="mistake-good"><span class="mistake-icon ok">V</span><span class="mistake-text">'+m.good+'</span></div>';
+  mistakeList.appendChild(el);
+});
 
-  function markEasy() {
-    easySet.add(cardIdx);
-    hardSet.delete(cardIdx);
-    nextCard();
-  }
+// ============ ELITE ============
+const eliteList=document.getElementById('elite-list');
+eliteItems.forEach(e=>{
+  const el=document.createElement('div');
+  el.className='elite-item';
+  el.innerHTML='<div class="elite-title">'+e.title+'</div><div class="elite-body">'+e.body+'</div>';
+  eliteList.appendChild(el);
+});
 
-  function markHard() {
-    hardSet.add(cardIdx);
-    easySet.delete(cardIdx);
-    nextCard();
-  }
+// ============ TABS ============
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('panel-'+name).querySelectorAll('.fade-in').forEach(el=>el.classList.add('visible'));
+}
 
-  function updateStatus() {
-    document.getElementById('fc-status').textContent =
-      'Sapute: ' + easySet.size + ' · Da ripassare: ' + hardSet.size + ' · Rimanenti: ' + (cards.length - easySet.size - hardSet.size);
-  }
+// ============ TYPEWRITER SUBTITLE ============
+const subtitleText="Guida completa per superare SC-900. Principi fondamentali, flash card, quiz nello stile dell'esame, piano di studio da 28 giorni e gli errori da non fare. Costruita per ritenere, non solo leggere.";
+const subtitleEl=document.getElementById('hero-subtitle');
+let si=0;
+const typeSubtitle=()=>{if(si<subtitleText.length){subtitleEl.textContent+=subtitleText[si++];setTimeout(typeSubtitle,20);}};
+window.addEventListener('load',()=>setTimeout(typeSubtitle,400));
 
-  renderCard();
+// ============ TYPEWRITER BLOCKQUOTE ============
+const typeObserver=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){const el=entry.target;const text=el.textContent;el.textContent='';let j=0;const type=()=>{if(j<text.length){el.textContent+=text[j++];setTimeout(type,18);}};type();typeObserver.unobserve(el);}});},{threshold:0.5});
+document.querySelectorAll('blockquote').forEach(q=>typeObserver.observe(q));
 
-  // ============================================
-  // TABS
-  // ============================================
-  function switchTab(name, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    btn.classList.add('active');
+// ============ FADE IN ============
+const fadeObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.05});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
 
-    // Trigger fade-in per gli elementi nel pannello appena attivato
-    const panel = document.getElementById('panel-' + name);
-    panel.querySelectorAll('.fade-in').forEach(el => {
-      if (!el.classList.contains('visible')) el.classList.add('visible');
-    });
-  }
+// ============ PROGRESS BAR + BACK TO TOP ============
+const progressBar=document.getElementById('progress-bar');
+const backToTop=document.getElementById('back-to-top');
+window.addEventListener('scroll',()=>{
+  const scrollTop=window.scrollY;
+  const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+  progressBar.style.width=(scrollTop/docHeight*100)+'%';
+  backToTop.classList.toggle('visible',scrollTop>400);
+});
+backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
-  // ============================================
-  // TYPEWRITER SUBTITLE
-  // ============================================
-  const subtitleText = "Guida completa per superare l'esame SC-900. Principi, flash card, piano di studio da 28 giorni e gli errori da non fare. Costruita per non dimenticare.";
-  const subtitleEl = document.getElementById('hero-subtitle');
-  let i = 0;
-  const typeSubtitle = () => {
-    if (i < subtitleText.length) {
-      subtitleEl.textContent += subtitleText[i++];
-      setTimeout(typeSubtitle, 20);
-    }
-  };
-  window.addEventListener('load', () => setTimeout(typeSubtitle, 400));
+// ============ THEME TOGGLE ============
+const toggle=document.getElementById('theme-toggle');
+const html=document.documentElement;
+toggle.addEventListener('click',()=>{
+  const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  try{localStorage.setItem('theme',next);}catch(e){}
+});
 
-  // ============================================
-  // TYPEWRITER BLOCKQUOTE
-  // ============================================
-  const typeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const text = el.textContent;
-        el.textContent = '';
-        let j = 0;
-        const type = () => {
-          if (j < text.length) { el.textContent += text[j++]; setTimeout(type, 18); }
-        };
-        type();
-        typeObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('blockquote').forEach(q => typeObserver.observe(q));
+// ============ BURGER ============
+const burger=document.getElementById('burger');
+const navLinks=document.getElementById('nav-links');
+if(burger){
+  burger.addEventListener('click',()=>{burger.classList.toggle('open');navLinks.classList.toggle('mobile-open');document.body.style.overflow=navLinks.classList.contains('mobile-open')?'hidden':'';});
+  navLinks.querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>{burger.classList.remove('open');navLinks.classList.remove('mobile-open');document.body.style.overflow='';});});
+}
 
-  // ============================================
-  // FADE-IN OBSERVER
-  // ============================================
-  const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.05 });
-  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+// ============ READ TIME ============
+const content=document.querySelector('.article-content');
+if(content){const words=content.innerText.split(/\s+/).length;const mins=Math.max(1,Math.round(words/200));const rt=document.getElementById('read-time');if(rt)rt.textContent=' -- '+mins+' min';}
 
-  // ============================================
-  // PROGRESS BAR + BACK TO TOP
-  // ============================================
-  const progressBar = document.getElementById('progress-bar');
-  const backToTop = document.getElementById('back-to-top');
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = (scrollTop / docHeight * 100) + '%';
-    backToTop.classList.toggle('visible', scrollTop > 400);
-  });
-  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  // ============================================
-  // THEME TOGGLE
-  // ============================================
-  const toggle = document.getElementById('theme-toggle');
-  const html = document.documentElement;
-  toggle.addEventListener('click', () => {
-    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch(e) {}
-  });
-
-  // ============================================
-  // BURGER MENU
-  // ============================================
-  const burger = document.getElementById('burger');
-  const navLinks = document.getElementById('nav-links');
-  if (burger) {
-    burger.addEventListener('click', () => {
-      burger.classList.toggle('open');
-      navLinks.classList.toggle('mobile-open');
-      document.body.style.overflow = navLinks.classList.contains('mobile-open') ? 'hidden' : '';
-    });
-    navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        burger.classList.remove('open');
-        navLinks.classList.remove('mobile-open');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  // ============================================
-  // READ TIME
-  // ============================================
-  const content = document.querySelector('.article-content');
-  if (content) {
-    const words = content.innerText.split(/\s+/).length;
-    const mins = Math.max(1, Math.round(words / 200));
-    const rt = document.getElementById('read-time');
-    if (rt) rt.textContent = ' · ' + mins + ' min';
-  }
-
-  // ============================================
-  // PAGE TRANSITION
-  // ============================================
-  const backLink = document.getElementById('back-link');
-  if (backLink) {
-    backLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.body.classList.add('fade-out');
-      setTimeout(() => { window.location.href = backLink.href; }, 260);
-    });
-  }
-  </script>
-
+// ============ PAGE TRANSITION ============
+const backLink=document.getElementById('back-link');
+if(backLink){backLink.addEventListener('click',(e)=>{e.preventDefault();document.body.classList.add('fade-out');setTimeout(()=>{window.location.href=backLink.href;},260);});}
+</script>
 </body>
 </html>
