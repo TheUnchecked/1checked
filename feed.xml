@@ -5,7 +5,7 @@
     <link>https://theunchecked.github.io/1checked/</link>
     <description>Non dare niente per scontato. Mai.</description>
     <language>it</language>
-    <lastBuildDate>Sat, 11 Apr 2026 08:05:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2026 12:40:50 +0000</lastBuildDate>
     <atom:link href="https://theunchecked.github.io/1checked/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Meta condannata a 375 milioni . E adesso?</title>
@@ -111,6 +111,13 @@
       <guid>https://theunchecked.github.io/1checked/articoli/la-matematica-degli-agent.html</guid>
       <pubDate>Fri, 06 Mar 2026 00:00:00 +0000</pubDate>
       <description>Un'azienda, 10.000 dipendenti. Costo medio: 5.000€ al mese a persona, tasse incluse. Diciamo che la metà fa lavoro eseguibile da un sistema automatizzato. Sono2...</description>
+    </item>
+    <item>
+      <title>Sistema di studio SC-900</title>
+      <link>https://theunchecked.github.io/1checked/articoli/sc-900.html</link>
+      <guid>https://theunchecked.github.io/1checked/articoli/sc-900.html</guid>
+      <pubDate>Fri, 11 Apr 2025 00:00:00 +0000</pubDate>
+      <description>Il 9 maggio sostengo l'esame SC-900 — Microsoft Security, Compliance and Identity Fundamentals. Ho costruito questo sistema di studio per non limitarmi a prende...</description>
     </item>
   </channel>
 </rss>
