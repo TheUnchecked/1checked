@@ -40,9 +40,7 @@
     <p class="article-meta">2026-04-12 | The Unchecked<span class="read-time" id="read-time"></span></p>
     <span class="article-number">16</span>
     <h1 class="article-page-title">Come non esaurire i token<br>di Claude in <mark>poche ore</mark>.</h1>
-    <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:var(--ink-light); margin-top:1.2rem; line-height:1.7;">
-      Claude rilegge l'intera conversazione ad ogni messaggio. Ecco le abitudini che cambiano il modo in cui spendi i token.
-    </p>
+    <p id="hero-subtitle" style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:#C3D809; margin-top:1.2rem; line-height:1.7; min-height:5rem;"></p>
     <div class="tags" style="margin-top:1.5rem;">
       <span class="tag">Claude</span>
       <span class="tag">AI</span>
@@ -147,9 +145,7 @@
 
     <p>Se hai parlato di un post LinkedIn, poi di una proposta cliente, poi di altro nella stessa chat, Claude rilegge tutto ogni volta. I messaggi vecchi su argomenti diversi sono peso morto.</p>
 
-    <div class="insight-box fade-in">
-      <p>Nuovo argomento, nuova chat. Sempre.</p>
-    </div>
+    <blockquote>Nuovo argomento, nuova chat. Sempre.</blockquote>
 
     <h2>8. Ogni 15-20 messaggi, riassumi e ricomincia</h2>
 
@@ -257,10 +253,41 @@
       });
     }
 
-    const observer = new IntersectionObserver((entries) => {
+    const fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+    const subtitleText = "Claude rilegge l'intera conversazione ad ogni messaggio che mandi. Ecco le abitudini che cambiano il modo in cui spendi i token, quelle che contano davvero.";
+    const subtitleEl = document.getElementById("hero-subtitle");
+    let i = 0;
+    const typeSubtitle = () => {
+      if (i < subtitleText.length) {
+        subtitleEl.textContent += subtitleText[i++];
+        setTimeout(typeSubtitle, 18);
+      }
+    };
+    window.addEventListener("load", () => setTimeout(typeSubtitle, 400));
+
+    const typeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const text = el.textContent;
+          el.textContent = "";
+          let j = 0;
+          const type = () => {
+            if (j < text.length) {
+              el.textContent += text[j++];
+              setTimeout(type, 18);
+            }
+          };
+          type();
+          typeObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll("blockquote").forEach(q => typeObserver.observe(q));
   </script>
 
 </body>
