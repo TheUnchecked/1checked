@@ -1,17 +1,21 @@
+Non ti ho detto che ho cambiato la struttura dei file.
+Guarda ti mando un articolo per capire la.differenza:
 <!DOCTYPE html>
 <html lang="it" data-theme="dark">
 <head>
   <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Come non esaurire i token di Claude in poche ore — The Unchecked</title>
-  <meta name="description" content="Claude rilegge l'intera conversazione ad ogni messaggio. Ecco le abitudini che cambiano il modo in cui spendi i token.">
+  <title>M365 Copilot è "ciuoto". E meno male. — The Unchecked</title>
+  <meta name="description" content="Ogni tanto dico che M365 Copilot è ciuoto. E meno male. Ecco perché quella stupidità è in realtà la scelta più intelligente che Microsoft potesse fare.">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="The Unchecked">
-  <meta property="og:title" content="Come non esaurire i token di Claude in poche ore.">
-  <meta property="og:description" content="Claude rilegge l'intera conversazione ad ogni messaggio. Ecco le abitudini che cambiano il modo in cui spendi i token.">
-  <meta property="og:url" content="https://theunchecked.github.io/1checked/articoli/claude-token.html">
+  <meta property="og:title" content="M365 Copilot è ciuoto. E meno male.">
+  <meta property="og:description" content="Ogni tanto dico che M365 Copilot è ciuoto. E meno male. Ecco perché quella stupidità è in realtà la scelta più intelligente che Microsoft potesse fare.">
+  <meta property="og:url" content="https://theunchecked.github.io/1checked/articoli/Copilot-il-ciuoto.html">
+  <meta property="og:image" content="https://theunchecked.github.io/1checked/assets/images/copilot.jpeg">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://theunchecked.github.io/1checked/assets/images/copilot.jpeg">
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="stylesheet" href="../style.css">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="04641f83-68da-43d1-af67-7ea3b798c434"></script>
@@ -37,148 +41,124 @@
   </nav>
 
   <header class="article-header">
-    <p class="article-meta">2026-04-12 | The Unchecked<span class="read-time" id="read-time"></span></p>
-    <span class="article-number">16</span>
-    <h1 class="article-page-title">Come non esaurire i token<br>di Claude in <mark>poche ore</mark>.</h1>
+    <p class="article-meta">2026-03-18 | The Unchecked<span class="read-time" id="read-time"></span></p>
+    <span class="article-number">10</span>
+    <h1 class="article-page-title">M365 Copilot è <mark>"ciuoto"</mark>.<br>E meno male.</h1>
     <p id="hero-subtitle" style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:#C3D809; margin-top:1.2rem; line-height:1.7; min-height:5rem;"></p>
     <div class="tags" style="margin-top:1.5rem;">
-      <span class="tag">Claude</span>
-      <span class="tag">AI</span>
-      <span class="tag">Produttività</span>
-      <span class="tag">Token</span>
+      <span class="tag">Microsoft 365</span>
+      <span class="tag">Copilot</span>
+      <span class="tag">Security</span>
+      <span class="tag">Cloud</span>
     </div>
   </header>
 
+  <img class="article-cover" src="../assets/images/copilot.jpeg" alt="M365 Copilot" onerror="this.style.display='none'">
+
   <article class="article-content">
 
-    <p>Claude conta i token. Un token è più o meno una parola.</p>
+    <p>Ogni tanto dico che M365 Copilot è "ciuoto". E meno male!</p>
 
-    <p>Ogni volta che mandi un messaggio, Claude rilegge l'intera conversazione dall'inizio. Ogni messaggio precedente. Ogni risposta precedente. Tutto.</p>
+    <p>Nel dialetto anglolucano :), "ciuoto" significa stupido, ed è esattamente quello che dico ogni tanto su M365 Copilot quando lo uso nel contesto aziendale, e non sono il solo a dirlo.</p>
 
-    <p>Il messaggio 1 costa pochissimo. Il messaggio 30? Claude sta rileggendo 29 scambi prima ancora di iniziare a pensare alla tua domanda.</p>
+    <p>"Non sa rispondere come ChatGPT."<br>
+    "È limitato."<br>
+    "Non capisce quello che gli chiedo."</p>
 
-    <blockquote>Ecco perché i crediti spariscono. La conversazione cresce e ogni messaggio diventa più costoso.</blockquote>
+    <p>M365 Copilot, usato come se fosse ChatGPT, delude, risponde in modo più cauto, meno creativo, meno disinvolto. Non si avventura in territori che non conosce. Non inventa... quasi mai (anche lui soffre di allucinazioni).</p>
 
-    <p>Quello che segue sono le abitudini che hanno cambiato il mio modo di usare Claude. Non tutte. Quelle che contano davvero.</p>
+    <p>Il problema è che quella non è stupidità, è una scelta progettuale precisa.</p>
 
-    <h2>1. Converti i file prima di caricarli</h2>
+    <h2>Tre componenti che la maggior parte degli utenti ignora</h2>
 
-    <p>Una singola pagina PDF costa tra 1.500 e 3.000 token. Uno screenshot 1000x1000 ne vale circa 1.300. I file DOCX e PPTX portano con sé metadati invisibili che consumano token senza darti niente in cambio.</p>
+    <p>M365 Copilot non è un chatbot, è un sistema orchestrato composto da tre strati che lavorano insieme.</p>
+
+    <div class="pipeline-steps fade-in">
+      <div class="pipeline-step">
+        <div class="step-num">01</div>
+        <div class="step-name">Il modello linguistico (GPT-4)</div>
+        <div class="step-detail">Genera il testo. È il motore creativo, ma da solo non basta. È ciò che condivide con ChatGPT, ma è solo uno dei tre strati.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">02</div>
+        <div class="step-name">Microsoft Graph</div>
+        <div class="step-detail">L'API che connette M365 Copilot a tutti i dati di Microsoft 365. È anche un filtro di sicurezza: M365 Copilot accede solo ai dati a cui l'utente ha già accesso. Se un file è riservato, M365 Copilot non lo considererà. Mai.</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">03</div>
+        <div class="step-name">Il motore di orchestrazione</div>
+        <div class="step-detail">Interpreta la richiesta, decide quali dati servono, interroga Graph, costruisce il prompt arricchito e lo invia al modello. Senza questo strato, M365 Copilot sarebbe solo un LLM come gli altri.</div>
+      </div>
+    </div>
+
+    <h2>Il grounding: che cos'è e perché risponde così</h2>
+
+    <p>Quando fai una domanda a M365 Copilot, lui non attinge solo alla conoscenza interna del modello — prima di rispondere, interroga i tuoi dati aziendali attraverso Graph: cerca nelle email, nei file SharePoint, nelle chat di Teams, nei calendari.</p>
+
+    <p>Questo meccanismo si chiama grounding, ed è il motivo per cui M365 Copilot a volte sembra meno brillante di ChatGPT su domande generiche. Non sta cercando di impressionarti con la sua conoscenza del mondo. Sta cercando di risponderti in base a quello che esiste davvero nella tua organizzazione.</p>
+
+    <blockquote>Se M365 Copilot non trova niente di rilevante nei tuoi dati, la risposta sarà più piatta. Non perché sia ciuoto. Perché non vuole inventare.</blockquote>
+
+    <h2>Perché M365 Copilot non si addestra con i tuoi dati</h2>
+
+    <p>I tuoi prompt, le tue domande, le tue conversazioni non vengono mai usati per addestrare il modello. Mai.</p>
+
+    <div class="insight-box fade-in">
+      <p>Microsoft lo garantisce contrattualmente per tutti gli utenti business: tutto quello che scrivi rimane confinato nel tuo tenant, non esce, non viene letto da ingegneri, non contribuisce ad aggiornare nessun modello.</p>
+    </div>
+
+    <p>Le policy di Data Loss Prevention, il Conditional Access, la Multi-Factor Authentication che hai configurato su Microsoft 365 valgono anche per M365 Copilot. Non ci sono eccezioni.</p>
 
     <div class="stats-row fade-in">
       <div class="stat-card">
-        <div class="stat-number">3.000</div>
-        <div class="stat-label">token per pagina PDF</div>
+        <div class="stat-number">ISO 27001</div>
+        <div class="stat-label">gestione sicurezza delle informazioni</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">1.300</div>
-        <div class="stat-label">token per screenshot 1000x1000</div>
+        <div class="stat-number">SOC 1-2-3</div>
+        <div class="stat-label">controllo per servizi cloud</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">100</div>
-        <div class="stat-label">token con ritaglio preciso</div>
+        <div class="stat-number">GDPR</div>
+        <div class="stat-label">conformità europea garantita</div>
       </div>
     </div>
 
-    <p>Prima di caricare: estrai il testo. Copia e incolla solo le sezioni che servono in un file di testo o markdown. Se ritagli uno screenshot alla sola parte che ti interessa, puoi scendere da 1.300 token a meno di 100.</p>
-
-    <p>Se carichi lo stesso PDF di 15 pagine in 4 chat diverse, hai bruciato 180.000 token su un documento che convertito in testo pulito ne avrebbe costati 2.000.</p>
-
-    <div class="insight-box fade-in">
-      <p>Il flusso che uso: apro un documento su <code>doc.new</code>, incollo il testo, lo scarico come file <code>.md</code> e lo carico su Claude.</p>
-    </div>
-
-    <h2>2. Pianifica in chat. Costruisci alla fine.</h2>
-
-    <p>La creazione di file, fogli di calcolo, documenti e presentazioni, consuma più token dei normali messaggi di chat.</p>
-
-    <p>Non aprire uno strumento di creazione e dire "costruiscimi un modello finanziario."</p>
-
-    <p>Prima pianifica la struttura in chat. Definisci le sezioni, chiarisci le ipotesi. Quando sai esattamente cosa vuoi, solo allora passa alla creazione.</p>
+    <h2>La differenza con ChatGPT</h2>
 
     <div class="two-cols fade-in">
       <div class="col-side col-left">
-        <div class="col-side-title">Fase di pianificazione</div>
-        <p>In chat. Costa poco.</p>
-        <p>Struttura, sezioni, ipotesi.</p>
-        <p>Fino a quando non sai esattamente cosa vuoi.</p>
+        <div class="col-side-title">ChatGPT</div>
+        <p>Generatore universale.</p>
+        <p>Non conosce i tuoi file interni.</p>
+        <p>Scrive il testo della mail, la invii tu.</p>
+        <p>Dati su infrastruttura esterna.</p>
       </div>
       <div class="col-side col-right">
-        <div class="col-side-title">Fase di costruzione</div>
-        <p>Nello strumento di creazione. Costa di più.</p>
-        <p>Solo quando hai le idee chiare.</p>
-        <p>Una volta sola, senza correzioni continue.</p>
+        <div class="col-side-title">M365 Copilot</div>
+        <p>Assistente aziendale integrato.</p>
+        <p>Lavora sui tuoi dati reali.</p>
+        <p>Invia la mail direttamente, se glielo chiedi.</p>
+        <p>Dati confinati nel tuo tenant.</p>
       </div>
     </div>
 
-    <h2>3. Scrivi "fammi delle domande" invece di un prompt lungo</h2>
+    <h2>Il vero problema</h2>
 
-    <p>Un prompt di 500 parole costa 500 token ogni volta che Claude rilegge la conversazione. Se invece scrivi 15 parole e chiedi a Claude di farti domande chiarificatrici, le domande vengono generate una volta e le tue risposte sono brevi.</p>
+    <p>Chi si lamenta che M365 Copilot è stupido sta facendo un confronto sbagliato. Sta prendendo uno strumento progettato per operare in sicurezza dentro un ecosistema aziendale e lo sta giudicando con i parametri di uno strumento progettato per fare tutto, per tutti, senza vincoli.</p>
 
-    <p>Cliccare su un'opzione costa quasi niente. Scrivere paragrafi di istruzioni costa molto. Lascia che sia Claude a estrarre il contesto invece di spingerlo contro muri di testo.</p>
+    <p>M365 Copilot è ciuoto solo se gli chiedi di essere qualcosa che non è.</p>
 
-    <h2>4. Non chiedere di rifare tutto</h2>
+    <h2>Detto questo, nessuno strumento è infallibile</h2>
 
-    <p>Quando la sezione 3 di un documento è sbagliata, non dire "rifai il documento."</p>
-
-    <p>Di' "rifai solo la sezione 3. Conserva tutto il resto."</p>
-
-    <p>Ogni rifacimento completo significa rigenerare l'intero output. Se il report è di 2.000 token, sono 2.000 token di output bruciati di nuovo. Indica la sezione specifica. Di' a Claude cosa non va.</p>
+    <p>Anche M365 Copilot ha le sue vulnerabilità. Sono state documentate tecniche di prompt injection che permettevano di esfiltrare dati attraverso risposte manipolate. Microsoft ha corretto queste falle, ma il concetto rimane: nessun sistema è sicuro al 100%, nemmeno quello progettato con i migliori standard del mercato.</p>
 
     <div class="warning-box fade-in">
-      <p>Aggiungi "nessun commento, nessuna spiegazione, solo l'output" quando sai già cosa vuoi. Ogni frase di "Certo, ecco cosa ho fatto..." sono token che stai pagando.</p>
+      <p>La sicurezza non è uno stato. È un processo continuo.</p>
     </div>
 
-    <h2>5. Raggruppa i compiti in un unico messaggio</h2>
-
-    <p>Tre prompt separati significano tre riletture complete del contesto. Un prompt con tre compiti significa una sola rilettura.</p>
-
-    <p>Invece di mandare "riassumi questo articolo", poi "elenca i punti principali", poi "suggerisci un titolo" in tre messaggi separati, scrivi tutto in uno. Il risultato è spesso migliore.</p>
-
-    <h2>6. Modifica il messaggio invece di mandare un follow-up</h2>
-
-    <p>Ogni volta che scrivi "no, intendevo..." o "cambia X in Y", stai aggiungendo alla cronologia. Claude rilegge tutto, compreso l'errore che hai già corretto.</p>
-
-    <p>In chat puoi modificare il messaggio originale e rigenerare la risposta. La vecchia versione viene sostituita, non accumulata. Usalo sempre quando Claude ha mancato il punto.</p>
-
-    <h2>7. Apri una nuova chat quando l'argomento cambia</h2>
-
-    <p>Se hai parlato di un post LinkedIn, poi di una proposta cliente, poi di altro nella stessa chat, Claude rilegge tutto ogni volta. I messaggi vecchi su argomenti diversi sono peso morto.</p>
-
-    <blockquote>Nuovo argomento, nuova chat. Sempre.</blockquote>
-
-    <h2>8. Ogni 15-20 messaggi, riassumi e ricomincia</h2>
-
-    <p>Le conversazioni lunghe sono forni per token. Un sviluppatore ha misurato che il 98,5% dei token in una sessione lunga viene speso rileggendo la cronologia. Solo l'1,5% va alla produzione effettiva.</p>
-
-    <p>Quando una sessione diventa lunga: chiedi a Claude di riassumere tutto quello che conta, copia il riepilogo, apri una nuova sessione e incollalo come primo messaggio.</p>
-
-    <h2>9. Usa il modello giusto per il compito</h2>
-
-    <p>Controlli grammaticali, brainstorming, riformattazione, risposte brevi: non serve il modello più potente. Sonnet gestisce queste cose a una frazione del costo.</p>
-
-    <p>Opus con pensiero esteso serve per lavoro profondo. Non usare macchinari pesanti per spostare una sedia. Se Claude impiega meno di 30 secondi a rispondere, probabilmente non hai bisogno del modello più costoso.</p>
-
-    <h2>10. Disattiva quello che non usi</h2>
-
-    <p>Ricerca web, connettori, modalità esplorazione: tutti aggiungono token a ogni risposta, anche quando non servono.</p>
-
-    <p>La mia impostazione di default: tutto spento. Attivo le funzionalità per compito, non per abitudine.</p>
-
-    <h2>11. Usa i Progetti per file che riusi spesso</h2>
-
-    <p>Se carichi lo stesso documento in cinque chat diverse, Claude lo ri-tokenizza ogni volta. Cinque letture complete.</p>
-
-    <p>I Progetti memorizzano il file una volta. Ogni nuova conversazione vi fa riferimento senza bruciare di nuovo i token. Se lavori con contratti, guide di stile o documenti di ricerca a cui torni spesso, questo da solo riduce significativamente il consumo.</p>
-
-    <h2>12. Smetti di usare Claude per cose che non sa fare bene</h2>
-
-    <p>Claude non genera immagini. Se passi 5 messaggi cercando soluzioni alternative basate su testo per qualcosa che richiede un'immagine, hai bruciato 5 messaggi su un compito che Claude non avrebbe mai risolto.</p>
-
-    <p>Per la ricerca in tempo reale ci sono strumenti più veloci e precisi. Conoscere i limiti dello strumento è parte dell'usarlo bene.</p>
-
     <div class="conclusion-box fade-in">
-      <div class="quote">Non si tratta di usare meno Claude.<br>Si tratta di non sprecare quello che hai.</div>
+      <div class="quote">Uno strumento serio non significa blindato per sempre.<br>Significa che parte da una base solida e va monitorato<br>come qualsiasi altro componente del tuo ecosistema.</div>
     </div>
 
     <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
@@ -258,7 +238,8 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
 
-    const subtitleText = "Claude rilegge l'intera conversazione ad ogni messaggio che mandi. Ecco le abitudini che cambiano il modo in cui spendi i token, quelle che contano davvero.";
+    // Typewriter effect sul sottotitolo in verde
+    const subtitleText = "Ogni tanto lo dico. Nel dialetto anglolucano, ciuoto significa stupido. Ed è esattamente quello che si sente dire di M365 Copilot da chi lo usa aspettandosi ChatGPT. Ma quella stupidità è una scelta. E per la sicurezza aziendale, è la scelta giusta.";
     const subtitleEl = document.getElementById("hero-subtitle");
     let i = 0;
     const typeSubtitle = () => {
@@ -267,8 +248,10 @@
         setTimeout(typeSubtitle, 18);
       }
     };
+    // Parte subito al caricamento della pagina
     window.addEventListener("load", () => setTimeout(typeSubtitle, 400));
 
+    // Typewriter effect sui blockquote
     const typeObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
