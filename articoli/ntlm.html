@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}document.documentElement.dataset.theme=t||'dark'})()</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NTLM — Protocolli deboli in Active Directory — The Unchecked</title>
+  <meta name="description" content="NTLM esiste dal 1993. Microsoft lo sta spegnendo. Ecco perché è ancora pericoloso e come viene usato per attaccare Active Directory.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="The Unchecked">
+  <meta property="og:title" content="NTLM — Protocolli deboli in Active Directory.">
+  <meta property="og:description" content="NTLM esiste dal 1993. Microsoft lo sta spegnendo. Ecco perché è ancora pericoloso e come viene usato per attaccare Active Directory.">
+  <meta property="og:url" content="https://theunchecked.github.io/1checked/articoli/ntlm.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../style.css">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="04641f83-68da-43d1-af67-7ea3b798c434"></script>
+
+  <style>
+    /* Timeline orizzontale */
+    .timeline {
+      display: flex;
+      gap: 0;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      right: 2rem;
+      height: 2px;
+      background: #C3D809;
+      z-index: 0;
+    }
+    .timeline-phase {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 0.5rem;
+    }
+    .timeline-dot {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #C3D809;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+    .timeline-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #C3D809;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .timeline-desc {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+
+    /* Card attacchi grandi */
+    .attack-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .attack-card {
+      border: 1px solid #C3D809;
+      border-left: 4px solid #C3D809;
+      padding: 1.8rem 2rem;
+      border-radius: 4px;
+      background: var(--surface, rgba(195,216,9,0.04));
+    }
+    .attack-card-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C3D809;
+      margin-bottom: 0.8rem;
+    }
+    .attack-card-desc {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+    }
+
+    /* Scheda protocollo */
+    .protocol-meta {
+      display: flex;
+      gap: 2rem;
+      margin: 1.5rem 0 2.5rem;
+      flex-wrap: wrap;
+    }
+    .protocol-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .protocol-meta-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-xlight);
+    }
+    .protocol-meta-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #C3D809;
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <nav>
+    <a href="../index.html" class="logo"><span style="color:#C3D809">[</span> Unchecked <span style="color:#C3D809">]</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#articoli">Articoli</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button id="theme-toggle" aria-label="Toggle theme">
+        <svg id="theme-icon-dark" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="theme-icon-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="article-header">
+    <p class="article-meta">2026-04-18 | The Unchecked<span class="read-time" id="read-time"></span></p>
+    <span class="article-number">18</span>
+    <h1 class="article-page-title"><mark>NTLM</mark><br>Protocolli deboli in Active Directory.</h1>
+    <p id="hero-subtitle" style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.05rem; color:#C3D809; margin-top:1.2rem; line-height:1.7; min-height:5rem;"></p>
+    <div class="tags" style="margin-top:1.5rem;">
+      <span class="tag">Active Directory</span>
+      <span class="tag">NTLM</span>
+      <span class="tag">Security</span>
+      <span class="tag">Red Team</span>
+    </div>
+  </header>
+
+  <article class="article-content">
+
+    <p>C'è un protocollo che gira nelle infrastrutture Windows da oltre trent'anni. La maggior parte degli amministratori sa che è vecchio. Pochi sanno esattamente quanto sia pericoloso. E ancora meno hanno fatto qualcosa per rimuoverlo.</p>
+
+    <p>Si chiama NTLM. E Microsoft sta finalmente spegnendolo.</p>
+
+    <h2>Il protocollo</h2>
+
+    <div class="protocol-meta">
+      <div class="protocol-meta-item">
+        <span class="protocol-meta-label">Nome completo</span>
+        <span class="protocol-meta-value">New Technology LAN Manager</span>
+      </div>
+      <div class="protocol-meta-item">
+        <span class="protocol-meta-label">Anno di creazione</span>
+        <span class="protocol-meta-value">1993</span>
+      </div>
+      <div class="protocol-meta-item">
+        <span class="protocol-meta-label">Stato attuale</span>
+        <span class="protocol-meta-value">Deprecato (2024)</span>
+      </div>
+    </div>
+
+    <p>NTLM è un protocollo di autenticazione challenge-response introdotto con Windows NT 3.1. Funziona così: il server manda una sfida al client, il client risponde con un hash della propria password. Nessuna verifica dell'identità del server. Nessuna protezione contro l'intercettazione.</p>
+
+    <p>Era il 1993. Il modello di minaccia era completamente diverso.</p>
+
+    <p>Da Windows 2000 in poi, Kerberos ha preso il suo posto come protocollo di autenticazione predefinito per i dispositivi nel dominio. NTLM è rimasto come fallback, per compatibilità con sistemi legacy, applicazioni vecchie, ambienti senza Domain Controller raggiungibile.</p>
+
+    <blockquote>Quel fallback è diventato un problema strutturale.</blockquote>
+
+    <p>A giugno 2024 Microsoft ha classificato NTLM ufficialmente come funzionalità deprecata. Non rimossa. Deprecata: ancora presente, ma senza aggiornamenti, senza correzioni, destinata alla dismissione.</p>
+
+    <h2>Gli attacchi</h2>
+
+    <div class="attack-cards">
+
+      <div class="attack-card fade-in">
+        <div class="attack-card-name">Pass-the-Hash</div>
+        <div class="attack-card-desc">L'attaccante ruba l'hash NTLM di un utente, senza mai conoscere la password in chiaro. Lo usa direttamente per autenticarsi come quell'utente su altri sistemi della rete. Non serve craccare niente. L'hash è la chiave.</div>
+      </div>
+
+      <div class="attack-card fade-in">
+        <div class="attack-card-name">NTLM Relay</div>
+        <div class="attack-card-desc">L'attaccante si posiziona tra client e server, intercetta la richiesta di autenticazione e la ritrasmette a un altro servizio fingendosi l'utente legittimo. Il server di destinazione vede una richiesta valida e la accetta. L'attaccante ottiene accesso senza credenziali.</div>
+      </div>
+
+      <div class="attack-card fade-in">
+        <div class="attack-card-name">Coercizione NTLM</div>
+        <div class="attack-card-desc">Tecniche come PetitPotam, ShadowCoerce e DFSCoerce forzano sistemi ad alto valore, inclusi i Domain Controller, ad autenticarsi contro macchine controllate dall'attaccante. Una volta catturato il traffico NTLM, si esegue un relay verso servizi critici. In scenari senza protezioni adeguate, questo porta alla compromissione completa del dominio.</div>
+      </div>
+
+    </div>
+
+    <h2>La dismissione</h2>
+
+    <p>Microsoft sta procedendo per fasi, con un approccio che permette alle organizzazioni di adattarsi senza interruzioni brusche.</p>
+
+    <div class="timeline fade-in">
+      <div class="timeline-phase">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-label">Attiva ora</div>
+        <div class="timeline-title">Visibilità NTLM tramite auditing</div>
+        <div class="timeline-desc">Windows 11 24H2 e Windows Server 2025 introducono log NTLM migliorati. Mostrano esattamente dove e perché NTLM viene ancora usato: quali account, quali macchine, quale IP.</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-label">2° metà 2026</div>
+        <div class="timeline-title">Riduzione dipendenze con Kerberos</div>
+        <div class="timeline-desc">Potenziamento di Kerberos anche in scenari dove prima non era disponibile, come autenticazioni locali e ambienti con connettività limitata al Domain Controller. Le dipendenze da NTLM si riducono senza rompere nulla.</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-label">Prossime release</div>
+        <div class="timeline-title">Disabilitazione per default</div>
+        <div class="timeline-desc">NTLM disabilitato per impostazione predefinita nelle prossime versioni maggiori di Windows. Non rimosso: rimane presente ma inattivo. Può essere riabilitato tramite policy, ma non è consigliato.</div>
+      </div>
+    </div>
+
+    <div class="warning-box fade-in">
+      <p>Riabilitare NTLM tramite policy dopo la dismissione è tecnicamente possibile. Non è raccomandato. Aumenta il rischio di attacco e lascia l'ambiente esposto agli stessi vettori che Microsoft sta cercando di eliminare.</p>
+    </div>
+
+    <div class="conclusion-box fade-in">
+      <div class="quote">NTLM non è pericoloso perché è vecchio.<br>È pericoloso perché è ancora lì,<br>in silenzio, come fallback.</div>
+    </div>
+
+    <div style="margin-top:3rem; display:flex; justify-content:space-between; align-items:center;">
+      <a id="back-link" href="../index.html" style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-light); text-decoration:none;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-light)'">← Torna agli articoli</a>
+      <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--ink-xlight);">The Unchecked</span>
+    </div>
+
+  </article>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Torna su">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <footer>
+    <span>the.unchecked</span>
+    <span>pubblicato su <a href="https://github.com/theunchecked/1checked">github</a></span>
+  </footer>
+
+  <script>
+    const burger = document.getElementById("burger");
+    const navLinks = document.querySelector(".nav-links");
+    if (burger) {
+      burger.addEventListener("click", () => {
+        burger.classList.toggle("open");
+        navLinks.classList.toggle("mobile-open");
+        document.body.style.overflow = navLinks.classList.contains("mobile-open") ? "hidden" : "";
+      });
+      navLinks.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          burger.classList.remove("open");
+          navLinks.classList.remove("mobile-open");
+          document.body.style.overflow = "";
+        });
+      });
+    }
+
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    const progressBar = document.getElementById("progress-bar");
+    const backToTop = document.getElementById("back-to-top");
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollTop / docHeight * 100) + "%";
+      backToTop.classList.toggle("visible", scrollTop > 400);
+    });
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const content = document.querySelector(".article-content");
+    if (content) {
+      const words = content.innerText.split(/\s+/).length;
+      const mins = Math.max(1, Math.round(words / 200));
+      const rt = document.getElementById("read-time");
+      if (rt) rt.textContent = " · " + mins + " min";
+    }
+
+    const backLink = document.getElementById("back-link");
+    if (backLink) {
+      backLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => { window.location.href = backLink.href; }, 260);
+      });
+    }
+
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+    const subtitleText = "C'è un protocollo che gira nelle infrastrutture Windows da oltre trent'anni. La maggior parte degli amministratori sa che è vecchio. Pochi sanno quanto sia pericoloso. E ancora meno hanno fatto qualcosa per rimuoverlo.";
+    const subtitleEl = document.getElementById("hero-subtitle");
+    let i = 0;
+    const typeSubtitle = () => {
+      if (i < subtitleText.length) {
+        subtitleEl.textContent += subtitleText[i++];
+        setTimeout(typeSubtitle, 18);
+      }
+    };
+    window.addEventListener("load", () => setTimeout(typeSubtitle, 400));
+
+    const typeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const text = el.textContent;
+          el.textContent = "";
+          let j = 0;
+          const type = () => {
+            if (j < text.length) {
+              el.textContent += text[j++];
+              setTimeout(type, 18);
+            }
+          };
+          type();
+          typeObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll("blockquote").forEach(q => typeObserver.observe(q));
+  </script>
+
+</body>
+</html>
