@@ -5,8 +5,15 @@
     <link>https://theunchecked.github.io/1checked/</link>
     <description>Non dare niente per scontato. Mai.</description>
     <language>it</language>
-    <lastBuildDate>Sun, 12 Apr 2026 06:45:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 06:00:55 +0000</lastBuildDate>
     <atom:link href="https://theunchecked.github.io/1checked/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>NTLM Protocolli deboli in Active Directory.</title>
+      <link>https://theunchecked.github.io/1checked/articoli/ntlm.html</link>
+      <guid>https://theunchecked.github.io/1checked/articoli/ntlm.html</guid>
+      <pubDate>Sat, 18 Apr 2026 00:00:00 +0000</pubDate>
+      <description>C'è un protocollo che gira nelle infrastrutture Windows da oltre trent'anni. La maggior parte degli amministratori sa che è vecchio. Pochi sanno esattamente qua...</description>
+    </item>
     <item>
       <title>Come non esaurire i token di Claude in poche ore .</title>
       <link>https://theunchecked.github.io/1checked/articoli/claude-token.html</link>
