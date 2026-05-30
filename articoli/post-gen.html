@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Generator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #222;
+    --border: #2e2e2e;
+    --border-active: #555;
+    --text: #e8e8e8;
+    --text-muted: #666;
+    --text-dim: #999;
+    --accent: #f0c040;
+    --accent-dim: #a07c1a;
+    --danger: #e05555;
+    --success: #4caf7d;
+    --info: #5b9bd5;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* LAYOUT */
+  .app {
+    display: grid;
+    grid-template-rows: 48px 1fr;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header .logo {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  header .step-nav {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+
+  .step-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .step-pill:hover { border-color: var(--border-active); color: var(--text-dim); }
+  .step-pill.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
+  .step-pill.done { border-color: var(--success); color: var(--success); }
+
+  main { padding: 24px 20px; max-width: 820px; margin: 0 auto; width: 100%; }
+
+  /* STEPS */
+  .step { display: none; }
+  .step.active { display: block; }
+
+  .step-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .step-desc {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  /* FIELDS */
+  .field { margin-bottom: 16px; }
+  label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: .05em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  label span { color: var(--danger); margin-left: 2px; }
+
+  input[type=text], textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color .15s;
+    resize: vertical;
+  }
+  input[type=text]:focus, textarea:focus { border-color: var(--accent); }
+  textarea { min-height: 320px; line-height: 1.65; }
+
+  .hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: .03em;
+  }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: #ffd860; }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+  .btn-ghost:hover { border-color: var(--border-active); color: var(--text); }
+  .btn-danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: #fff; }
+  .btn-success { background: var(--success); color: #000; }
+  .btn-success:hover { filter: brightness(1.1); }
+  .btn:disabled { opacity: .4; cursor: default; }
+
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+  /* SECTION CARDS */
+  .section-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color .15s;
+  }
+  .section-card.enabled { border-color: var(--accent-dim); }
+
+  .section-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-card-header:hover { background: var(--surface2); }
+
+  .toggle-switch {
+    width: 36px; height: 20px;
+    background: var(--border);
+    border-radius: 10px;
+    position: relative;
+    flex-shrink: 0;
+    transition: background .2s;
+  }
+  .toggle-switch::after {
+    content: '';
+    width: 14px; height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px; left: 3px;
+    transition: left .2s;
+  }
+  .section-card.enabled .toggle-switch { background: var(--accent); }
+  .section-card.enabled .toggle-switch::after { left: 19px; }
+
+  .section-card-info { flex: 1; }
+  .section-card-name { font-weight: 600; font-size: 13px; }
+  .section-card-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  .suggested-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    background: rgba(240,192,64,.15);
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .section-card-body {
+    padding: 14px;
+    border-top: 1px solid var(--border);
+    display: none;
+  }
+  .section-card.enabled .section-card-body { display: block; }
+
+  /* TAG input */
+  .tag-input-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: text;
+    min-height: 42px;
+    align-items: center;
+    transition: border-color .15s;
+  }
+  .tag-input-wrapper:focus-within { border-color: var(--accent); }
+  .tag-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tag-chip button {
+    background: none; border: none; color: var(--text-muted);
+    cursor: pointer; font-size: 14px; padding: 0; line-height: 1;
+  }
+  .tag-chip button:hover { color: var(--danger); }
+  #tag-input {
+    border: none; background: transparent; color: var(--text);
+    font-family: var(--sans); font-size: 14px;
+    outline: none; min-width: 120px; flex: 1;
+    padding: 0;
+  }
+
+  /* STAT ROWS */
+  .sub-field { margin-bottom: 12px; }
+  .sub-label { font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  input.small { padding: 7px 10px; font-size: 13px; }
+
+  .stat-row-builder, .list-builder { display: flex; flex-direction: column; gap: 8px; }
+  .stat-item, .list-item {
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .stat-item input, .list-item input { flex: 1; }
+  .remove-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--text-muted); border-radius: 4px;
+    width: 32px; height: 32px; flex-shrink: 0;
+    cursor: pointer; font-size: 16px; display: flex;
+    align-items: center; justify-content: center;
+    margin-top: 6px;
+    transition: all .15s;
+  }
+  .remove-btn:hover { border-color: var(--danger); color: var(--danger); }
+  .add-btn {
+    background: none; border: 1px dashed var(--border);
+    color: var(--text-muted); border-radius: 4px;
+    padding: 7px 12px; cursor: pointer; font-size: 12px;
+    transition: all .15s; text-align: left;
+    font-family: var(--mono);
+  }
+  .add-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* TIMELINE */
+  .timeline-item-builder { background: var(--surface2); border-radius: 6px; padding: 12px; margin-bottom: 8px; }
+  .timeline-item-builder .sub-label { color: var(--accent); }
+
+  /* SELECT */
+  select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    outline: none;
+    width: 100%;
+    transition: border-color .15s;
+  }
+  select:focus { border-color: var(--accent); }
+
+  /* PREVIEW */
+  #preview-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 60vh;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+
+  /* ALERTS */
+  .alert {
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .alert-info { background: rgba(91,155,213,.1); border: 1px solid rgba(91,155,213,.3); color: var(--info); }
+  .alert-success { background: rgba(76,175,125,.1); border: 1px solid rgba(76,175,125,.3); color: var(--success); }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    main { padding: 16px 14px; }
+    .step-desc { font-size: 15px; }
+    header { padding: 0 14px; gap: 8px; }
+    .step-pill { padding: 3px 8px; font-size: 10px; }
+    textarea { min-height: 240px; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .copy-flash { animation: flash .3s ease; }
+  @keyframes flash { 0%,100% { opacity:1; } 50% { opacity:.5; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">// BLOG GENERATOR</div>
+    <div class="step-nav">
+      <div class="step-pill active" data-step="1" onclick="goStep(1)">1 · Testo</div>
+      <div class="step-pill" data-step="2" onclick="goStep(2)">2 · Meta</div>
+      <div class="step-pill" data-step="3" onclick="goStep(3)">3 · Sezioni</div>
+      <div class="step-pill" data-step="4" onclick="goStep(4)">4 · Esporta</div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- STEP 1: TESTO -->
+    <div class="step active" id="step-1">
+      <div class="step-title">Step 01</div>
+      <div class="step-desc">Incolla o scrivi il tuo articolo</div>
+
+      <div class="field">
+        <label>Contenuto dell'articolo <span>*</span></label>
+        <textarea id="content" placeholder="Scrivi qui il tuo articolo esattamente come lo vuoi pubblicare. Il tuo stile non verrà modificato, solo corretti eventuali errori ortografici." oninput="analyzeContent()"></textarea>
+        <div class="hint" id="content-stats">—</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goStep(2)">Continua →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: META -->
+    <div class="step" id="step-2">
+      <div class="step-title">Step 02</div>
+      <div class="step-desc">Metadati del post</div>
+
+      <div class="field">
+        <label>Titolo <span>*</span></label>
+        <input type="text" id="meta-title" placeholder="Il titolo del tuo articolo">
+      </div>
+
+      <div class="field">
+        <label>Sottotitolo</label>
+        <input type="text" id="meta-subtitle" placeholder="Una frase che introduce l'articolo (opzionale)">
+      </div>
+
+      <div class="field">
+        <label>Tag</label>
+        <div class="tag-input-wrapper" onclick="document.getElementById('tag-input').focus()">
+          <div id="tags-container"></div>
+          <input type="text" id="tag-input" placeholder="Scrivi un tag e premi Invio…" onkeydown="handleTagInput(event)">
+        </div>
+        <div class="hint">Premi Invio o virgola per aggiungere un tag</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goStep(1)">← Indietro</button>
+        <button class="btn btn-primary" onclick="goStep(3)">Continua →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: SEZIONI -->
+    <div class="step" id="step-3">
+      <div class="step-title">Step 03</div>
+      <div class="step-desc">Sezioni speciali</div>
+
+      <div class="alert alert-info" id="suggest-alert" style="display:none">
+        <span>💡</span>
+        <span id="suggest-text"></span>
+      </div>
+
+      <div class="section-grid" id="section-grid">
+
+        <!-- STAT CARDS -->
+        <div class="section-card" id="card-stats">
+          <div class="section-card-header" onclick="toggleSection('stats')">
+            <div class="toggle-switch"></div>
+            <div class="section-card-info">
+              <div class="section-card-name">Stat Cards <span id="badge-stats"></span></div>
+              <div class="section-card-desc">Blocco con numeri grandi — statistiche, percentuali, metriche</div>
+            </div>
+          </div>
+          <div class="section-card-body">
+            <div class="field">
+              <label>Posizione nel testo</label>
+              <select id="stats-position">
+                <option value="top">All'inizio (dopo il primo paragrafo)</option>
+                <option value="after-intro">Dopo l'introduzione</option>
+                <option value="custom">Segnaposto nel testo: [STATS]</option>
+              </select>
+            </div>
+            <div class="stat-row-builder" id="stats-builder">
+              <div class="stat-item">
+                <div style="flex:1">
+                  <div class="sub-label">Numero</div>
+                  <input type="text" class="stat-number" placeholder="es. 95%">
+                </div>
+                <div style="flex:2">
+                  <div class="sub-label">Etichetta</div>
+                  <input type="text" class="stat-label-text" placeholder="es. Persone con smartphone">
+                </div>
+                <div style="flex:1">
+                  <div class="sub-label">Colore</div>
+                  <select class="stat-accent">
+                    <option value="">Neutro</option>
+                    <option value="accent-red">Rosso</option>
+                    <option value="accent-amber">Ambra</option>
+                    <option value="accent-blue">Blu</option>
+                    <option value="accent-green">Verde</option>
+                  </select>
+                </div>
+                <button class="remove-btn" onclick="removeStat(this)">×</button>
+              </div>
+            </div>
+            <button class="add-btn" onclick="addStat()">+ Aggiungi statistica</button>
+          </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="section-card" id="card-timeline">
+          <div class="section-card-header" onclick="toggleSection('timeline')">
+            <div class="toggle-switch"></div>
+            <div class="section-card-info">
+              <div class="section-card-name">Timeline <span id="badge-timeline"></span></div>
+              <div class="section-card-desc">Sequenza di passi o fasi — processi, tutorial, storie</div>
+            </div>
+          </div>
+          <div class="section-card-body">
+            <div class="field">
+              <label>Posizione</label>
+              <select id="timeline-position">
+                <option value="auto">Automatica (dopo il secondo paragrafo)</option>
+                <option value="custom">Segnaposto: [TIMELINE]</option>
+              </select>
+            </div>
+            <div id="timeline-builder">
+              <div class="timeline-item-builder">
+                <div class="sub-label">Passo 1</div>
+                <div class="sub-field">
+                  <div class="sub-label">Etichetta data/fase</div>
+                  <input type="text" class="tl-date" placeholder="es. Passo 1" style="width:100%">
+                </div>
+                <div class="sub-field">
+                  <div class="sub-label">Titolo</div>
+                  <input type="text" class="tl-title" placeholder="es. Download e installazione" style="width:100%">
+                </div>
+                <div class="sub-field">
+                  <div class="sub-label">Descrizione</div>
+                  <textarea class="tl-body" placeholder="Testo del passo..." style="min-height:70px;width:100%"></textarea>
+                </div>
+                <div class="sub-field">
+                  <div class="sub-label">Stile</div>
+                  <select class="tl-style" style="width:100%">
+                    <option value="active">Normal (active)</option>
+                    <option value="warning">Attenzione (warning)</option>
+                    <option value="danger">Pericolo (danger)</option>
+                  </select>
+                </div>
+                <button class="remove-btn" style="margin-top:4px" onclick="removeTimelineItem(this)">× Rimuovi passo</button>
+              </div>
+            </div>
+            <button class="add-btn" onclick="addTimelineItem()">+ Aggiungi passo</button>
+          </div>
+        </div>
+
+        <!-- CALLOUT -->
+        <div class="section-card" id="card-callout">
+          <div class="section-card-header" onclick="toggleSection('callout')">
+            <div class="toggle-switch"></div>
+            <div class="section-card-info">
+              <div class="section-card-name">Callout <span id="badge-callout"></span></div>
+              <div class="section-card-desc">Riquadro evidenziato — avvisi, riepiloghi, consigli pratici</div>
+            </div>
+          </div>
+          <div class="section-card-body">
+            <div id="callout-builder">
+              <div class="callout-item" style="background:var(--surface2);border-radius:6px;padding:12px;margin-bottom:8px">
+                <div class="sub-field">
+                  <div class="sub-label">Titolo bold</div>
+                  <input type="text" class="co-title" placeholder="es. Ricapitolando" style="width:100%">
+                </div>
+                <div class="sub-field">
+                  <div class="sub-label">Testo</div>
+                  <textarea class="co-body" placeholder="Testo del callout..." style="min-height:70px;width:100%"></textarea>
+                </div>
+                <div class="sub-field">
+                  <div class="sub-label">Tipo</div>
+                  <select class="co-type" style="width:100%">
+                    <option value="warning">Warning (giallo)</option>
+                    <option value="success">Success (verde)</option>
+                    <option value="info">Info (blu)</option>
+                    <option value="danger">Danger (rosso)</option>
+                  </select>
+                </div>
+                <div class="sub-field">
+                  <div class="sub-label">Posizione</div>
+                  <select class="co-pos" style="width:100%">
+                    <option value="end">Fine articolo</option>
+                    <option value="middle">Metà articolo</option>
+                    <option value="custom">Segnaposto: [CALLOUT]</option>
+                  </select>
+                </div>
+                <button class="remove-btn" style="margin-top:4px" onclick="removeCallout(this)">× Rimuovi</button>
+              </div>
+            </div>
+            <button class="add-btn" onclick="addCallout()">+ Aggiungi callout</button>
+          </div>
+        </div>
+
+        <!-- PULL QUOTE -->
+        <div class="section-card" id="card-pullquote">
+          <div class="section-card-header" onclick="toggleSection('pullquote')">
+            <div class="toggle-switch"></div>
+            <div class="section-card-info">
+              <div class="section-card-name">Pull Quote <span id="badge-pullquote"></span></div>
+              <div class="section-card-desc">Citazione in evidenza — frase chiave da isolare visivamente</div>
+            </div>
+          </div>
+          <div class="section-card-body">
+            <div id="pullquote-builder">
+              <div class="pq-item" style="background:var(--surface2);border-radius:6px;padding:12px;margin-bottom:8px">
+                <div class="sub-field">
+                  <div class="sub-label">Testo della citazione</div>
+                  <textarea class="pq-text" placeholder="es. Non ci rubano niente. Ci chiedono solo di sapere tutto." style="min-height:70px;width:100%"></textarea>
+                </div>
+                <div class="sub-field">
+                  <div class="sub-label">Posizione</div>
+                  <select class="pq-pos" style="width:100%">
+                    <option value="end">Fine articolo</option>
+                    <option value="middle">Metà articolo</option>
+                    <option value="custom">Segnaposto: [PULLQUOTE]</option>
+                  </select>
+                </div>
+                <button class="remove-btn" style="margin-top:4px" onclick="removePullquote(this)">× Rimuovi</button>
+              </div>
+            </div>
+            <button class="add-btn" onclick="addPullquote()">+ Aggiungi pull quote</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goStep(2)">← Indietro</button>
+        <button class="btn btn-primary" onclick="goStep(4)">Genera anteprima →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: ESPORTA -->
+    <div class="step" id="step-4">
+      <div class="step-title">Step 04</div>
+      <div class="step-desc">Anteprima ed esportazione</div>
+
+      <div id="preview-box"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goStep(3)">← Modifica</button>
+        <button class="btn btn-success" onclick="downloadMD()">↓ Scarica .md</button>
+        <button class="btn btn-ghost" onclick="copyToClipboard()">⎘ Copia</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// STATE
+const state = {
+  currentStep: 1,
+  tags: [],
+  sections: { stats: false, timeline: false, callout: false, pullquote: false }
+};
+
+// NAVIGATION
+function goStep(n) {
+  if (n === 4) buildPreview();
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  document.querySelectorAll('.step-pill').forEach(p => {
+    p.classList.remove('active');
+    if (parseInt(p.dataset.step) < n) p.classList.add('done');
+    else p.classList.remove('done');
+  });
+  document.querySelector('[data-step="' + n + '"]').classList.add('active');
+  state.currentStep = n;
+  window.scrollTo(0,0);
+}
+
+// CONTENT ANALYSIS
+function analyzeContent() {
+  const txt = document.getElementById('content').value;
+  const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+  const chars = txt.length;
+  document.getElementById('content-stats').textContent = `${words} parole · ${chars} caratteri`;
+  suggestSections(txt);
+}
+
+function suggestSections(txt) {
+  const lower = txt.toLowerCase();
+  const suggestions = [];
+  if (/\d+%|\d+ su \d+|statistic|dato|numeri|percentuale|media/.test(lower)) {
+    suggestions.push('stat-cards (ho trovato dati numerici nel testo)');
+    if (!state.sections.stats) showBadge('stats', 'suggerita');
+  } else { hideBadge('stats'); }
+
+  if (/passo \d|step \d|prima di|poi|infine|sequenza|fase|installa|processo/.test(lower)) {
+    suggestions.push('timeline (ho trovato sequenze o passi)');
+    if (!state.sections.timeline) showBadge('timeline', 'suggerita');
+  } else { hideBadge('timeline'); }
+
+  if (/ricapit|riassun|attenzione|nota bene|importante|consiglio|cosa puoi fare/.test(lower)) {
+    suggestions.push('callout (ho trovato riepilogo o avviso)');
+    if (!state.sections.callout) showBadge('callout', 'suggerita');
+  } else { hideBadge('callout'); }
+
+  if (/"[^"]{15,}"/.test(txt) || /'[^']{15,}'/.test(txt)) {
+    suggestions.push('pull-quote (ho trovato una frase tra virgolette)');
+    if (!state.sections.pullquote) showBadge('pullquote', 'suggerita');
+  } else { hideBadge('pullquote'); }
+
+  const alert = document.getElementById('suggest-alert');
+  if (suggestions.length) {
+    alert.style.display = 'flex';
+    document.getElementById('suggest-text').textContent = 'Suggerisco: ' + suggestions.join('; ') + '. Puoi attivarle o ignorarle nel passo 3.';
+  } else {
+    alert.style.display = 'none';
+  }
+}
+
+function showBadge(id, text) {
+  const el = document.getElementById('badge-' + id);
+  if (el) { el.innerHTML = `<span class="suggested-badge">${text}</span>`; }
+}
+function hideBadge(id) {
+  const el = document.getElementById('badge-' + id);
+  if (el && !state.sections[id]) el.innerHTML = '';
+}
+
+// TOGGLE SECTIONS
+function toggleSection(id) {
+  state.sections[id] = !state.sections[id];
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('enabled', state.sections[id]);
+  if (state.sections[id]) hideBadge(id);
+}
+
+// TAGS
+function handleTagInput(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = e.target.value.trim().replace(/,$/, '');
+    if (val && !state.tags.includes(val)) {
+      state.tags.push(val);
+      renderTags();
+    }
+    e.target.value = '';
+  } else if (e.key === 'Backspace' && !e.target.value && state.tags.length) {
+    state.tags.pop();
+    renderTags();
+  }
+}
+
+function renderTags() {
+  const c = document.getElementById('tags-container');
+  c.innerHTML = state.tags.map((t, i) =>
+    `<div class="tag-chip">${t}<button onclick="removeTag(${i})">×</button></div>`
+  ).join('');
+}
+
+function removeTag(i) {
+  state.tags.splice(i, 1);
+  renderTags();
+}
+
+// STAT BUILDER
+function addStat() {
+  const b = document.getElementById('stats-builder');
+  const div = document.createElement('div');
+  div.className = 'stat-item';
+  div.innerHTML = `
+    <div style="flex:1"><div class="sub-label">Numero</div><input type="text" class="stat-number" placeholder="es. 41"></div>
+    <div style="flex:2"><div class="sub-label">Etichetta</div><input type="text" class="stat-label-text" placeholder="Descrizione"></div>
+    <div style="flex:1"><div class="sub-label">Colore</div><select class="stat-accent"><option value="">Neutro</option><option value="accent-red">Rosso</option><option value="accent-amber">Ambra</option><option value="accent-blue">Blu</option><option value="accent-green">Verde</option></select></div>
+    <button class="remove-btn" onclick="removeStat(this)">×</button>`;
+  b.appendChild(div);
+}
+function removeStat(btn) { btn.closest('.stat-item').remove(); }
+
+// TIMELINE BUILDER
+let tlCount = 1;
+function addTimelineItem() {
+  tlCount++;
+  const b = document.getElementById('timeline-builder');
+  const div = document.createElement('div');
+  div.className = 'timeline-item-builder';
+  div.innerHTML = `
+    <div class="sub-label">Passo ${tlCount}</div>
+    <div class="sub-field"><div class="sub-label">Etichetta</div><input type="text" class="tl-date" placeholder="Passo ${tlCount}" style="width:100%"></div>
+    <div class="sub-field"><div class="sub-label">Titolo</div><input type="text" class="tl-title" placeholder="Titolo del passo" style="width:100%"></div>
+    <div class="sub-field"><div class="sub-label">Descrizione</div><textarea class="tl-body" placeholder="Testo..." style="min-height:70px;width:100%"></textarea></div>
+    <div class="sub-field"><div class="sub-label">Stile</div><select class="tl-style" style="width:100%"><option value="active">Normal</option><option value="warning">Attenzione</option><option value="danger">Pericolo</option></select></div>
+    <button class="remove-btn" style="margin-top:4px" onclick="removeTimelineItem(this)">× Rimuovi passo</button>`;
+  b.appendChild(div);
+}
+function removeTimelineItem(btn) { btn.closest('.timeline-item-builder').remove(); }
+
+// CALLOUT BUILDER
+function addCallout() {
+  const b = document.getElementById('callout-builder');
+  const div = document.createElement('div');
+  div.className = 'callout-item';
+  div.style = 'background:var(--surface2);border-radius:6px;padding:12px;margin-bottom:8px';
+  div.innerHTML = `
+    <div class="sub-field"><div class="sub-label">Titolo bold</div><input type="text" class="co-title" placeholder="Titolo" style="width:100%"></div>
+    <div class="sub-field"><div class="sub-label">Testo</div><textarea class="co-body" placeholder="Testo..." style="min-height:70px;width:100%"></textarea></div>
+    <div class="sub-field"><div class="sub-label">Tipo</div><select class="co-type" style="width:100%"><option value="warning">Warning</option><option value="success">Success</option><option value="info">Info</option><option value="danger">Danger</option></select></div>
+    <div class="sub-field"><div class="sub-label">Posizione</div><select class="co-pos" style="width:100%"><option value="end">Fine articolo</option><option value="middle">Metà</option><option value="custom">Segnaposto [CALLOUT]</option></select></div>
+    <button class="remove-btn" style="margin-top:4px" onclick="removeCallout(this)">× Rimuovi</button>`;
+  b.appendChild(div);
+}
+function removeCallout(btn) { btn.closest('.callout-item').remove(); }
+
+// PULLQUOTE BUILDER
+function addPullquote() {
+  const b = document.getElementById('pullquote-builder');
+  const div = document.createElement('div');
+  div.className = 'pq-item';
+  div.style = 'background:var(--surface2);border-radius:6px;padding:12px;margin-bottom:8px';
+  div.innerHTML = `
+    <div class="sub-field"><div class="sub-label">Citazione</div><textarea class="pq-text" placeholder="La frase..." style="min-height:70px;width:100%"></textarea></div>
+    <div class="sub-field"><div class="sub-label">Posizione</div><select class="pq-pos" style="width:100%"><option value="end">Fine</option><option value="middle">Metà</option><option value="custom">Segnaposto [PULLQUOTE]</option></select></div>
+    <button class="remove-btn" style="margin-top:4px" onclick="removePullquote(this)">× Rimuovi</button>`;
+  b.appendChild(div);
+}
+function removePullquote(btn) { btn.closest('.pq-item').remove(); }
+
+// MD GENERATION
+function buildStats() {
+  const items = document.querySelectorAll('#stats-builder .stat-item');
+  const cards = Array.from(items).map(it => {
+    const num = it.querySelector('.stat-number').value.trim();
+    const lbl = it.querySelector('.stat-label-text').value.trim();
+    const acc = it.querySelector('.stat-accent').value;
+    const cls = acc ? `stat-card ${acc}` : 'stat-card';
+    return `  <div class="${cls}">\n    <div class="stat-number">${num}</div>\n    <div class="stat-label">${lbl}</div>\n  </div>`;
+  }).filter(c => c.includes('stat-number">') && !c.includes('stat-number"></'));
+  if (!cards.length) return '';
+  return `<div class="stat-row">\n${cards.join('\n')}\n</div>`;
+}
+
+function buildTimeline() {
+  const items = document.querySelectorAll('#timeline-builder .timeline-item-builder');
+  const steps = Array.from(items).map(it => {
+    const date = it.querySelector('.tl-date').value.trim();
+    const title = it.querySelector('.tl-title').value.trim();
+    const body = it.querySelector('.tl-body').value.trim();
+    const sty = it.querySelector('.tl-style').value;
+    return `  <div class="timeline-item ${sty}">\n    <div class="timeline-date">${date}</div>\n    <div class="timeline-title">${title}</div>\n    <div class="timeline-body">${body}</div>\n  </div>`;
+  });
+  if (!steps.length) return '';
+  return `<div class="timeline">\n${steps.join('\n')}\n</div>`;
+}
+
+function buildCallouts() {
+  const items = document.querySelectorAll('#callout-builder .callout-item');
+  return Array.from(items).map(it => {
+    const title = it.querySelector('.co-title').value.trim();
+    const body = it.querySelector('.co-body').value.trim();
+    const type = it.querySelector('.co-type').value;
+    const pos = it.querySelector('.co-pos').value;
+    const html = `<div class="callout ${type}">\n  <strong>${title}</strong> ${body}\n</div>`;
+    return { html, pos };
+  });
+}
+
+function buildPullquotes() {
+  const items = document.querySelectorAll('#pullquote-builder .pq-item');
+  return Array.from(items).map(it => {
+    const text = it.querySelector('.pq-text').value.trim();
+    const pos = it.querySelector('.pq-pos').value;
+    const html = `<div class="pull-quote">\n  <p>"${text}"</p>\n</div>`;
+    return { html, pos };
+  });
+}
+
+function buildFrontmatter() {
+  const title = document.getElementById('meta-title').value.trim();
+  const subtitle = document.getElementById('meta-subtitle').value.trim();
+  const tags = state.tags;
+  let fm = '---\nlayout: post\n';
+  fm += `title: "${title}"\n`;
+  if (subtitle) fm += `subtitle: "${subtitle}"\n`;
+  if (tags.length) fm += `tags: [${tags.map(t => t).join(', ')}]\n`;
+  fm += '---\n';
+  return fm;
+}
+
+function injectAtPosition(content, html, pos, placeholder) {
+  if (pos === 'custom') {
+    return content.replace(placeholder, html);
+  }
+  const paragraphs = content.split(/\n---\n|\n\n/);
+  if (pos === 'top' || pos === 'after-intro') {
+    return html + '\n\n' + content;
+  }
+  if (pos === 'middle') {
+    const mid = Math.floor(paragraphs.length / 2);
+    paragraphs.splice(mid, 0, html);
+    return paragraphs.join('\n\n');
+  }
+  // end
+  return content + '\n\n' + html;
+}
+
+function buildFullMD() {
+  let content = document.getElementById('content').value.trim();
+  const fm = buildFrontmatter();
+
+  // Stats
+  if (state.sections.stats) {
+    const html = buildStats();
+    if (html) {
+      const pos = document.getElementById('stats-position').value;
+      content = injectAtPosition(content, html, pos, '[STATS]');
+    }
+  }
+
+  // Timeline
+  if (state.sections.timeline) {
+    const html = buildTimeline();
+    if (html) {
+      const pos = document.getElementById('timeline-position').value;
+      content = injectAtPosition(content, html, pos === 'auto' ? 'after-intro' : 'custom', '[TIMELINE]');
+    }
+  }
+
+  // Callouts
+  if (state.sections.callout) {
+    buildCallouts().forEach(({ html, pos }) => {
+      content = injectAtPosition(content, html, pos, '[CALLOUT]');
+    });
+  }
+
+  // Pull quotes
+  if (state.sections.pullquote) {
+    buildPullquotes().forEach(({ html, pos }) => {
+      content = injectAtPosition(content, html, pos, '[PULLQUOTE]');
+    });
+  }
+
+  return fm + '\n' + content;
+}
+
+function buildPreview() {
+  document.getElementById('preview-box').textContent = buildFullMD();
+}
+
+function downloadMD() {
+  const md = buildFullMD();
+  const title = document.getElementById('meta-title').value.trim() || 'post';
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const today = new Date().toISOString().split('T')[0];
+  const filename = `${today}-${slug}.md`;
+  const blob = new Blob([md], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+function copyToClipboard() {
+  const md = buildFullMD();
+  navigator.clipboard.writeText(md).then(() => {
+    const btn = event.target;
+    const original = btn.textContent;
+    btn.textContent = '✓ Copiato!';
+    btn.classList.add('copy-flash');
+    setTimeout(() => { btn.textContent = original; btn.classList.remove('copy-flash'); }, 1500);
+  });
+}
+</script>
+</body>
+</html>
